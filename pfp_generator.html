@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PissTek PFP Generator v5.9 — by ColinRobinson.Sol</title>
+<title>PissTek PFP Generator v6.3 — by ColinRobinson.Sol</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { background: #C0C0C0; font-family: 'MS Sans Serif', 'Segoe UI', Tahoma, sans-serif; min-height: 100vh; display: flex; justify-content: center; align-items: flex-start; padding: 10px; }
@@ -36,11 +36,11 @@ canvas { background: transparent; image-rendering: pixelated; }
 <body>
 <div class="window">
   <div class="title-bar">
-    <span>💦 PissTek PFP Generator v5.9 — ColinRobinson.Sol Labs × CRISARP</span>
+    <span>💦 PissTek PFP Generator v6.3 — ColinRobinson.Sol Labs × CRISARP</span>
     <div class="title-bar-buttons"><button>_</button><button>□</button><button>✕</button></div>
   </div>
   <div class="marquee-bar">
-    <span>☢ BUILT OUT OF PURE SPITE ☢ v5.9 — maniac face, gold chain, tinfoil, casino, sewer ☢ i'M #1 aT EvErYtHiNg ☢ DoN't ToUcH tHe PiNgLe ☢ FuCk KoLs ☢ THE ENGINE IS CLOSED. THE OUTPUT IS OPEN. ☢ mismatched socks: green left, blue right ☢ PISSCON 2 ☢ PISSTEK SURVIVES THE RUG ☢ ALL IN ☢ p/acc → Pissingularity ☢ 不要触摸我的 ☢ :23 ☢ PissTek™ | PingleTek™ | PISSTEK CAPITAL® ☢ 我是活的 ☢</span>
+    <span>☢ BUILT OUT OF PURE SPITE ☢ v6.3 — pill pilled, roach rider, killcam, mattress mode ☢ TAKE THE PILL ☢ PUMPFUN PILL CULTURE ☢ ALON IS PISSTEK CEO ☢ STOP BEING POOR ☢ LEGENDARY KILLCAM ☢ 360 NOSCOPE THE MOON ☢ DoN't ToUcH tHe PiNgLe ☢ FuCk KoLs ☢ THE ENGINE IS CLOSED. THE OUTPUT IS OPEN. ☢ mismatched socks: green left, blue right ☢ PISSCON 2 ☢ PISSTEK SURVIVES THE RUG ☢ ALL IN ☢ p/acc → Pissingularity ☢ 不要触摸我的 ☢ :23 ☢ PissTek™ | PingleTek™ | PISSTEK CAPITAL® ☢ 我是活的 ☢ PISSTINA IN THE KITCHEN ☢ ROACH ARMY MOBILIZING ☢</span>
   </div>
   <div class="content">
     <div class="preset-row">
@@ -61,6 +61,12 @@ canvas { background: transparent; image-rendering: pixelated; }
       <button class="btn95 preset" onclick="P('victory')">⚔️ Victory</button>
       <button class="btn95 preset" onclick="P('casino')">🎰 Casino</button>
       <button class="btn95 preset" onclick="P('sewer')">🪳 Sewer</button>
+      <button class="btn95 preset" onclick="P('alon')">🏊 Alon</button>
+      <button class="btn95 preset" onclick="P('pillpilled')">💊 PillPilled</button>
+      <button class="btn95 preset" onclick="P('killcam')">🔫 Killcam</button>
+      <button class="btn95 preset" onclick="P('roachride')">🪳 RoachRide</button>
+      <button class="btn95 preset" onclick="P('mattress')">🌈 Mattress</button>
+      <button class="btn95 preset" onclick="P('pisstinakitchen')">👩‍🍳 Kitchen</button>
     </div>
     <div class="controls">
       <div class="control-group"><label>🎭 Character</label>
@@ -73,13 +79,13 @@ canvas { background: transparent; image-rendering: pixelated; }
         <select id="face"><option value="angry">Angry</option><option value="smug">Smug</option><option value="cry">Crying</option><option value="happy">Happy</option><option value="dead">Dead Inside</option><option value="vampire">Energy Vampire</option><option value="uwu">UwU</option><option value="confused">Confused</option><option value="laser">Laser Eyes</option><option value="maniac">Maniac</option></select>
       </div>
       <div class="control-group"><label>🤲 Pose</label>
-        <select id="pose"><option value="plotting">Plotting (default)</option><option value="arms">Arms Out</option><option value="victory">Victory Raise</option><option value="hips">Hands on Hips</option></select>
+        <select id="pose"><option value="plotting">Plotting (default)</option><option value="arms">Arms Out</option><option value="victory">Victory Raise</option><option value="hips">Hands on Hips</option><option value="crossed">Arms Crossed</option></select>
       </div>
       <div class="control-group"><label>🎩 Head</label>
         <select id="hat"><option value="none">None</option><option value="tophat">Top Hat</option><option value="crown">Piss Crown</option><option value="halo">Halo</option><option value="cap">Yellow Cap</option><option value="horns">Horns</option><option value="hardhat">Hard Hat</option><option value="headband">Headband</option><option value="viking">Viking Helm</option><option value="pinkhair">Pink Hair</option><option value="tinfoil">Tinfoil Hat</option><option value="bucket">Bucket Hat</option></select>
       </div>
       <div class="control-group"><label>🦸 Gear</label>
-        <select id="gear"><option value="none">None</option><option value="cape">Yellow Cape (P)</option><option value="speedo">Speedo</option><option value="blackshades">Black Shades</option><option value="whiteshades">White Round Shades</option><option value="glasses">Round Glasses</option><option value="stream">Piss Stream</option><option value="diamonds">Diamond Piss</option><option value="sword">Sword</option><option value="shirt">STOP BEING POOR</option><option value="flag">Piss Raider Flag</option><option value="controller">Controller</option><option value="bowtie">Bowtie</option><option value="bikini">Bikini</option><option value="chain">Gold Chain</option><option value="moneybag">Money Bag</option></select>
+        <select id="gear"><option value="none">None</option><option value="cape">Yellow Cape (P)</option><option value="speedo">Speedo</option><option value="blackshades">Black Shades</option><option value="whiteshades">White Round Shades</option><option value="glasses">Round Glasses</option><option value="stream">Piss Stream</option><option value="diamonds">Diamond Piss</option><option value="sword">Sword</option><option value="shirt">STOP BEING POOR</option><option value="alonceo">CEO Kit (shirt+shades)</option><option value="flag">Piss Raider Flag</option><option value="controller">Controller</option><option value="bowtie">Bowtie</option><option value="bikini">Bikini</option><option value="bikini_yellow">Yellow Bikini</option><option value="chain">Gold Chain</option><option value="moneybag">Money Bag</option><option value="pill">Pumpfun Pill</option><option value="sniper">Sniper Rifle</option><option value="cocktail">Cocktail Glass</option><option value="spoon">Wooden Spoon</option><option value="roachride">Roach Rider</option></select>
       </div>
       <div class="control-group"><label>🧦 Socks</label>
         <select id="sock"><option value="mismatch">Green + Blue</option><option value="green">Both Green</option><option value="blue">Both Blue</option><option value="none">Barefoot</option></select>
@@ -91,7 +97,7 @@ canvas { background: transparent; image-rendering: pixelated; }
         <select id="ping"><option value="normal">Normal</option><option value="happy">Happy</option><option value="angry">Angry</option><option value="splat">Splatted</option><option value="none">None</option></select>
       </div>
       <div class="control-group"><label>🌈 Background</label>
-        <select id="bg"><option value="none">Transparent</option><option value="#000">Black</option><option value="#FC0">Piss Yellow</option><option value="#888">Grey</option><option value="#008">Navy</option><option value="space">Space</option><option value="beach">Beach</option><option value="fire">Campfire</option><option value="storm">Storm Sea</option><option value="grave">Graveyard</option><option value="rainbow">Rainbow</option><option value="poker">Poker Table</option><option value="livingroom">Living Room</option><option value="ruins">Ruins</option><option value="lobsterpile">Lobster Pile</option><option value="casino">Casino Floor</option><option value="sewer">Sewer</option></select>
+        <select id="bg"><option value="none">Transparent</option><option value="#000">Black</option><option value="#FC0">Piss Yellow</option><option value="#888">Grey</option><option value="#008">Navy</option><option value="space">Space</option><option value="beach">Beach</option><option value="fire">Campfire</option><option value="storm">Storm Sea</option><option value="grave">Token Graveyard</option><option value="rainbow">Rainbow</option><option value="poker">Poker Table</option><option value="livingroom">Living Room</option><option value="ruins">Ruins</option><option value="lobsterpile">Lobster Pile</option><option value="casino">Casino Floor</option><option value="sewer">Sewer</option><option value="mattress">Brain Rot Mattress</option><option value="glitch">Vaporwave Glitch</option><option value="kitchen">Yellow Kitchen</option></select>
       </div>
       <div class="control-group"><label>🪳 Roaches</label>
         <select id="roach"><option value="0">None</option><option value="4">Few</option><option value="10">Many</option><option value="25">PLAGUE</option></select>
@@ -103,13 +109,13 @@ canvas { background: transparent; image-rendering: pixelated; }
         <select id="cone"><option value="0">None</option><option value="3">Squad</option><option value="8">Army</option><option value="15">LEGION</option></select>
       </div>
       <div class="control-group"><label>🦞 Creatures</label>
-        <select id="creature"><option value="none">None</option><option value="lobster">Lobsters</option><option value="chick">Chicks</option></select>
+        <select id="creature"><option value="none">None</option><option value="lobster">Lobsters</option><option value="chick">Chicks</option><option value="worm">Green Worm</option><option value="mushroom">Mushrooms</option></select>
       </div>
       <div class="control-group"><label>✨ FX</label>
         <select id="fx"><option value="none">None</option><option value="P">P Letters</option><option value="hearts">Hearts</option><option value="fire">Fire</option><option value="money">$PISS</option><option value="zap">Lightning</option><option value="star">Sparkle</option><option value="matrix">Matrix Rain</option></select>
       </div>
       <div class="control-group"><label>📝 Title</label>
-        <select id="title"><option value="none">None</option><option value="custom">Custom Text</option><option value="allin">ALL IN</option><option value="diamond">DIAMOND PISS</option><option value="survives">SURVIVES THE RUG</option><option value="ftw">FOR THE WIN!</option></select>
+        <select id="title"><option value="none">None</option><option value="custom">Custom Text</option><option value="allin">ALL IN</option><option value="diamond">DIAMOND PISS</option><option value="survives">SURVIVES THE RUG</option><option value="ftw">FOR THE WIN!</option><option value="killcam">LEGENDARY KILLCAM</option><option value="takepill">TAKE THE PILL</option></select>
       </div>
     </div>
     <div class="btn-row" id="customTitleRow" style="display:none;margin-bottom:6px;">
@@ -250,15 +256,11 @@ function drawGoblin(cx, skin, bodyType, face, hat, gear, sockStyle, pingStyle, i
   const shoulderY = bodyY - bodyH * 0.12;
   x.lineCap = 'round';
   const drawArm = (x1,y1,cpx,cpy,x2,y2) => {
-    // Thick skin fill tube
+    // Thin noodle arm — skin-colored fill with black outline (matching reference art)
     x.beginPath(); x.moveTo(x1,y1); x.quadraticCurveTo(cpx,cpy,x2,y2);
-    x.strokeStyle = skin; x.lineWidth = 10; x.stroke();
-    // Black outline
+    x.strokeStyle = skin; x.lineWidth = 5; x.stroke();
     x.beginPath(); x.moveTo(x1,y1); x.quadraticCurveTo(cpx,cpy,x2,y2);
-    x.strokeStyle = '#000'; x.lineWidth = 3; x.stroke();
-    // Highlight
-    x.beginPath(); x.moveTo(x1-1,y1); x.quadraticCurveTo(cpx-1,cpy,x2-1,y2);
-    x.strokeStyle = 'rgba(255,255,255,0.18)'; x.lineWidth = 3; x.stroke();
+    x.strokeStyle = '#000'; x.lineWidth = 2.5; x.stroke();
   };
   if (pose === 'plotting') {
     drawArm(cx - bodyW + 2, shoulderY, cx - bodyW - 10, shoulderY + 28, cx - 14, bodyY + 10);
@@ -273,6 +275,10 @@ function drawGoblin(cx, skin, bodyType, face, hat, gear, sockStyle, pingStyle, i
   } else if (pose === 'hips') {
     drawArm(cx - bodyW + 2, shoulderY, cx - bodyW - 18, shoulderY + 15, cx - bodyW - 14, shoulderY + 38);
     drawArm(cx + bodyW - 2, shoulderY, cx + bodyW + 18, shoulderY + 15, cx + bodyW + 14, shoulderY + 38);
+  } else if (pose === 'crossed') {
+    // Arms crossed over chest — Sonic stance (from Sonic 2 ref)
+    drawArm(cx - bodyW + 2, shoulderY, cx - bodyW + 8, shoulderY + 22, cx + bodyW * 0.18, shoulderY + 32);
+    drawArm(cx + bodyW - 2, shoulderY, cx + bodyW - 8, shoulderY + 22, cx - bodyW * 0.18, shoulderY + 32);
   }
 
   // === MAIN BODY — one continuous organic bean shape ===
@@ -376,6 +382,14 @@ function drawGoblin(cx, skin, bodyType, face, hat, gear, sockStyle, pingStyle, i
   } else if (pose === 'hips') {
     ci(cx - bodyW - 14, shoulderY + 38, 6, skin, true, 2);
     ci(cx + bodyW + 14, shoulderY + 38, 6, skin, true, 2);
+  } else if (pose === 'crossed') {
+    // Right hand rests on left arm
+    ci(cx + bodyW * 0.18, shoulderY + 32, 6, skin, true, 2);
+    // Left hand rests on right arm
+    ci(cx - bodyW * 0.18, shoulderY + 32, 6, skin, true, 2);
+    // Cross-arm overlap lines
+    x.strokeStyle = 'rgba(0,0,0,0.1)'; x.lineWidth = 1;
+    x.beginPath(); x.moveTo(cx - 10, shoulderY + 26); x.lineTo(cx + 10, shoulderY + 36); x.stroke();
   }
 
   // === PINGLE — drawn AFTER body so it appears in front ===
@@ -471,63 +485,58 @@ function drawGoblin(cx, skin, bodyType, face, hat, gear, sockStyle, pingStyle, i
   x.strokeStyle = 'rgba(0,0,0,0.18)'; x.lineWidth = 1;
   x.beginPath(); x.moveTo(cx + headR*0.72 + 1, earY - 3); x.lineTo(cx + headR*0.72 + 12, earY + 2); x.lineTo(cx + headR*0.72 + 1, earY + 5); x.stroke();
 
-  // === THE NOSE — THE most defining feature ===
-  // Long pointed beak/snout, protrudes far right, slightly downward curve
-  // In references: prominent, angular, almost bird-like, dominates the face
-  const noseBaseX = cx + headR * 0.50;
-  const eyeYRef = headY - headR * 0.10; // keep nose aligned with eyes
-  const noseBaseY = eyeYRef + 4; // nose at eye level, very slightly below
-  x.beginPath();
-  // Top edge: starts at face, curves out to sharp tip
-  x.moveTo(noseBaseX, noseBaseY - 10);
-  x.quadraticCurveTo(noseBaseX + 18, noseBaseY - 8, noseBaseX + 32, noseBaseY + 2);
-  // Tip of nose (sharp point)
-  x.quadraticCurveTo(noseBaseX + 30, noseBaseY + 10, noseBaseX + 20, noseBaseY + 14);
-  // Underside back to face
-  x.quadraticCurveTo(noseBaseX + 8, noseBaseY + 14, noseBaseX, noseBaseY + 6);
-  x.closePath();
-  x.fillStyle = skin; x.fill();
-  x.strokeStyle = '#000'; x.lineWidth = 2.5; x.stroke();
-  // Nostril — small dark oval, positioned mid-beak not at tip
-  x.fillStyle = 'rgba(0,0,0,0.75)';
-  x.beginPath(); x.ellipse(noseBaseX + 16, noseBaseY + 9, 2.8, 2, -0.3, 0, Math.PI * 2); x.fill();
-  // Nose underside shadow for depth — thin dark line under beak
-  x.strokeStyle = 'rgba(0,0,0,0.14)'; x.lineWidth = 1.5;
-  x.beginPath();
-  x.moveTo(noseBaseX + 2, noseBaseY + 13);
-  x.quadraticCurveTo(noseBaseX + 16, noseBaseY + 16, noseBaseX + 26, noseBaseY + 10);
-  x.stroke();
+  // === THE NOSE ===
+  const eyeYRef = headY - headR * 0.10;
+  if (isP) {
+    // Pisstina: tiny upturned stub nose (reference: PISS BLOB MAGAZINE)
+    const nx = cx + headR * 0.18, ny = eyeYRef + 8;
+    x.beginPath();
+    x.moveTo(nx - 6, ny + 2);
+    x.quadraticCurveTo(nx - 2, ny - 5, nx + 4, ny + 2);
+    x.strokeStyle = '#000'; x.lineWidth = 1.8; x.stroke();
+    // Tiny nostrils
+    x.fillStyle = 'rgba(0,0,0,0.55)';
+    x.beginPath(); x.ellipse(nx - 4, ny + 3, 1.5, 1, 0.3, 0, Math.PI*2); x.fill();
+    x.beginPath(); x.ellipse(nx + 2, ny + 3, 1.5, 1, -0.3, 0, Math.PI*2); x.fill();
+  } else {
+    // Pissmissle: THE long pointed beak/snout, protrudes far right
+    const noseBaseX = cx + headR * 0.50;
+    const noseBaseY = eyeYRef + 4; // nose at eye level
+    x.beginPath();
+    x.moveTo(noseBaseX, noseBaseY - 10);
+    x.quadraticCurveTo(noseBaseX + 18, noseBaseY - 8, noseBaseX + 32, noseBaseY + 2);
+    x.quadraticCurveTo(noseBaseX + 30, noseBaseY + 10, noseBaseX + 20, noseBaseY + 14);
+    x.quadraticCurveTo(noseBaseX + 8, noseBaseY + 14, noseBaseX, noseBaseY + 6);
+    x.closePath();
+    x.fillStyle = skin; x.fill();
+    x.strokeStyle = '#000'; x.lineWidth = 2.5; x.stroke();
+    x.fillStyle = 'rgba(0,0,0,0.75)';
+    x.beginPath(); x.ellipse(noseBaseX + 16, noseBaseY + 9, 2.8, 2, -0.3, 0, Math.PI * 2); x.fill();
+    x.strokeStyle = 'rgba(0,0,0,0.14)'; x.lineWidth = 1.5;
+    x.beginPath();
+    x.moveTo(noseBaseX + 2, noseBaseY + 13);
+    x.quadraticCurveTo(noseBaseX + 16, noseBaseY + 16, noseBaseX + 26, noseBaseY + 10);
+    x.stroke();
+  }
 
   // === HEADWEAR ===
   drawHat(cx, headY, headR, hat);
 
   // === PISSTINA extras ===
+  // From reference: PISS BLOB MAGAZINE — goblin ears (same as Pissmissle), pink bob hair,
+  // subtle blush DOTS on cheeks, small stub nose (NOT the big beak)
   if (isP) {
     if (hat === 'none') drawHat(cx, headY, headR, 'pinkhair');
-    // Blush patches — big anime-style cheek blush
-    x.fillStyle = 'rgba(255,120,140,0.42)';
-    x.beginPath(); x.ellipse(cx - headR * 0.32, headY + headR * 0.18, 11, 7, 0, 0, Math.PI * 2); x.fill();
-    x.beginPath(); x.ellipse(cx + headR * 0.32, headY + headR * 0.18, 11, 7, 0, 0, Math.PI * 2); x.fill();
-    // Cat/bear ears on top of head
-    const catTop = headY - headR * 0.92;
-    // Left cat ear
-    x.beginPath();
-    x.moveTo(cx - headR * 0.52, catTop + 5);
-    x.lineTo(cx - headR * 0.64, catTop - 22);
-    x.lineTo(cx - headR * 0.3, catTop - 16);
-    x.closePath();
-    x.fillStyle = '#FF69B4'; x.fill(); x.strokeStyle = '#000'; x.lineWidth = 1.5; x.stroke();
-    // Right cat ear
-    x.beginPath();
-    x.moveTo(cx + headR * 0.52, catTop + 5);
-    x.lineTo(cx + headR * 0.64, catTop - 22);
-    x.lineTo(cx + headR * 0.3, catTop - 16);
-    x.closePath();
-    x.fillStyle = '#FF69B4'; x.fill(); x.strokeStyle = '#000'; x.lineWidth = 1.5; x.stroke();
-    // Inner ear
-    x.fillStyle = 'rgba(255,180,200,0.6)';
-    x.beginPath(); x.moveTo(cx - headR*0.52+3, catTop+2); x.lineTo(cx - headR*0.62, catTop-16); x.lineTo(cx - headR*0.33, catTop-12); x.closePath(); x.fill();
-    x.beginPath(); x.moveTo(cx + headR*0.52-3, catTop+2); x.lineTo(cx + headR*0.62, catTop-16); x.lineTo(cx + headR*0.33, catTop-12); x.closePath(); x.fill();
+    // Diamond sparkle marks — ✦ shapes on cheeks (from kitchen ref)
+    const spkL = cx - headR * 0.32, spkR = cx + headR * 0.32, spkY = headY + headR * 0.1;
+    for (const [sx, sy] of [[spkL, spkY], [spkR, spkY]]) {
+      const ss = 5;
+      x.strokeStyle = '#000'; x.lineWidth = 1.2;
+      x.beginPath(); x.moveTo(sx, sy - ss); x.lineTo(sx, sy + ss); x.stroke();
+      x.beginPath(); x.moveTo(sx - ss, sy); x.lineTo(sx + ss, sy); x.stroke();
+      x.beginPath(); x.moveTo(sx - ss*0.6, sy - ss*0.6); x.lineTo(sx + ss*0.6, sy + ss*0.6); x.stroke();
+      x.beginPath(); x.moveTo(sx + ss*0.6, sy - ss*0.6); x.lineTo(sx - ss*0.6, sy + ss*0.6); x.stroke();
+    }
   }
 
   // === FACE — eyes slightly above center, nose at eye level ===
@@ -540,7 +549,7 @@ function drawGoblin(cx, skin, bodyType, face, hat, gear, sockStyle, pingStyle, i
   drawGear(cx, headY, bodyY, headR, bodyW, bodyH, gear, skin, legBase, pose, shoulderY);
 
   // === SHIRT overlay ===
-  if (gear === 'shirt') {
+  if (gear === 'shirt' || gear === 'alonceo') {
     el(cx, bodyY, bodyW + 2, bodyH * 0.8 + 2, '#111', true, 2);
     x.fillStyle = '#FFF'; x.font = 'bold 9px sans-serif'; x.textAlign = 'center';
     x.fillText('STOP', cx, bodyY - 8);
@@ -657,25 +666,46 @@ function drawFace(cx, ey, my, sp, face, hR) {
     x.moveTo(cx - 10, my); x.quadraticCurveTo(cx, my - 3, cx + 10, my);
     x.strokeStyle = '#000'; x.lineWidth = 2; x.stroke();
   } else if (face === 'happy') {
-    // Happy — upward arc eyes with pupils, big smile
+    // === HAPPY — HUGE anime sparkle eyes (from cloud reference image) ===
+    // Big outer eye circles with lashes
+    ci(lx, ey, 9, '#FFF', true, 2); ci(rx, ey, 9, '#FFF', true, 2);
+    // Top lash line
     x.strokeStyle = '#000'; x.lineWidth = 2.5;
-    x.beginPath(); x.arc(lx, ey + 2, 5, Math.PI*1.1, Math.PI*1.9); x.stroke();
-    x.beginPath(); x.arc(rx, ey + 2, 5, Math.PI*1.1, Math.PI*1.9); x.stroke();
-    // Pupils inside arc eyes
+    x.beginPath(); x.arc(lx, ey, 9, Math.PI*1.05, Math.PI*1.95); x.stroke();
+    x.beginPath(); x.arc(rx, ey, 9, Math.PI*1.05, Math.PI*1.95); x.stroke();
+    // Big black pupils
     x.fillStyle = '#000';
-    x.beginPath(); x.arc(lx, ey + 1, 2, 0, Math.PI*2); x.fill();
-    x.beginPath(); x.arc(rx, ey + 1, 2, 0, Math.PI*2); x.fill();
-    // Eye shine
-    x.fillStyle = 'rgba(255,255,255,0.7)';
-    x.beginPath(); x.arc(lx - 1, ey, 1, 0, Math.PI*2); x.fill();
-    x.beginPath(); x.arc(rx - 1, ey, 1, 0, Math.PI*2); x.fill();
-    // Big smile with teeth
-    x.beginPath(); x.arc(cx, my - 2, 9, 0.05, Math.PI - 0.05);
+    x.beginPath(); x.arc(lx, ey + 1, 6.5, 0, Math.PI*2); x.fill();
+    x.beginPath(); x.arc(rx, ey + 1, 6.5, 0, Math.PI*2); x.fill();
+    // Green/teal iris glint
+    x.fillStyle = '#5DC87B';
+    x.beginPath(); x.arc(lx - 1, ey + 0.5, 3.5, 0, Math.PI*2); x.fill();
+    x.beginPath(); x.arc(rx - 1, ey + 0.5, 3.5, 0, Math.PI*2); x.fill();
+    // Star/sparkle inside pupils
+    x.fillStyle = '#000';
+    x.beginPath(); x.arc(lx - 1, ey + 0.5, 2, 0, Math.PI*2); x.fill();
+    x.beginPath(); x.arc(rx - 1, ey + 0.5, 2, 0, Math.PI*2); x.fill();
+    // Big white shines
+    x.fillStyle = '#FFF';
+    x.beginPath(); x.arc(lx + 2, ey - 3, 2.5, 0, Math.PI*2); x.fill();
+    x.beginPath(); x.arc(rx + 2, ey - 3, 2.5, 0, Math.PI*2); x.fill();
+    x.beginPath(); x.arc(lx - 3, ey + 2, 1.2, 0, Math.PI*2); x.fill();
+    x.beginPath(); x.arc(rx - 3, ey + 2, 1.2, 0, Math.PI*2); x.fill();
+    // Eyelashes — short lines from top of eye
+    x.strokeStyle = '#000'; x.lineWidth = 1.5;
+    for(let l=-1;l<=1;l++){
+      ln(lx+l*3.5, ey-8, lx+l*4, ey-12, 1.5);
+      ln(rx+l*3.5, ey-8, rx+l*4, ey-12, 1.5);
+    }
+    // Red squiggle blush (from reference: //// hatching marks)
+    x.strokeStyle = 'rgba(220,60,80,0.5)'; x.lineWidth = 1.2;
+    for(let h=-2;h<=2;h++){
+      ln(lx-10+h*1.5, my-14+h*0.5, lx-5+h*1.5, my-12+h*0.5, 1.2, 'rgba(220,60,80,0.45)');
+      ln(rx+5+h*1.5, my-14+h*0.5, rx+10+h*1.5, my-12+h*0.5, 1.2, 'rgba(220,60,80,0.45)');
+    }
+    // Small happy smile
+    x.beginPath(); x.arc(cx, my - 2, 7, 0.1, Math.PI - 0.1);
     x.strokeStyle = '#000'; x.lineWidth = 2.5; x.stroke();
-    // Cheek blush
-    x.fillStyle = 'rgba(255,100,100,0.22)';
-    x.beginPath(); x.ellipse(lx - 4, my - 8, 6, 4, -0.2, 0, Math.PI*2); x.fill();
-    x.beginPath(); x.ellipse(rx + 4, my - 8, 6, 4, 0.2, 0, Math.PI*2); x.fill();
   } else if (face === 'dead') {
     // Dead inside — heavy flat brows, x eyes, flat mouth
     ln(lx-10,ey-11,lx+6,ey-6,3.5); ln(rx+10,ey-11,rx-6,ey-6,3.5);
@@ -846,24 +876,38 @@ function drawHat(cx, hy, hr, hat) {
     x.strokeStyle='#DDD';x.lineWidth=6;x.stroke();
     x.strokeStyle='#000';x.lineWidth=2;x.stroke();
   } else if (hat === 'pinkhair') {
+    // Long flowing messy pink hair — kitchen/Pisstina ref
+    // Main hair mass — big and wild
     x.beginPath();
-    x.moveTo(cx-hr*0.7,top+hr*0.7);
-    x.quadraticCurveTo(cx-hr*0.8,top-3,cx,top-6);
-    x.quadraticCurveTo(cx+hr*0.8,top-3,cx+hr*0.7,top+hr*0.7);
-    x.quadraticCurveTo(cx+hr+8,top+hr*1.3,cx+hr+5,top+hr*2.1);
-    x.lineTo(cx+hr*0.3,top+hr*1.6);
-    x.lineTo(cx-hr*0.3,top+hr*1.6);
-    x.lineTo(cx-hr-5,top+hr*2.1);
-    x.quadraticCurveTo(cx-hr-8,top+hr*1.3,cx-hr*0.7,top+hr*0.7);
-    x.fillStyle='#FF69B4';x.fill();x.strokeStyle='#000';x.lineWidth=2;x.stroke();
-    // Jagged bangs
-    x.beginPath();
-    x.moveTo(cx-hr*0.5,top+hr*0.15);
-    for(let i=0;i<6;i++){
-      const bx=cx-hr*0.4+i*hr*0.16;
-      x.lineTo(bx,top+hr*(0.3+((i%2)*0.15)));
+    x.moveTo(cx - hr*0.72, top + hr*0.7);
+    x.quadraticCurveTo(cx - hr*0.85, top - 2, cx, top - 8);
+    x.quadraticCurveTo(cx + hr*0.85, top - 2, cx + hr*0.72, top + hr*0.7);
+    // Right side cascades down long
+    x.quadraticCurveTo(cx + hr + 14, top + hr*1.6, cx + hr + 18, top + hr*2.8);
+    x.quadraticCurveTo(cx + hr + 8, top + hr*3.2, cx + hr*0.55, top + hr*3.0);
+    x.quadraticCurveTo(cx + hr*0.2, top + hr*2.5, cx + hr*0.05, top + hr*2.0);
+    // Left side cascades down long
+    x.quadraticCurveTo(cx - hr*0.2, top + hr*2.5, cx - hr*0.55, top + hr*3.0);
+    x.quadraticCurveTo(cx - hr - 8, top + hr*3.2, cx - hr - 18, top + hr*2.8);
+    x.quadraticCurveTo(cx - hr - 14, top + hr*1.6, cx - hr*0.72, top + hr*0.7);
+    x.fillStyle = '#FF69B4'; x.fill(); x.strokeStyle = '#000'; x.lineWidth = 2; x.stroke();
+    // Hair strand lines — messy texture
+    x.strokeStyle = '#E0508A'; x.lineWidth = 1.2;
+    for (let s = 0; s < 8; s++) {
+      const hsx = cx - hr*0.6 + s * hr*0.17;
+      x.beginPath();
+      x.moveTo(hsx, top + hr*0.15);
+      x.quadraticCurveTo(hsx + (s%2===0?-8:8), top + hr*1.2, hsx + (s%2===0?-14:12), top + hr*2.6);
+      x.stroke();
     }
-    x.strokeStyle='#E0508A';x.lineWidth=2;x.stroke();
+    // Jagged front bangs
+    x.beginPath();
+    x.moveTo(cx - hr*0.55, top + hr*0.12);
+    for (let i = 0; i < 7; i++) {
+      const bx = cx - hr*0.44 + i * hr*0.15;
+      x.lineTo(bx, top + hr*(0.28 + (i%2)*0.14));
+    }
+    x.strokeStyle = '#D03878'; x.lineWidth = 1.8; x.stroke();
   } else if (hat === 'tinfoil') {
     // Crinkled silver tinfoil hat — conspiratorial energy
     x.beginPath();
@@ -910,6 +954,7 @@ function drawHat(cx, hy, hr, hat) {
 function drawGear(cx, hy, by, hr, bw, bh, gear, skin, lb, pose, shoulderY) {
   pose = pose || 'plotting';
   if (gear === 'none' || gear === 'cape' || gear === 'shirt') return;
+  if (gear === 'roachride') return; // drawn separately before character
   if (gear === 'sword') {
     // Sword follows right hand position based on pose
     let sx, sy;
@@ -1098,7 +1143,139 @@ function drawGear(cx, hy, by, hr, bw, bh, gear, skin, lb, pose, shoulderY) {
     // Shine
     x.fillStyle = 'rgba(255,255,255,0.3)';
     x.beginPath(); x.ellipse(mbx - 5, mby + 3, 5, 7, -0.3, 0, Math.PI*2); x.fill();
+  } else if (gear === 'bikini_yellow') {
+    // Yellow bikini — Pisstina kitchen ref
+    const bby = by - bh*0.25;
+    pg([[cx-11,bby],[cx-3,bby+9],[cx-19,bby+9]],'#FFD700');
+    pg([[cx+11,bby],[cx+3,bby+9],[cx+19,bby+9]],'#FFD700');
+    ln(cx-3,bby+5,cx+3,bby+5,1.5);
+    // Tie straps
+    ln(cx-11,bby,cx-8,bby-8,1.5,'#E6B800'); ln(cx+11,bby,cx+8,bby-8,1.5,'#E6B800');
+    ln(cx-19,bby+5,cx-24,bby,1.5,'#E6B800'); ln(cx+19,bby+5,cx+24,bby,1.5,'#E6B800');
+    pg([[cx-bw*0.3,by+bh*0.4],[cx+bw*0.3,by+bh*0.4],[cx+bw*0.18,by+bh*0.7],[cx-bw*0.18,by+bh*0.7]],'#FFD700');
+  } else if (gear === 'alonceo') {
+    // White round shades — part of CEO kit (shirt drawn separately)
+    const gy=hy-hr*0.10, sp=hr*0.28;
+    ci(cx-sp,gy,13,'#FFF'); ci(cx+sp,gy,13,'#FFF');
+    ci(cx-sp,gy,9,'#333',true,1.5); ci(cx+sp,gy,9,'#333',true,1.5);
+    x.fillStyle='rgba(255,255,255,0.3)';
+    x.beginPath();x.ellipse(cx-sp-3,gy-3,5,3,0,0,Math.PI*2);x.fill();
+    x.beginPath();x.ellipse(cx+sp-3,gy-3,5,3,0,0,Math.PI*2);x.fill();
+    ln(cx-sp+13,gy,cx+sp-13,gy,2,'#FFF');
+    ln(cx-sp-13,gy,cx-sp-20,gy-3,2,'#FFF');
+    ln(cx+sp+13,gy,cx+sp+20,gy-3,2,'#FFF');
+  } else if (gear === 'pill') {
+    // Giant pumpfun capsule pill — character rides it (pumpfun pill culture ref)
+    const ply = lb + 28, pw = 72, ph = 22;
+    // Left half — green
+    x.beginPath();
+    x.moveTo(cx, ply - ph);
+    x.lineTo(cx - pw, ply - ph);
+    x.arc(cx - pw, ply, ph, -Math.PI/2, Math.PI/2, true);
+    x.lineTo(cx, ply + ph);
+    x.closePath();
+    x.fillStyle = '#3CB844'; x.fill(); x.strokeStyle = '#000'; x.lineWidth = 2.5; x.stroke();
+    // Right half — white/grey
+    x.beginPath();
+    x.moveTo(cx, ply - ph);
+    x.lineTo(cx + pw, ply - ph);
+    x.arc(cx + pw, ply, ph, -Math.PI/2, Math.PI/2, false);
+    x.lineTo(cx, ply + ph);
+    x.closePath();
+    x.fillStyle = '#E0E0E0'; x.fill(); x.strokeStyle = '#000'; x.lineWidth = 2.5; x.stroke();
+    // Center divider
+    ln(cx, ply - ph, cx, ply + ph, 2);
+    // Shine highlights
+    x.fillStyle = 'rgba(255,255,255,0.4)';
+    x.beginPath(); x.ellipse(cx - pw*0.5, ply - ph*0.22, pw*0.22, ph*0.3, -0.3, 0, Math.PI*2); x.fill();
+    x.beginPath(); x.ellipse(cx + pw*0.5, ply - ph*0.22, pw*0.22, ph*0.3, 0.3, 0, Math.PI*2); x.fill();
+  } else if (gear === 'sniper') {
+    // Sniper rifle — legendary killcam, points upper right
+    const grx = cx - 8, gry = by - bh*0.08;
+    const angle = -0.48;
+    x.save(); x.translate(grx, gry); x.rotate(angle);
+    // Stock
+    x.fillStyle = '#5C3A1E';
+    x.beginPath(); x.moveTo(-42,-5); x.lineTo(-18,-5); x.lineTo(-18,8); x.quadraticCurveTo(-28,13,-42,12); x.closePath();
+    x.fill(); x.strokeStyle='#000'; x.lineWidth=1.5; x.stroke();
+    // Body
+    x.fillStyle='#8B5E3C'; x.fillRect(-18,-5,72,10); x.strokeStyle='#000'; x.lineWidth=1.5; x.strokeRect(-18,-5,72,10);
+    // Scope
+    x.fillStyle='#333'; x.fillRect(2,-11,30,6); x.strokeStyle='#000'; x.lineWidth=1; x.strokeRect(2,-11,30,6);
+    ci(0,-8,3,'#111',true,0.8); ci(34,-8,3,'#111',true,0.8);
+    // Barrel (thin)
+    x.fillStyle='#777'; x.fillRect(54,-3,60,6); x.strokeStyle='#000'; x.lineWidth=1.5; x.strokeRect(54,-3,60,6);
+    // Grip
+    x.fillStyle='#3a2010'; x.fillRect(8,5,10,16); x.strokeStyle='#000'; x.lineWidth=1; x.strokeRect(8,5,10,16);
+    // Trigger
+    x.beginPath(); x.arc(13,5,7,0,Math.PI); x.strokeStyle='#555'; x.lineWidth=1.5; x.stroke();
+    x.restore();
+    // Muzzle flash at barrel tip
+    const tipx = grx + Math.cos(angle)*114, tipy = gry + Math.sin(angle)*114;
+    x.shadowColor='#FF8800'; x.shadowBlur=10;
+    x.fillStyle='#FFD700';
+    x.beginPath();
+    for(let f=0;f<6;f++){const fa=f/6*Math.PI*2; x.lineTo(tipx+Math.cos(fa+angle)*10,tipy+Math.sin(fa+angle)*10); x.lineTo(tipx+Math.cos(fa+angle+Math.PI/6)*4,tipy+Math.sin(fa+angle+Math.PI/6)*4);}
+    x.closePath(); x.fill(); x.shadowBlur=0;
+  } else if (gear === 'cocktail') {
+    // Martini glass held in right hand — poolside Alon ref
+    const cgx = cx + bw + 16, cgy = by - bh*0.22;
+    ln(cgx, cgy+9, cgx, cgy+22, 2);
+    ln(cgx-8, cgy+22, cgx+8, cgy+22, 3);
+    x.beginPath();
+    x.moveTo(cgx-13, cgy-11); x.lineTo(cgx, cgy+9); x.lineTo(cgx+13, cgy-11);
+    x.closePath(); x.fillStyle='rgba(180,230,255,0.55)'; x.fill(); x.strokeStyle='#000'; x.lineWidth=2; x.stroke();
+    x.beginPath(); x.moveTo(cgx-10,cgy-7); x.lineTo(cgx,cgy+7); x.lineTo(cgx+10,cgy-7);
+    x.fillStyle='rgba(220,60,120,0.6)'; x.fill();
+    // Olive + toothpick
+    ln(cgx+2,cgy-14,cgx+9,cgy-14,1.5);
+    ci(cgx+4,cgy-14,3,'#5B8',true,1); ci(cgx+8,cgy-14,2.5,'#C22',true,0.8);
+  } else if (gear === 'spoon') {
+    // Wooden spoon raised — Pisstina kitchen ref
+    const spx = cx + bw + 12, spy = hy - hr*0.2;
+    // Handle
+    x.strokeStyle='#8B5E3C'; x.lineWidth=5; x.lineCap='round';
+    x.beginPath(); x.moveTo(spx,spy+30); x.quadraticCurveTo(spx+8,spy+10,spx+5,spy-20); x.stroke();
+    x.strokeStyle='#5C3A1E'; x.lineWidth=2;
+    x.beginPath(); x.moveTo(spx,spy+30); x.quadraticCurveTo(spx+8,spy+10,spx+5,spy-20); x.stroke();
+    // Bowl of spoon
+    x.beginPath(); x.ellipse(spx+6,spy-24,8,5,0.4,0,Math.PI*2);
+    x.fillStyle='#8B5E3C'; x.fill(); x.strokeStyle='#000'; x.lineWidth=1.5; x.stroke();
   }
+}
+
+// ============================================================
+// ROACH RIDER — giant cockroach mount (drawn before character)
+// ============================================================
+function drawRoachRider(cx, lb) {
+  const rx = cx + 5, ry = lb + 12;
+  const rsz = 3.5; // big roach
+  x.save(); x.translate(rx, ry);
+  // Giant roach body
+  el(0,0,rsz*14,rsz*8,'#5C3A18',true,2.5);
+  // Head
+  el(-rsz*13,0,rsz*5,rsz*4,'#4A2E10',true,2);
+  // Antennae
+  x.strokeStyle='#2a1a08'; x.lineWidth=1.5;
+  x.beginPath(); x.moveTo(-rsz*17,-rsz*2); x.quadraticCurveTo(-rsz*22,-rsz*8,-rsz*26,-rsz*4); x.stroke();
+  x.beginPath(); x.moveTo(-rsz*17,rsz*2); x.quadraticCurveTo(-rsz*22,rsz*8,-rsz*26,rsz*4); x.stroke();
+  // Yellow wing markings
+  x.fillStyle='rgba(220,190,0,0.65)';
+  x.beginPath(); x.ellipse(rsz*2,-rsz*5,rsz*5,rsz*2,-0.2,0,Math.PI*2); x.fill();
+  x.beginPath(); x.ellipse(rsz*2,rsz*5,rsz*5,rsz*2,0.2,0,Math.PI*2); x.fill();
+  x.beginPath(); x.ellipse(rsz*7,-rsz*5.5,rsz*3,rsz*1.5,-0.15,0,Math.PI*2); x.fill();
+  x.beginPath(); x.ellipse(rsz*7,rsz*5.5,rsz*3,rsz*1.5,0.15,0,Math.PI*2); x.fill();
+  // Legs — 6 of them
+  x.strokeStyle='#3B2403'; x.lineWidth=2;
+  for(let i=-1;i<=1;i++){
+    const lx2=i*rsz*5, langle=i===0?0.3:0.5;
+    x.beginPath(); x.moveTo(lx2,-rsz*8); x.lineTo(lx2-rsz*2,-rsz*14); x.lineTo(lx2-rsz*5,-rsz*12); x.stroke();
+    x.beginPath(); x.moveTo(lx2,rsz*8); x.lineTo(lx2-rsz*2,rsz*14); x.lineTo(lx2-rsz*5,rsz*12); x.stroke();
+  }
+  // Saddle area marker
+  x.strokeStyle='rgba(0,0,0,0.2)'; x.lineWidth=1;
+  x.beginPath(); x.ellipse(rsz*2,-rsz*2,rsz*4,rsz*2,0,0,Math.PI*2); x.stroke();
+  x.restore();
 }
 
 // ============================================================
@@ -1191,6 +1368,10 @@ function roach(rx,ry,sz,a,style){
   // Body
   el(0,0,sz*5,sz*3,'#6B4423',true,1.5);
   el(-sz*4.5,0,sz*2.2,sz*1.8,'#5B3413',true,1.5);
+  // Yellow wing markings (from office/roachride ref)
+  x.fillStyle='rgba(210,175,0,0.55)';
+  x.beginPath(); x.ellipse(sz*1.5,-sz*2,sz*2,sz*1,0,0,Math.PI*2); x.fill();
+  x.beginPath(); x.ellipse(sz*1.5,sz*2,sz*2,sz*1,0,0,Math.PI*2); x.fill();
   // Antennae
   x.strokeStyle='#3B2403';x.lineWidth=0.8;
   x.beginPath();x.moveTo(-sz*6.5,-sz);x.lineTo(-sz*10,-sz*3);x.stroke();
@@ -1336,12 +1517,57 @@ function drawBg(bg){
     for(let w=0;w<8;w++){const wy=280+w*18;x.beginPath();
     for(let i=0;i<420;i+=5){const y=wy+Math.sin(i*.03+w)*8;if(i===0)x.moveTo(i,y);else x.lineTo(i,y);}x.stroke();}
   } else if(bg==='grave'){
-    x.fillStyle='#1a1a2e';x.fillRect(0,0,420,420);
-    x.fillStyle='#F0E68C';x.beginPath();x.arc(340,60,30,0,Math.PI*2);x.fill();
-    x.fillStyle='#2a3a2a';x.fillRect(0,300,420,120);
-    [[50,280],[140,290],[270,275],[360,285]].forEach(([sx,sy])=>{
-    pg([[sx-13,sy+26],[sx-13,sy],[sx-8,sy-12],[sx,sy-16],[sx+8,sy-12],[sx+13,sy],[sx+13,sy+26]],'#666');
-    x.fillStyle='#888';x.font='7px sans-serif';x.textAlign='center';x.fillText('$PISS',sx,sy+10);});
+    // Token graveyard — pumpfun pill ref: dark night, moon, token tombstones, gold coins
+    x.fillStyle='#080814';x.fillRect(0,0,420,420);
+    // Full moon upper-left
+    const moonG=x.createRadialGradient(52,52,8,52,52,30);
+    moonG.addColorStop(0,'#F5F5E0');moonG.addColorStop(0.65,'#D8D8B8');moonG.addColorStop(1,'#A8A880');
+    x.beginPath();x.arc(52,52,30,0,Math.PI*2);x.fillStyle=moonG;x.fill();
+    x.strokeStyle='rgba(0,0,0,0.15)';x.lineWidth=0.8;
+    x.beginPath();x.arc(43,44,7,0,Math.PI*2);x.stroke();
+    x.beginPath();x.arc(62,58,5,0,Math.PI*2);x.stroke();
+    x.beginPath();x.arc(50,65,3.5,0,Math.PI*2);x.stroke();
+    // Dark scribble sky texture
+    x.strokeStyle='rgba(50,50,90,0.35)';x.lineWidth=1.5;
+    for(let i=0;i<12;i++){
+      const scx=90+Math.random()*320,scy=5+Math.random()*120;
+      x.beginPath();x.moveTo(scx,scy);
+      for(let j=0;j<5;j++)x.lineTo(scx+(j-2)*18+(Math.random()-0.5)*22,scy+(Math.random()-0.5)*28);
+      x.stroke();
+    }
+    // Dark grass
+    x.fillStyle='#0a150a';x.fillRect(0,290,420,130);
+    x.fillStyle='#132013';x.fillRect(0,282,420,12);
+    // Token tombstones — $PISS $SOL $BONK $WIF $PEPE
+    const toks=[['$PISS',40,272],['$SOL',108,265],['$BONK',198,258],['$WIF',298,262],['$PEPE',372,268]];
+    toks.forEach(([tok,sx,sy])=>{
+      x.beginPath();x.moveTo(sx-13,sy+28);x.lineTo(sx-13,sy+4);
+      x.quadraticCurveTo(sx-13,sy-18,sx,sy-20);
+      x.quadraticCurveTo(sx+13,sy-18,sx+13,sy+4);
+      x.lineTo(sx+13,sy+28);x.closePath();
+      x.fillStyle='#545464';x.fill();x.strokeStyle='rgba(0,0,0,0.8)';x.lineWidth=1.5;x.stroke();
+      x.fillStyle='rgba(255,255,255,0.08)';x.fillRect(sx-11,sy+2,22,7);
+      x.fillStyle='#bbb';x.font='bold 7px sans-serif';x.textAlign='center';x.fillText(tok,sx,sy+8);
+      x.fillStyle='rgba(255,255,255,0.28)';x.font='5px sans-serif';x.fillText('RIP',sx,sy+18);
+    });
+    // Central cross grave — $PISS rising from here
+    pg([[204,250],[212,250],[212,215],[204,215]],'#4a4a5a',true,1.5);
+    pg([[196,232],[220,232],[220,240],[196,240]],'#4a4a5a',true,1.5);
+    // Disturbed dirt mound
+    x.beginPath();x.ellipse(210,294,40,11,0,0,Math.PI*2);
+    x.fillStyle='#3a2510';x.fill();x.strokeStyle='#1a100a';x.lineWidth=1;x.stroke();
+    // Gold coins scattered on ground
+    for(let c=0;c<22;c++){
+      const cgx=15+Math.random()*390,cgy=292+Math.random()*65;
+      if(Math.random()>0.4){
+        x.beginPath();x.arc(cgx,cgy,4,0,Math.PI*2);
+        x.fillStyle='#C8A200';x.fill();x.strokeStyle='#7a6000';x.lineWidth=0.8;x.stroke();
+        x.fillStyle='#E8C000';x.font='5px sans-serif';x.textAlign='center';x.fillText('$',cgx,cgy+2);
+      }else{
+        x.beginPath();x.ellipse(cgx,cgy,4.5,1.8,Math.random()*0.5,0,Math.PI*2);
+        x.fillStyle='#B09000';x.fill();x.strokeStyle='#7a6000';x.lineWidth=0.8;x.stroke();
+      }
+    }
   } else if(bg==='poker'){
     // Dark casino floor
     x.fillStyle='#1a2a1a';x.fillRect(0,0,420,420);
@@ -1515,6 +1741,136 @@ function drawBg(bg){
       ci(ex+12,ey2,3,'rgba(255,0,0,0.6)',false);
       x.shadowBlur=0;
     }
+  } else if(bg==='mattress'){
+    // Brain rot mattress room — dark walls, rainbows, mushrooms, bare bulb
+    x.fillStyle='#2a2a28';x.fillRect(0,0,420,420);
+    // Dark drip walls
+    x.fillStyle='#1e1e1c';x.fillRect(0,0,420,320);
+    // Wall drips — dark goo
+    x.fillStyle='#141412';
+    for(let d=0;d<12;d++){
+      const dx=20+d*32,dh=30+Math.random()*80;
+      x.beginPath();x.moveTo(dx-6,0);x.quadraticCurveTo(dx-3,dh*0.5,dx-4,dh);
+      x.quadraticCurveTo(dx,dh+10,dx+4,dh);x.quadraticCurveTo(dx+3,dh*0.5,dx+6,0);
+      x.fill();
+    }
+    // Rainbow streaks on walls
+    const rainbows=[[40,60,0.7],[280,40,0.5],[360,100,0.65],[15,120,-0.6],[310,200,0.8]];
+    rainbows.forEach(([rx2,ry2,ra])=>{
+      for(let b=0;b<6;b++){
+        const rc=['#F00','#F80','#FF0','#0F0','#00F','#80F'][b];
+        x.strokeStyle=rc;x.lineWidth=4;x.globalAlpha=0.55;
+        x.save();x.translate(rx2,ry2);x.rotate(ra);
+        x.beginPath();x.arc(0,0,30+b*12,Math.PI,0);x.stroke();
+        x.restore();x.globalAlpha=1;
+      }
+    });
+    // Bare light bulb hanging
+    x.strokeStyle='#888';x.lineWidth=2;ln(210,0,210,40,2,'#888');
+    x.beginPath();x.arc(210,50,12,0,Math.PI*2);x.fillStyle='#FFFFE0';x.fill();
+    x.shadowColor='#FFFFA0';x.shadowBlur=20;x.strokeStyle='#CCC';x.lineWidth=1.5;x.stroke();
+    x.shadowBlur=0;
+    // Stained mattress
+    x.beginPath();x.moveTo(55,305);x.lineTo(55,375);x.lineTo(365,375);x.lineTo(365,305);x.closePath();
+    x.fillStyle='#E8E0D0';x.fill();x.strokeStyle='#000';x.lineWidth=2;x.stroke();
+    // Mattress stains
+    const stains=['rgba(100,70,20,0.4)','rgba(60,40,10,0.35)','rgba(80,60,30,0.45)','rgba(120,80,20,0.3)'];
+    [[130,330,28,12],[200,360,20,8],[280,340,35,14],[320,355,18,7],[160,350,22,9]].forEach(([sx,sy,sw,sh],i)=>{
+      x.beginPath();x.ellipse(sx,sy,sw,sh,(Math.random()-0.5)*0.8,0,Math.PI*2);
+      x.fillStyle=stains[i%stains.length];x.fill();
+    });
+    // Mattress tufting marks
+    x.strokeStyle='rgba(0,0,0,0.2)';x.lineWidth=1;
+    for(let mx=100;mx<380;mx+=60){for(let my2=315;my2<375;my2+=30){
+      x.beginPath();x.moveTo(mx-4,my2);x.lineTo(mx+4,my2);x.moveTo(mx,my2-4);x.lineTo(mx,my2+4);x.stroke();
+    }}
+    // Small mushrooms on floor
+    [[75,390],[155,395],[250,388],[335,392],[390,385]].forEach(([mx,my2])=>{
+      x.beginPath();x.arc(mx,my2-8,9,Math.PI,0);x.fillStyle='#8B3A0A';x.fill();x.strokeStyle='#000';x.lineWidth=1;x.stroke();
+      x.fillStyle='rgba(255,255,255,0.4)';
+      x.beginPath();x.arc(mx-3,my2-10,2,0,Math.PI*2);x.fill();
+      x.beginPath();x.arc(mx+3,my2-10,2,0,Math.PI*2);x.fill();
+      pg([[mx-4,my2-2],[mx+4,my2-2],[mx+3,my2+5],[mx-3,my2+5]],'#DDD',true,1);
+    });
+    // Rainbow puddles on floor
+    x.fillStyle='rgba(0,0,0,0.3)';x.fillRect(0,375,420,45);
+    [80,200,340].forEach(px2=>{
+      const rainG=x.createRadialGradient(px2,400,2,px2,400,22);
+      ['#F00','#FF8800','#FF0','#0F0','#00F','#8000FF'].forEach((c,i)=>rainG.addColorStop(i/5,c+'88'));
+      x.beginPath();x.ellipse(px2,400,22,7,0,0,Math.PI*2);x.fillStyle=rainG;x.fill();
+    });
+  } else if(bg==='glitch'){
+    // Vaporwave glitch — corrupted living room, laser energy (glitch lasers ref)
+    x.fillStyle='#0a0015';x.fillRect(0,0,420,420);
+    // Swirling vortex background
+    for(let r=180;r>20;r-=18){
+      const hue=(r*3+Math.random()*30)%360;
+      x.strokeStyle=`hsla(${hue},80%,55%,0.2)`;x.lineWidth=2;
+      x.beginPath();x.arc(280,180,r,0,Math.PI*2);x.stroke();
+    }
+    // Glitch color blocks
+    for(let g=0;g<8;g++){
+      const gx=Math.random()*420,gy=Math.random()*420,gw=30+Math.random()*80,gh=5+Math.random()*20;
+      x.fillStyle=`hsla(${Math.random()*360},90%,60%,0.15)`;
+      x.fillRect(gx,gy,gw,gh);
+    }
+    // Melted armchair silhouette
+    x.fillStyle='rgba(30,0,60,0.8)';
+    x.beginPath();x.moveTo(30,380);x.quadraticCurveTo(20,260,45,220);
+    x.quadraticCurveTo(55,180,100,190);x.lineTo(140,190);
+    x.quadraticCurveTo(155,185,155,200);x.lineTo(150,380);x.closePath();x.fill();
+    x.strokeStyle='rgba(120,0,200,0.5)';x.lineWidth=2;x.stroke();
+    // Goo/drips on chair
+    x.fillStyle='rgba(100,0,180,0.4)';
+    for(let d=0;d<5;d++){
+      const ddx=50+d*22,ddh=30+Math.random()*60;
+      x.beginPath();x.moveTo(ddx-3,200);x.quadraticCurveTo(ddx,200+ddh*0.5,ddx-2,200+ddh);
+      x.quadraticCurveTo(ddx+2,200+ddh+8,ddx+4,200+ddh);x.quadraticCurveTo(ddx+5,200+ddh*0.5,ddx+4,200);x.fill();
+    }
+    // Anarchy + currency symbols
+    x.fillStyle='rgba(0,220,220,0.35)';x.font='bold 20px monospace';x.textAlign='center';
+    x.fillText('₿',30,80);x.fillText('⊕',380,120);x.fillText('★',370,55);
+    // Scan lines
+    x.fillStyle='rgba(0,0,0,0.08)';
+    for(let sl=0;sl<420;sl+=4){x.fillRect(0,sl,420,2);}
+    // Floor goo pool
+    x.fillStyle='rgba(60,0,120,0.5)';
+    x.beginPath();x.ellipse(210,400,160,22,0,0,Math.PI*2);x.fill();
+  } else if(bg==='kitchen'){
+    // Yellow kitchen — Pisstina / Alon ref
+    x.fillStyle='#F5E800';x.fillRect(0,0,420,420);
+    // Slightly darker floor
+    x.fillStyle='#E8E0D0';x.fillRect(0,290,420,130);
+    // Floor tiles
+    x.strokeStyle='rgba(0,0,0,0.08)';x.lineWidth=1;
+    for(let tx=0;tx<420;tx+=42){ln(tx,290,tx,420,0.8,'rgba(0,0,0,0.07)');}
+    for(let ty=290;ty<420;ty+=32){ln(0,ty,420,ty,0.8,'rgba(0,0,0,0.07)');}
+    // Counter/stove left
+    x.fillStyle='#F0F0E8';x.fillRect(0,200,180,95);
+    x.strokeStyle='#000';x.lineWidth=1.5;x.strokeRect(0,200,180,95);
+    // Stove burners
+    [50,110].forEach(bx=>{
+      x.beginPath();x.arc(bx,248,18,0,Math.PI*2);x.strokeStyle='#888';x.lineWidth=2;x.stroke();
+      x.beginPath();x.arc(bx,248,12,0,Math.PI*2);x.strokeStyle='#555';x.lineWidth=1;x.stroke();
+    });
+    // Messy pot
+    x.fillStyle='#888';x.fillRect(30,218,35,25);x.strokeStyle='#000';x.lineWidth=1.5;x.strokeRect(30,218,35,25);
+    x.fillStyle='rgba(80,40,0,0.4)';x.fillRect(32,220,31,10); // dirty pot
+    // Sink right side
+    x.fillStyle='#C8C8C8';x.fillRect(260,190,155,105);
+    x.strokeStyle='#000';x.lineWidth=1.5;x.strokeRect(260,190,155,105);
+    x.fillStyle='#A8A8A8';x.fillRect(275,205,120,70);
+    x.strokeStyle='#888';x.lineWidth=1;x.strokeRect(275,205,120,70);
+    // Faucet
+    x.fillStyle='#B0B0B8';x.fillRect(325,190,15,20);
+    x.beginPath();x.arc(332,190,6,Math.PI,0);x.fill();x.strokeStyle='#000';x.lineWidth=1;x.stroke();
+    // Cabinet under counter
+    x.fillStyle='#8B5E30';x.fillRect(260,290,155,50);
+    x.strokeStyle='#000';x.lineWidth=1;x.strokeRect(260,290,155,50);
+    ln(337,290,337,340,1,'#000');
+    // Range hood upper left
+    x.fillStyle='#D0D0D0';x.fillRect(0,0,120,80);x.strokeStyle='#000';x.lineWidth=1.5;x.strokeRect(0,0,120,80);
+    x.fillStyle='#888';pg([[0,80],[20,120],[100,120],[120,80]],'#C0C0C0',true,1.5);
   } else {
     x.fillStyle=bg;x.fillRect(0,0,420,420);
   }
@@ -1629,6 +1985,9 @@ function G(){
   x.beginPath(); x.ellipse(cx, footY, 55, 14, 0, 0, Math.PI*2);
   x.fillStyle = shadG; x.fill();
 
+  // Roach rider — draw giant roach BEFORE character so goblin sits on top
+  if (gr === 'roachride') drawRoachRider(cx, footY - 60);
+
   // Main goblin (pissmissle/pisstina)
   drawGoblin(cx,sk,bt,fc,ht,gr,sc,pg2,ch==='pisstina',ps);
 
@@ -1646,6 +2005,34 @@ function G(){
 // CREATURES
 // ============================================================
 
+function drawWorm(wx,wy){
+  const segs=7;
+  for(let s=segs-1;s>=0;s--){
+    const sx=wx+s*7.5, sy=wy+Math.sin(s*0.9)*4;
+    const sr=4.5-s*0.35;
+    x.beginPath();x.arc(sx,sy,sr,0,Math.PI*2);
+    x.fillStyle=s===0?'#4CC030':'#55D035';x.fill();
+    x.strokeStyle='#000';x.lineWidth=0.8;x.stroke();
+  }
+  // Eyes on head
+  x.fillStyle='#000';
+  x.beginPath();x.arc(wx+2,wy-2,1,0,Math.PI*2);x.fill();
+  x.beginPath();x.arc(wx+5,wy-2,1,0,Math.PI*2);x.fill();
+}
+
+function drawMushroom(mx,my2,sz){
+  // Cap
+  x.beginPath();x.arc(mx,my2-sz*0.4,sz*0.9,Math.PI,0);
+  x.fillStyle='#8B2A0A';x.fill();x.strokeStyle='#000';x.lineWidth=1;x.stroke();
+  // Spots
+  x.fillStyle='rgba(255,255,255,0.5)';
+  [[-sz*0.4,-sz*0.1],[sz*0.2,-sz*0.3],[sz*0.5,sz*0.05]].forEach(([dx,dy])=>{
+    x.beginPath();x.arc(mx+dx,my2-sz*0.4+dy,sz*0.18,0,Math.PI*2);x.fill();
+  });
+  // Stem
+  pg([[mx-sz*0.32,my2-sz*0.1],[mx+sz*0.32,my2-sz*0.1],[mx+sz*0.28,my2+sz*0.5],[mx-sz*0.28,my2+sz*0.5]],'#DDD',true,1);
+}
+
 function drawCreatures(cr){
   if(cr==='none')return;
   if(cr==='lobster'){
@@ -1655,6 +2042,14 @@ function drawCreatures(cr){
   } else if(cr==='chick'){
     for(let c=0;c<6;c++){
       drawChick(40+Math.random()*340,330+Math.random()*60,2+Math.random()*1.5);
+    }
+  } else if(cr==='worm'){
+    for(let w=0;w<4;w++){
+      drawWorm(40+Math.random()*320,355+Math.random()*30);
+    }
+  } else if(cr==='mushroom'){
+    for(let m=0;m<8;m++){
+      drawMushroom(20+Math.random()*380,350+Math.random()*50,8+Math.random()*10);
     }
   }
 }
@@ -1676,6 +2071,10 @@ function drawTitle(ti){
     text='PISSTEK SURVIVES THE RUG'; fillCol='#FF6633'; accentCol='#CC2200';
   } else if(ti==='ftw'){
     text='PISSTEK FOR THE WIN!'; fillCol='#FFD700'; accentCol='#FF8800';
+  } else if(ti==='killcam'){
+    text='LEGENDARY KILLCAM'; fillCol='#FFF'; accentCol='#AAAAAA';
+  } else if(ti==='takepill'){
+    text='TAKE THE PILL'; fillCol='#3CB844'; accentCol='#D8D8D8';
   }
   if(!text)return;
 
@@ -1726,6 +2125,12 @@ function P(p){
     victory:{char:'goblin',body:'normal',face:'angry',hat:'none',gear:'sword',skin:'#E8D5A8',sock:'mismatch',ping:'normal',bg:'lobsterpile',roach:'4',cone:'0',fx:'none',roachstyle:'normal',creature:'lobster',title:'ftw',pose:'victory'},
     casino:{char:'goblin',body:'normal',face:'maniac',hat:'none',gear:'chain',skin:'#E8D5A8',sock:'mismatch',ping:'normal',bg:'casino',roach:'6',cone:'0',fx:'money',roachstyle:'suited',creature:'none',title:'none',pose:'arms'},
     sewer:{char:'goblin',body:'normal',face:'angry',hat:'tinfoil',gear:'none',skin:'#E8D5A8',sock:'mismatch',ping:'angry',bg:'sewer',roach:'8',cone:'0',fx:'none',roachstyle:'gasmask',creature:'none',title:'none',pose:'plotting'},
+    alon:{char:'goblin',body:'normal',face:'smug',hat:'cap',gear:'alonceo',skin:'#E8D5A8',sock:'mismatch',ping:'normal',bg:'beach',roach:'0',cone:'0',fx:'none',roachstyle:'normal',creature:'worm',title:'none',pose:'arms'},
+    pillpilled:{char:'goblin',body:'normal',face:'angry',hat:'none',gear:'pill',skin:'#E8D5A8',sock:'mismatch',ping:'normal',bg:'grave',roach:'0',cone:'0',fx:'none',roachstyle:'normal',creature:'none',title:'takepill',pose:'plotting'},
+    killcam:{char:'goblin',body:'normal',face:'angry',hat:'none',gear:'sniper',skin:'#E8D5A8',sock:'mismatch',ping:'normal',bg:'none',roach:'0',cone:'0',fx:'none',roachstyle:'normal',creature:'none',title:'killcam',pose:'arms'},
+    roachride:{char:'goblin',body:'normal',face:'smug',hat:'none',gear:'roachride',skin:'#E8D5A8',sock:'mismatch',ping:'normal',bg:'none',roach:'25',cone:'0',fx:'none',roachstyle:'normal',creature:'none',title:'none',pose:'arms'},
+    mattress:{char:'goblin',body:'normal',face:'dead',hat:'none',gear:'none',skin:'#E8D5A8',sock:'mismatch',ping:'normal',bg:'mattress',roach:'0',cone:'0',fx:'none',roachstyle:'normal',creature:'mushroom',title:'none',pose:'plotting'},
+    pisstinakitchen:{char:'pisstina',body:'normal',face:'angry',hat:'pinkhair',gear:'bikini_yellow',skin:'#E8D5A8',sock:'mismatch',ping:'normal',bg:'kitchen',roach:'25',cone:'0',fx:'none',roachstyle:'normal',creature:'none',title:'none',pose:'hips'},
   };
   const v=presets[p];if(!v)return;
   Object.entries(v).forEach(([id,val])=>{const e=document.getElementById(id);if(e)e.value=val;});
