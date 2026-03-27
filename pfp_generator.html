@@ -408,8 +408,9 @@ function drawGoblin(cx, skin, bodyType, face, hat, gear, sockStyle, pingStyle, i
   // === THE NOSE — THE most defining feature ===
   // Long pointed beak/snout, protrudes far right, slightly downward curve
   // In references: prominent, angular, almost bird-like, dominates the face
-  const noseBaseX = cx + headR * 0.48;
-  const noseBaseY = headY + headR * 0.1; // slightly below face center (eye level-ish)
+  const noseBaseX = cx + headR * 0.50;
+  const eyeYRef = headY - headR * 0.10; // keep nose aligned with eyes
+  const noseBaseY = eyeYRef + 4; // nose at eye level, very slightly below
   x.beginPath();
   // Top edge: starts at face, curves out to sharp tip
   x.moveTo(noseBaseX, noseBaseY - 10);
@@ -421,9 +422,9 @@ function drawGoblin(cx, skin, bodyType, face, hat, gear, sockStyle, pingStyle, i
   x.closePath();
   x.fillStyle = skin; x.fill();
   x.strokeStyle = '#000'; x.lineWidth = 2.5; x.stroke();
-  // Nostril — small dark oval near tip
-  x.fillStyle = 'rgba(0,0,0,0.7)';
-  x.beginPath(); x.ellipse(noseBaseX + 22, noseBaseY + 8, 2.5, 1.8, -0.3, 0, Math.PI * 2); x.fill();
+  // Nostril — small dark oval, positioned mid-beak not at tip
+  x.fillStyle = 'rgba(0,0,0,0.75)';
+  x.beginPath(); x.ellipse(noseBaseX + 16, noseBaseY + 9, 2.8, 2, -0.3, 0, Math.PI * 2); x.fill();
 
   // === HEADWEAR ===
   drawHat(cx, headY, headR, hat);
@@ -436,11 +437,11 @@ function drawGoblin(cx, skin, bodyType, face, hat, gear, sockStyle, pingStyle, i
     x.beginPath(); x.arc(cx + headR * 0.3, headY + headR * 0.18, 7, 0, Math.PI * 2); x.fill();
   }
 
-  // === FACE — eyes placed near center of face, NOT upper quarter ===
-  // In reference: eyes are fairly low/centered on face, big brow angles
-  const eyeY = headY - headR * 0.05; // near face center (was -0.15, too high)
-  const eyeSpan = headR * 0.24;
-  drawFace(cx, eyeY, headY + headR * 0.38, eyeSpan, face, headR);
+  // === FACE — eyes slightly above center, nose at eye level ===
+  // In references: eyes in upper-middle zone, beak emerges at eye level
+  const eyeY = headY - headR * 0.10; // slightly above center
+  const eyeSpan = headR * 0.28; // wider eye span — more expressive
+  drawFace(cx, eyeY, headY + headR * 0.34, eyeSpan, face, headR);
 
   // === GEAR (front accessories) ===
   drawGear(cx, headY, bodyY, headR, bodyW, bodyH, gear, skin, legBase, pose, shoulderY);
