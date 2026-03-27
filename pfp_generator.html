@@ -481,7 +481,7 @@ function drawGoblin(cx, skin, bodyType, face, hat, gear, sockStyle, pingStyle, i
   x.beginPath(); x.arc(cx + headR*0.82, earY, 4, Math.PI*1.4, Math.PI*0.2); x.stroke();
 
   // === THE NOSE ===
-  const eyeYRef = headY - headR * 0.10;
+  const eyeYRef = headY - headR * 0.12; // nose: just below eye zone (eyes at -0.28)
   if (isP) {
     // Pisstina: tiny upturned stub nose (reference: PISS BLOB MAGAZINE)
     const nx = cx + headR * 0.18, ny = eyeYRef + 8;
@@ -538,11 +538,11 @@ function drawGoblin(cx, skin, bodyType, face, hat, gear, sockStyle, pingStyle, i
     }
   }
 
-  // === FACE — eyes slightly above center, nose at eye level ===
-  // In references: eyes in upper-middle zone, beak emerges at eye level
-  const eyeY = headY - headR * 0.10; // slightly above center
-  const eyeSpan = headR * 0.28; // wider eye span — more expressive
-  drawFace(cx, eyeY, headY + headR * 0.34, eyeSpan, face, headR);
+  // === FACE — eyes in UPPER third of face, big chin area below ===
+  // Refs (Sonic group, mattress, kitchen): eyes sit HIGH, lots of lower-face/chin
+  const eyeY = headY - headR * 0.28; // upper zone of face
+  const eyeSpan = headR * 0.24; // closer together than before
+  drawFace(cx, eyeY, headY + headR * 0.42, eyeSpan, face, headR, skin);
 
   // === GEAR (front accessories) ===
   drawGear(cx, headY, bodyY, headR, bodyW, bodyH, gear, skin, legBase, pose, shoulderY);
@@ -561,7 +561,7 @@ function drawGoblin(cx, skin, bodyType, face, hat, gear, sockStyle, pingStyle, i
 // FACE EXPRESSIONS
 // ============================================================
 
-function drawFace(cx, ey, my, sp, face, hR) {
+function drawFace(cx, ey, my, sp, face, hR, skin) {
   const lx = cx - sp, rx = cx + sp;
 
   if (face === 'angry') {
@@ -574,12 +574,12 @@ function drawFace(cx, ey, my, sp, face, hR) {
     x.beginPath(); x.ellipse(lx, ey + 1, 2.8, 2.5, 0, 0, Math.PI*2); x.fill();
     x.beginPath(); x.ellipse(rx, ey + 1, 2.8, 2.5, 0, 0, Math.PI*2); x.fill();
     // HOODED EYELIDS — thick arc covering top of each eye (the signature look)
-    x.strokeStyle = skin; x.lineWidth = 5;
-    x.beginPath(); x.arc(lx, ey, 4.5, Math.PI*1.08, Math.PI*1.92, false); x.stroke();
-    x.beginPath(); x.arc(rx, ey, 4.5, Math.PI*1.08, Math.PI*1.92, false); x.stroke();
-    x.strokeStyle = '#000'; x.lineWidth = 2.2;
-    x.beginPath(); x.arc(lx, ey, 4.5, Math.PI*1.08, Math.PI*1.92, false); x.stroke();
-    x.beginPath(); x.arc(rx, ey, 4.5, Math.PI*1.08, Math.PI*1.92, false); x.stroke();
+    x.strokeStyle = skin; x.lineWidth = 7;
+    x.beginPath(); x.arc(lx, ey, 4.5, Math.PI*1.05, Math.PI*1.95, false); x.stroke();
+    x.beginPath(); x.arc(rx, ey, 4.5, Math.PI*1.05, Math.PI*1.95, false); x.stroke();
+    x.strokeStyle = '#000'; x.lineWidth = 2.5;
+    x.beginPath(); x.arc(lx, ey, 4.5, Math.PI*1.05, Math.PI*1.95, false); x.stroke();
+    x.beginPath(); x.arc(rx, ey, 4.5, Math.PI*1.05, Math.PI*1.95, false); x.stroke();
     // Brows — heavy, LOW, steep V shape toward center, close to eyes
     ln(lx - 9, ey - 10, lx + 5, ey - 4, 3.5);
     ln(rx + 9, ey - 10, rx - 5, ey - 4, 3.5);
@@ -606,9 +606,9 @@ function drawFace(cx, ey, my, sp, face, hR) {
     ci(rx, ey, 4, '#FFF', true, 1.2);
     x.beginPath(); x.ellipse(rx, ey + 1, 2.5, 2, 0, 0, Math.PI*2); x.fill();
     // Heavy lid on right eye
-    x.strokeStyle = skin; x.lineWidth = 4.5;
-    x.beginPath(); x.arc(rx, ey, 4, Math.PI*1.1, Math.PI*1.9); x.stroke();
-    x.strokeStyle = '#000'; x.lineWidth = 2;
+    x.strokeStyle = skin || '#E8D5A8'; x.lineWidth = 6;
+    x.beginPath(); x.arc(rx, ey, 4, Math.PI*1.05, Math.PI*1.95); x.stroke();
+    x.strokeStyle = '#000'; x.lineWidth = 2.2;
     x.beginPath(); x.arc(rx, ey, 4, Math.PI*1.1, Math.PI*1.9); x.stroke();
     // Eye shine
     x.fillStyle = 'rgba(255,255,255,0.65)';
