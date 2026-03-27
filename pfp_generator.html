@@ -299,10 +299,50 @@ function drawGoblin(cx, skin, bodyType, face, hat, gear, sockStyle, pingStyle, i
   x.strokeStyle = 'rgba(0,0,0,0.08)'; x.lineWidth = 1.2;
   x.arc(cx, bodyY + 2, bodyW * 0.52, 0.35, Math.PI - 0.35);
   x.stroke();
+  // Neck shadow — separates head from body at the jaw/shoulder junction
+  x.strokeStyle = 'rgba(0,0,0,0.11)'; x.lineWidth = 2;
+  x.beginPath();
+  x.moveTo(cx - headR * 0.6, headY + headR * 0.7);
+  x.quadraticCurveTo(cx, headY + headR * 0.82, cx + headR * 0.6, headY + headR * 0.7);
+  x.stroke();
 
   // Skin texture
   tex(cx, bodyY, bodyW * 1.4, bodyH * 1.2, 14);
   tex(cx, headY, headR * 1.1, headR * 0.9, 7);
+
+  // === SUBTLE FACE DEPTH SHADING ===
+  // Soft gradient shadow on the right/lower face — gives the round head more volume
+  const faceShad = x.createRadialGradient(cx - headR*0.25, headY - headR*0.15, headR*0.1, cx + headR*0.2, headY + headR*0.15, headR * 0.95);
+  faceShad.addColorStop(0, 'rgba(0,0,0,0)');
+  faceShad.addColorStop(1, 'rgba(0,0,0,0.07)');
+  x.beginPath(); x.ellipse(cx, headY, headR * 0.92, headR * 0.88, 0, 0, Math.PI*2);
+  x.fillStyle = faceShad; x.fill();
+  // Matching body shading
+  const bodyShad = x.createRadialGradient(cx - bodyW*0.28, bodyY - bodyH*0.2, bodyW*0.1, cx + bodyW*0.25, bodyY + bodyH*0.25, bodyW * 0.9);
+  bodyShad.addColorStop(0, 'rgba(0,0,0,0)');
+  bodyShad.addColorStop(1, 'rgba(0,0,0,0.055)');
+  x.beginPath(); x.ellipse(cx, bodyY, bodyW * 0.88, bodyH * 0.82, 0, 0, Math.PI*2);
+  x.fillStyle = bodyShad; x.fill();
+
+  // === FACE GLOSS — Pisstek's painted highlight on upper-left of head ===
+  const faceHL = x.createRadialGradient(cx - headR*0.32, headY - headR*0.52, 1, cx - headR*0.18, headY - headR*0.38, headR * 0.46);
+  faceHL.addColorStop(0, 'rgba(255,255,255,0.22)');
+  faceHL.addColorStop(0.6, 'rgba(255,255,255,0.08)');
+  faceHL.addColorStop(1, 'rgba(255,255,255,0)');
+  x.beginPath(); x.ellipse(cx - headR*0.2, headY - headR*0.42, headR * 0.38, headR * 0.28, -0.25, 0, Math.PI*2);
+  x.fillStyle = faceHL; x.fill();
+  // Chin/jaw shadow — dark underside of head where it meets neck/body
+  const chinShad = x.createLinearGradient(cx, headY + headR*0.6, cx, headY + headR*0.95);
+  chinShad.addColorStop(0, 'rgba(0,0,0,0)');
+  chinShad.addColorStop(1, 'rgba(0,0,0,0.12)');
+  x.beginPath(); x.ellipse(cx, headY + headR*0.72, headR*0.62, headR*0.28, 0, 0, Math.PI*2);
+  x.fillStyle = chinShad; x.fill();
+  // Body upper-left highlight
+  const bodyHL = x.createRadialGradient(cx - bodyW*0.35, bodyY - bodyH*0.35, 2, cx - bodyW*0.2, bodyY - bodyH*0.2, bodyW*0.45);
+  bodyHL.addColorStop(0, 'rgba(255,255,255,0.14)');
+  bodyHL.addColorStop(1, 'rgba(255,255,255,0)');
+  x.beginPath(); x.ellipse(cx - bodyW*0.22, bodyY - bodyH*0.22, bodyW*0.35, bodyH*0.28, -0.2, 0, Math.PI*2);
+  x.fillStyle = bodyHL; x.fill();
 
   // === HANDS IN FRONT OF BODY (drawn over body fill) ===
   if (pose === 'plotting') {
@@ -397,6 +437,9 @@ function drawGoblin(cx, skin, bodyType, face, hat, gear, sockStyle, pingStyle, i
   x.lineTo(cx - headR * 0.72, earY + 8);
   x.closePath();
   x.fillStyle = skin; x.fill(); x.strokeStyle = '#000'; x.lineWidth = 2; x.stroke();
+  // Ear inner shadow
+  x.strokeStyle = 'rgba(0,0,0,0.18)'; x.lineWidth = 1;
+  x.beginPath(); x.moveTo(cx - headR*0.72 - 1, earY - 3); x.lineTo(cx - headR*0.72 - 12, earY + 2); x.lineTo(cx - headR*0.72 - 1, earY + 5); x.stroke();
   // Right ear
   x.beginPath();
   x.moveTo(cx + headR * 0.72, earY - 6);
@@ -404,6 +447,9 @@ function drawGoblin(cx, skin, bodyType, face, hat, gear, sockStyle, pingStyle, i
   x.lineTo(cx + headR * 0.72, earY + 8);
   x.closePath();
   x.fillStyle = skin; x.fill(); x.strokeStyle = '#000'; x.lineWidth = 2; x.stroke();
+  // Ear inner shadow
+  x.strokeStyle = 'rgba(0,0,0,0.18)'; x.lineWidth = 1;
+  x.beginPath(); x.moveTo(cx + headR*0.72 + 1, earY - 3); x.lineTo(cx + headR*0.72 + 12, earY + 2); x.lineTo(cx + headR*0.72 + 1, earY + 5); x.stroke();
 
   // === THE NOSE — THE most defining feature ===
   // Long pointed beak/snout, protrudes far right, slightly downward curve
@@ -425,6 +471,12 @@ function drawGoblin(cx, skin, bodyType, face, hat, gear, sockStyle, pingStyle, i
   // Nostril — small dark oval, positioned mid-beak not at tip
   x.fillStyle = 'rgba(0,0,0,0.75)';
   x.beginPath(); x.ellipse(noseBaseX + 16, noseBaseY + 9, 2.8, 2, -0.3, 0, Math.PI * 2); x.fill();
+  // Nose underside shadow for depth — thin dark line under beak
+  x.strokeStyle = 'rgba(0,0,0,0.14)'; x.lineWidth = 1.5;
+  x.beginPath();
+  x.moveTo(noseBaseX + 2, noseBaseY + 13);
+  x.quadraticCurveTo(noseBaseX + 16, noseBaseY + 16, noseBaseX + 26, noseBaseY + 10);
+  x.stroke();
 
   // === HEADWEAR ===
   drawHat(cx, headY, headR, hat);
@@ -479,11 +531,20 @@ function drawFace(cx, ey, my, sp, face, hR) {
     x.fillStyle = 'rgba(255,255,255,0.7)';
     x.beginPath(); x.arc(lx - 1, ey - 1, 1.2, 0, Math.PI*2); x.fill();
     x.beginPath(); x.arc(rx - 1, ey - 1, 1.2, 0, Math.PI*2); x.fill();
-    // Flat tight frown — just a short horizontal line
-    ln(cx - 7, my + 2, cx + 7, my + 2, 2.5);
-    // Slight downturn at mouth corners
-    ln(cx - 7, my + 2, cx - 9, my + 5, 1.5);
-    ln(cx + 7, my + 2, cx + 9, my + 5, 1.5);
+    // Snarling frown with gritted teeth — Pisstek's signature intensity
+    x.beginPath();
+    x.moveTo(cx - 10, my);
+    x.quadraticCurveTo(cx, my + 6, cx + 10, my);
+    x.fillStyle = '#300000'; x.fill();
+    x.strokeStyle = '#000'; x.lineWidth = 2; x.stroke();
+    // Gritted teeth lines across mouth
+    x.strokeStyle = '#000'; x.lineWidth = 1;
+    for (let t = -2; t <= 2; t++) {
+      ln(cx + t * 3.5, my, cx + t * 3.5, my + 5, 1, 'rgba(0,0,0,0.35)');
+    }
+    // White teeth glint
+    x.fillStyle = 'rgba(255,255,255,0.55)';
+    x.fillRect(cx - 8, my + 1, 16, 3);
   } else if (face === 'smug') {
     // === SMUG — one eye open one squinting, crooked smirk ===
     // As seen in "ALL IN" image — both slightly narrowed, confident look
@@ -495,12 +556,26 @@ function drawFace(cx, ey, my, sp, face, hR) {
     // Brows — flatter than angry, slight tilt toward center
     ln(lx - 8, ey - 11, lx + 5, ey - 7, 3);
     ln(rx + 6, ey - 11, rx - 5, ey - 8, 2.5);
-    // Smirk — one side only, curves up on right (wider)
+    // Eye shine
+    x.fillStyle = 'rgba(255,255,255,0.65)';
+    x.beginPath(); x.arc(rx - 1, ey - 1, 1.2, 0, Math.PI*2); x.fill();
+    // Smirk — asymmetric upturn, filled shape for more presence
     x.beginPath();
-    x.moveTo(cx - 7, my + 3);
-    x.quadraticCurveTo(cx + 4, my - 2, cx + 16, my - 5);
+    x.moveTo(cx - 8, my + 4);
+    x.quadraticCurveTo(cx + 2, my + 7, cx + 15, my - 4);
+    x.quadraticCurveTo(cx + 14, my - 1, cx + 6, my + 4);
+    x.quadraticCurveTo(cx - 1, my + 4, cx - 8, my + 4);
+    x.fillStyle = '#300000'; x.fill();
+    x.beginPath();
+    x.moveTo(cx - 8, my + 4);
+    x.quadraticCurveTo(cx + 2, my + 2, cx + 15, my - 4);
     x.strokeStyle = '#000'; x.lineWidth = 2.5; x.stroke();
+    // Smirk corner dimple
+    ci(cx + 15, my - 4, 1.5, '#000');
   } else if (face === 'cry') {
+    // Distressed brows — angled UP toward center (opposite of angry)
+    ln(lx - 9, ey - 7, lx + 6, ey - 14, 3.2);
+    ln(rx + 9, ey - 7, rx - 6, ey - 14, 3.2);
     ci(lx, ey, 7, '#FFF'); ci(rx, ey, 7, '#FFF');
     x.fillStyle = '#000';
     x.beginPath(); x.arc(lx, ey + 1, 3.5, 0, Math.PI*2); x.fill();
@@ -508,11 +583,36 @@ function drawFace(cx, ey, my, sp, face, hR) {
     ci(lx + 2, ey - 2, 1.5, '#FFF', false);
     ci(rx + 2, ey - 2, 1.5, '#FFF', false);
     x.fillStyle = '#69D2E7';
-    for (let t = 0; t < 22; t += 4) {
-      x.beginPath(); x.arc(lx - 2, ey + 9 + t, 1.5, 0, Math.PI*2); x.fill();
-      x.beginPath(); x.arc(rx + 2, ey + 9 + t, 1.5, 0, Math.PI*2); x.fill();
+    // Teardrop-shaped tears — pointed bottom, round top like real tears
+    for (let t = 0; t < 3; t++) {
+      const tdx = lx - 2, tdy = ey + 10 + t * 12;
+      const tw = 2.8 - t * 0.4, th = 9 + t * 2;
+      x.beginPath();
+      x.moveTo(tdx, tdy);
+      x.bezierCurveTo(tdx - tw, tdy + th*0.35, tdx - tw*1.3, tdy + th*0.72, tdx, tdy + th);
+      x.bezierCurveTo(tdx + tw*1.3, tdy + th*0.72, tdx + tw, tdy + th*0.35, tdx, tdy);
+      x.fill();
     }
-    el(cx, my + 3, 8, 6, '#300000');
+    for (let t = 0; t < 3; t++) {
+      const tdx = rx + 2, tdy = ey + 10 + t * 12;
+      const tw = 2.8 - t * 0.4, th = 9 + t * 2;
+      x.beginPath();
+      x.moveTo(tdx, tdy);
+      x.bezierCurveTo(tdx - tw, tdy + th*0.35, tdx - tw*1.3, tdy + th*0.72, tdx, tdy + th);
+      x.bezierCurveTo(tdx + tw*1.3, tdy + th*0.72, tdx + tw, tdy + th*0.35, tdx, tdy);
+      x.fill();
+    }
+    // Wide open crying mouth — frown with open dark interior
+    x.beginPath();
+    x.moveTo(cx - 10, my);
+    x.quadraticCurveTo(cx - 12, my + 10, cx, my + 12);
+    x.quadraticCurveTo(cx + 12, my + 10, cx + 10, my);
+    x.fillStyle = '#300000'; x.fill();
+    x.strokeStyle = '#000'; x.lineWidth = 2; x.stroke();
+    // Frown line at top of mouth
+    x.beginPath();
+    x.moveTo(cx - 10, my); x.quadraticCurveTo(cx, my - 3, cx + 10, my);
+    x.strokeStyle = '#000'; x.lineWidth = 2; x.stroke();
   } else if (face === 'happy') {
     // Happy — upward arc eyes with pupils, big smile
     x.strokeStyle = '#000'; x.lineWidth = 2.5;
@@ -522,8 +622,17 @@ function drawFace(cx, ey, my, sp, face, hR) {
     x.fillStyle = '#000';
     x.beginPath(); x.arc(lx, ey + 1, 2, 0, Math.PI*2); x.fill();
     x.beginPath(); x.arc(rx, ey + 1, 2, 0, Math.PI*2); x.fill();
+    // Eye shine
+    x.fillStyle = 'rgba(255,255,255,0.7)';
+    x.beginPath(); x.arc(lx - 1, ey, 1, 0, Math.PI*2); x.fill();
+    x.beginPath(); x.arc(rx - 1, ey, 1, 0, Math.PI*2); x.fill();
+    // Big smile with teeth
     x.beginPath(); x.arc(cx, my - 2, 9, 0.05, Math.PI - 0.05);
     x.strokeStyle = '#000'; x.lineWidth = 2.5; x.stroke();
+    // Cheek blush
+    x.fillStyle = 'rgba(255,100,100,0.22)';
+    x.beginPath(); x.ellipse(lx - 4, my - 8, 6, 4, -0.2, 0, Math.PI*2); x.fill();
+    x.beginPath(); x.ellipse(rx + 4, my - 8, 6, 4, 0.2, 0, Math.PI*2); x.fill();
   } else if (face === 'dead') {
     // Dead inside — heavy flat brows, x eyes, flat mouth
     ln(lx-10,ey-11,lx+6,ey-6,3.5); ln(rx+10,ey-11,rx-6,ey-6,3.5);
@@ -1000,7 +1109,14 @@ function drawChick(cx2,cy2,sz){
 // ============================================================
 
 function drawBg(bg){
-  if(bg==='none')return;
+  if(bg==='none'){
+    // Soft off-white background with very subtle vignette — clean PFP look
+    x.fillStyle='#F8F5EE';x.fillRect(0,0,420,420);
+    const vig=x.createRadialGradient(210,210,80,210,210,300);
+    vig.addColorStop(0,'rgba(0,0,0,0)');vig.addColorStop(1,'rgba(0,0,0,0.08)');
+    x.fillStyle=vig;x.fillRect(0,0,420,420);
+    return;
+  }
   if(bg==='rainbow'){
     const g=x.createLinearGradient(0,0,420,420);
     g.addColorStop(0,'#F00');g.addColorStop(.17,'#F80');g.addColorStop(.33,'#FF0');
@@ -1285,27 +1401,41 @@ function drawCreatures(cr){
 
 function drawTitle(ti){
   if(ti==='none')return;
-  let text='';
+  let text='', fillCol='#FFF', accentCol='#FFD700';
   if(ti==='custom'){
     text=(document.getElementById('customTitle').value||'PISSTEK').toUpperCase();
-  } else if(ti==='allin') text='PISSTEK ALL IN';
-  else if(ti==='diamond') text='DIAMOND PISS';
-  else if(ti==='survives') text='PISSTEK SURVIVES THE RUG';
-  else if(ti==='ftw') text='PISSTEK FOR THE WIN!';
+  } else if(ti==='allin'){
+    text='PISSTEK ALL IN'; fillCol='#FFE44A'; accentCol='#FF9900';
+  } else if(ti==='diamond'){
+    text='DIAMOND PISS'; fillCol='#7EEDFF'; accentCol='#00CCEE';
+  } else if(ti==='survives'){
+    text='PISSTEK SURVIVES THE RUG'; fillCol='#FF6633'; accentCol='#CC2200';
+  } else if(ti==='ftw'){
+    text='PISSTEK FOR THE WIN!'; fillCol='#FFD700'; accentCol='#FF8800';
+  }
   if(!text)return;
 
-  const fs=text.length>18?22:text.length>12?28:34;
+  const fs=text.length>18?21:text.length>12?27:34;
   x.font=`900 ${fs}px Impact, "Arial Black", sans-serif`;
   x.textAlign='center';
-  // Text outline/shadow for readability
-  x.strokeStyle='#000';x.lineWidth=5;x.lineJoin='round';
+  x.lineJoin='round';
+  // Drop shadow for depth
+  x.shadowColor='rgba(0,0,0,0.6)'; x.shadowBlur=4; x.shadowOffsetY=2;
+  // Heavy black outline
+  x.strokeStyle='#000'; x.lineWidth=6;
   x.strokeText(text,210,42);
-  // Fill
-  x.fillStyle='#FFF';
+  x.shadowBlur=0; x.shadowOffsetY=0;
+  // Accent color fill (bottom half gradient effect via stroke)
+  x.strokeStyle=accentCol; x.lineWidth=2;
+  x.strokeText(text,210,42);
+  // Main fill
+  x.fillStyle=fillCol;
   x.fillText(text,210,42);
-  // Second stroke for crispness
-  x.strokeStyle='#000';x.lineWidth=2;
-  x.strokeText(text,210,42);
+  // Accent underline
+  const tw=x.measureText(text).width;
+  x.beginPath();
+  x.moveTo(210-tw/2,47);x.lineTo(210+tw/2,47);
+  x.strokeStyle=accentCol; x.lineWidth=3; x.stroke();
 }
 
 function $i(id){return document.getElementById(id);}
@@ -1328,7 +1458,7 @@ function P(p){
     desk:{char:'goblin',body:'normal',face:'angry',hat:'none',gear:'none',skin:'#E8D5A8',sock:'mismatch',ping:'normal',bg:'none',roach:'10',cone:'0',fx:'P',roachstyle:'normal',creature:'none',title:'none',pose:'plotting'},
     allin:{char:'goblin',body:'normal',face:'smug',hat:'none',gear:'blackshades',skin:'#E8D5A8',sock:'mismatch',ping:'normal',bg:'poker',roach:'10',cone:'0',fx:'money',roachstyle:'suited',creature:'chick',title:'allin',pose:'plotting'},
     diamondpiss:{char:'goblin',body:'normal',face:'angry',hat:'none',gear:'diamonds',skin:'#E8D5A8',sock:'mismatch',ping:'normal',bg:'livingroom',roach:'4',cone:'0',fx:'star',roachstyle:'bucket',creature:'none',title:'diamond',pose:'plotting'},
-    rugsurvive:{char:'goblin',body:'normal',face:'angry',hat:'none',gear:'none',skin:'#E8D5A8',sock:'mismatch',ping:'normal',bg:'ruins',roach:'10',cone:'0',fx:'none',roachstyle:'gasmask',creature:'none',title:'survives',pose:'plotting'},
+    rugsurvive:{char:'goblin',body:'normal',face:'cry',hat:'none',gear:'none',skin:'#E8D5A8',sock:'mismatch',ping:'normal',bg:'ruins',roach:'10',cone:'0',fx:'none',roachstyle:'gasmask',creature:'none',title:'survives',pose:'arms'},
     victory:{char:'goblin',body:'normal',face:'angry',hat:'none',gear:'sword',skin:'#E8D5A8',sock:'mismatch',ping:'normal',bg:'lobsterpile',roach:'4',cone:'0',fx:'none',roachstyle:'normal',creature:'lobster',title:'ftw',pose:'victory'},
   };
   const v=presets[p];if(!v)return;
