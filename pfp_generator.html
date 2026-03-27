@@ -944,12 +944,32 @@ function drawGear(cx, hy, by, hr, bw, bh, gear, skin, lb, pose, shoulderY) {
     ln(cx-sp-11,gy,cx-sp-17,gy-3,1.5);
     ln(cx+sp+11,gy,cx+sp+17,gy-3,1.5);
   } else if (gear === 'stream') {
-    const sx=cx+bw,sy=by+bh*0.3;
-    x.beginPath();x.moveTo(sx,sy);x.strokeStyle='#FFD700';x.lineWidth=4;
-    for(let i=0;i<50;i++){const t=i/50;x.lineTo(sx+t*100,sy+t*t*60+Math.sin(i*0.5)*2);}
+    // Piss arc — parabolic stream with thick core + spray droplets
+    const sx=cx+bw-2, sy=by+bh*0.3;
+    // Outer glow
+    x.shadowColor='rgba(255,200,0,0.5)'; x.shadowBlur=8;
+    x.beginPath(); x.moveTo(sx,sy); x.strokeStyle='rgba(255,220,0,0.4)'; x.lineWidth=9;
+    for(let i=0;i<50;i++){const t=i/50;x.lineTo(sx+t*100,sy+t*t*65+Math.sin(i*0.5)*1.5);}
     x.stroke();
+    x.shadowBlur=0;
+    // Core stream
+    x.beginPath(); x.moveTo(sx,sy); x.strokeStyle='#FFD700'; x.lineWidth=5;
+    for(let i=0;i<50;i++){const t=i/50;x.lineTo(sx+t*100,sy+t*t*65+Math.sin(i*0.5)*2);}
+    x.stroke();
+    // Center highlight
+    x.beginPath(); x.moveTo(sx,sy); x.strokeStyle='rgba(255,255,200,0.5)'; x.lineWidth=2;
+    for(let i=0;i<50;i++){const t=i/50;x.lineTo(sx+t*98,sy+t*t*62);}
+    x.stroke();
+    // Splash droplets at landing zone
     x.fillStyle='#FFD700';
-    for(let s=0;s<5;s++){x.beginPath();x.arc(sx+90+(Math.random()-0.5)*18,sy+55+(Math.random()-0.5)*10,2+Math.random()*2,0,Math.PI*2);x.fill();}
+    for(let s=0;s<8;s++){
+      const ddx=sx+85+(Math.random()-0.5)*22, ddy=sy+58+(Math.random()-0.5)*14;
+      const dr=1.5+Math.random()*2;
+      x.beginPath();x.arc(ddx,ddy,dr,0,Math.PI*2);x.fill();
+    }
+    // Splash pool
+    x.beginPath(); x.ellipse(sx+93,sy+66,14,5,0,0,Math.PI*2);
+    x.fillStyle='rgba(255,215,0,0.5)'; x.fill();
   } else if (gear === 'flag') {
     const fx=cx+bw+16,fy=hy-50;
     ln(fx,fy,fx,by+bh+10,3,'#8B6914');
@@ -1555,6 +1575,14 @@ function G(){
     gc++;$i('ct').textContent=gc;$i('st').textContent=`Pingle #${gc} — smol but mighty`;
     return;
   }
+
+  // Ground shadow — soft ellipse under feet to anchor the character
+  const footY = 370;
+  const shadG = x.createRadialGradient(cx, footY, 5, cx, footY, 55);
+  shadG.addColorStop(0, 'rgba(0,0,0,0.18)');
+  shadG.addColorStop(1, 'rgba(0,0,0,0)');
+  x.beginPath(); x.ellipse(cx, footY, 55, 14, 0, 0, Math.PI*2);
+  x.fillStyle = shadG; x.fill();
 
   // Main goblin (pissmissle/pisstina)
   drawGoblin(cx,sk,bt,fc,ht,gr,sc,pg2,ch==='pisstina',ps);
