@@ -305,57 +305,7 @@ function drawGoblin(cx, skin, bodyType, face, hat, gear, sockStyle, pingStyle, i
   x.quadraticCurveTo(cx - bodyW * 0.18, legBase + 12, cx - bodyW * 0.48, legBase);
 
   x.fillStyle = skin; x.fill();
-  x.strokeStyle = '#000'; x.lineWidth = 3; x.stroke();
-
-  // Subtle belly roundness shadow
-  x.beginPath();
-  x.strokeStyle = 'rgba(0,0,0,0.08)'; x.lineWidth = 1.2;
-  x.arc(cx, bodyY + 2, bodyW * 0.52, 0.35, Math.PI - 0.35);
-  x.stroke();
-  // Neck shadow — separates head from body at the jaw/shoulder junction
-  x.strokeStyle = 'rgba(0,0,0,0.11)'; x.lineWidth = 2;
-  x.beginPath();
-  x.moveTo(cx - headR * 0.6, headY + headR * 0.7);
-  x.quadraticCurveTo(cx, headY + headR * 0.82, cx + headR * 0.6, headY + headR * 0.7);
-  x.stroke();
-
-  // Skin texture
-  tex(cx, bodyY, bodyW * 1.4, bodyH * 1.2, 14);
-  tex(cx, headY, headR * 1.1, headR * 0.9, 7);
-
-  // === SUBTLE FACE DEPTH SHADING ===
-  // Soft gradient shadow on the right/lower face — gives the round head more volume
-  const faceShad = x.createRadialGradient(cx - headR*0.25, headY - headR*0.15, headR*0.1, cx + headR*0.2, headY + headR*0.15, headR * 0.95);
-  faceShad.addColorStop(0, 'rgba(0,0,0,0)');
-  faceShad.addColorStop(1, 'rgba(0,0,0,0.07)');
-  x.beginPath(); x.ellipse(cx, headY, headR * 0.92, headR * 0.88, 0, 0, Math.PI*2);
-  x.fillStyle = faceShad; x.fill();
-  // Matching body shading
-  const bodyShad = x.createRadialGradient(cx - bodyW*0.28, bodyY - bodyH*0.2, bodyW*0.1, cx + bodyW*0.25, bodyY + bodyH*0.25, bodyW * 0.9);
-  bodyShad.addColorStop(0, 'rgba(0,0,0,0)');
-  bodyShad.addColorStop(1, 'rgba(0,0,0,0.055)');
-  x.beginPath(); x.ellipse(cx, bodyY, bodyW * 0.88, bodyH * 0.82, 0, 0, Math.PI*2);
-  x.fillStyle = bodyShad; x.fill();
-
-  // === FACE GLOSS — Pisstek's painted highlight on upper-left of head ===
-  const faceHL = x.createRadialGradient(cx - headR*0.32, headY - headR*0.52, 1, cx - headR*0.18, headY - headR*0.38, headR * 0.46);
-  faceHL.addColorStop(0, 'rgba(255,255,255,0.22)');
-  faceHL.addColorStop(0.6, 'rgba(255,255,255,0.08)');
-  faceHL.addColorStop(1, 'rgba(255,255,255,0)');
-  x.beginPath(); x.ellipse(cx - headR*0.2, headY - headR*0.42, headR * 0.38, headR * 0.28, -0.25, 0, Math.PI*2);
-  x.fillStyle = faceHL; x.fill();
-  // Chin/jaw shadow — dark underside of head where it meets neck/body
-  const chinShad = x.createLinearGradient(cx, headY + headR*0.6, cx, headY + headR*0.95);
-  chinShad.addColorStop(0, 'rgba(0,0,0,0)');
-  chinShad.addColorStop(1, 'rgba(0,0,0,0.12)');
-  x.beginPath(); x.ellipse(cx, headY + headR*0.72, headR*0.62, headR*0.28, 0, 0, Math.PI*2);
-  x.fillStyle = chinShad; x.fill();
-  // Body upper-left highlight
-  const bodyHL = x.createRadialGradient(cx - bodyW*0.35, bodyY - bodyH*0.35, 2, cx - bodyW*0.2, bodyY - bodyH*0.2, bodyW*0.45);
-  bodyHL.addColorStop(0, 'rgba(255,255,255,0.14)');
-  bodyHL.addColorStop(1, 'rgba(255,255,255,0)');
-  x.beginPath(); x.ellipse(cx - bodyW*0.22, bodyY - bodyH*0.22, bodyW*0.35, bodyH*0.28, -0.2, 0, Math.PI*2);
-  x.fillStyle = bodyHL; x.fill();
+  x.strokeStyle = '#000'; x.lineWidth = 4; x.stroke();
 
   // === HANDS IN FRONT OF BODY (drawn over body fill) ===
   if (pose === 'plotting') {
@@ -566,26 +516,34 @@ function drawFace(cx, ey, my, sp, face, hR, skin) {
 
   if (face === 'angry') {
     // === ANGRY — THE signature Pisstek face ===
-    // KEY: HEAVY DROOPING EYELIDS covering top ~40% of eye. This is the defining look.
-    // Refs: Sonic group, kitchen, space image — always this hooded contemptuous stare
-    ci(lx, ey, 4.5, '#FFF', true, 1.3); ci(rx, ey, 4.5, '#FFF', true, 1.3);
+    // FLAT MS-PAINT STYLE: wide horizontal almond eyes, heavy straight lid, no shading
+    // Refs: Sonic group, kitchen, space — eyes almost closed, contemptuous squint
+    const ew = 7, eh = 4.5; // wide almond: 7px half-width, 4.5px half-height
+    // White fill
+    x.beginPath(); x.ellipse(lx, ey, ew, eh, 0, 0, Math.PI*2); x.fillStyle='#FFF'; x.fill();
+    x.beginPath(); x.ellipse(rx, ey, ew, eh, 0, 0, Math.PI*2); x.fillStyle='#FFF'; x.fill();
+    // Pupils — small, low, peering up from under lids
     x.fillStyle = '#000';
-    // Small pupils — low in eye, peering out from under hooded lids (contemptuous glare)
     x.beginPath(); x.ellipse(lx, ey + 2, 2.8, 2.5, 0, 0, Math.PI*2); x.fill();
     x.beginPath(); x.ellipse(rx, ey + 2, 2.8, 2.5, 0, 0, Math.PI*2); x.fill();
-    // HOODED EYELIDS — thick arc covering top of each eye (the signature look)
-    x.strokeStyle = skin; x.lineWidth = 7;
-    x.beginPath(); x.arc(lx, ey, 4.5, Math.PI*1.05, Math.PI*1.95, false); x.stroke();
-    x.beginPath(); x.arc(rx, ey, 4.5, Math.PI*1.05, Math.PI*1.95, false); x.stroke();
-    x.strokeStyle = '#000'; x.lineWidth = 2.5;
-    x.beginPath(); x.arc(lx, ey, 4.5, Math.PI*1.05, Math.PI*1.95, false); x.stroke();
-    x.beginPath(); x.arc(rx, ey, 4.5, Math.PI*1.05, Math.PI*1.95, false); x.stroke();
-    // Brows — heavy, LOW, steep V shape toward center, close to eyes
-    ln(lx - 9, ey - 10, lx + 5, ey - 4, 3.5);
-    ln(rx + 9, ey - 10, rx - 5, ey - 4, 3.5);
+    // HOODED LID — skin-color rect clips top half of each eye, then black lid line
+    x.fillStyle = skin;
+    x.fillRect(lx - ew - 1, ey - eh - 1, (ew+1)*2, eh + 1);
+    x.fillRect(rx - ew - 1, ey - eh - 1, (ew+1)*2, eh + 1);
+    // Eye outlines (almond ellipse)
+    x.strokeStyle='#000'; x.lineWidth=2;
+    x.beginPath(); x.ellipse(lx, ey, ew, eh, 0, 0, Math.PI*2); x.stroke();
+    x.beginPath(); x.ellipse(rx, ey, ew, eh, 0, 0, Math.PI*2); x.stroke();
+    // Lid line — slightly curved, dark, the KEY line across top of eye
+    x.strokeStyle='#000'; x.lineWidth=3;
+    x.beginPath(); x.moveTo(lx-ew-1, ey); x.quadraticCurveTo(lx, ey-2.5, lx+ew+1, ey); x.stroke();
+    x.beginPath(); x.moveTo(rx-ew-1, ey); x.quadraticCurveTo(rx, ey-2.5, rx+ew+1, ey); x.stroke();
+    // Brows — heavy, V-shape, low and close to eyes
+    ln(lx - 9, ey - 9, lx + 5, ey - 3, 4);
+    ln(rx + 9, ey - 9, rx - 5, ey - 3, 4);
     // Nose bridge crease
-    ln(cx - 2, ey - 6, cx + 2, ey - 6, 1.5, 'rgba(0,0,0,0.3)');
-    // Frown — flat, minimal
+    ln(cx - 2, ey - 5, cx + 2, ey - 5, 1.5, 'rgba(0,0,0,0.3)');
+    // Frown
     x.beginPath();
     x.moveTo(cx - 8, my + 2);
     x.quadraticCurveTo(cx, my + 5, cx + 8, my + 2);
@@ -605,11 +563,11 @@ function drawFace(cx, ey, my, sp, face, hR, skin) {
     // Right eye — small oval with heavy lid
     ci(rx, ey, 4, '#FFF', true, 1.2);
     x.beginPath(); x.ellipse(rx, ey + 1, 2.5, 2, 0, 0, Math.PI*2); x.fill();
-    // Heavy lid on right eye
-    x.strokeStyle = skin || '#E8D5A8'; x.lineWidth = 6;
-    x.beginPath(); x.arc(rx, ey, 4, Math.PI*1.05, Math.PI*1.95); x.stroke();
-    x.strokeStyle = '#000'; x.lineWidth = 2.2;
-    x.beginPath(); x.arc(rx, ey, 4, Math.PI*1.1, Math.PI*1.9); x.stroke();
+    // Heavy lid on right eye — skin rect covers top half
+    x.fillStyle = skin || '#E8D5A8';
+    x.fillRect(rx - 5, ey - 5, 10, 5);
+    x.strokeStyle = '#000'; x.lineWidth = 2.5;
+    x.beginPath(); x.moveTo(rx-4, ey); x.quadraticCurveTo(rx, ey-2, rx+4, ey); x.stroke();
     // Eye shine
     x.fillStyle = 'rgba(255,255,255,0.65)';
     x.beginPath(); x.arc(rx - 1, ey - 1, 1.1, 0, Math.PI*2); x.fill();
