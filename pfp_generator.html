@@ -239,36 +239,35 @@ function drawGoblin(cx, skin, bodyType, face, hat, gear, sockStyle, pingStyle, i
     ln(rl - 12, st + 6, rl + 11, st + 6, 1, 'rgba(0,0,0,0.15)');
   }
 
-  // === ARM LINES BEHIND BODY (upper portion only) ===
-  // Draw the thin arm LINES before body so they appear to originate from body sides
-  // Hands/clasped blobs are drawn AFTER body so they appear in front
+  // === RUBBER-HOSE ARMS BEHIND BODY ===
+  // Draw thick skin-colored tube arms before body so body covers shoulder junction naturally
+  // Hands drawn AFTER body so they appear in front
   const shoulderY = bodyY - bodyH * 0.12;
-  x.strokeStyle = '#000'; x.lineCap = 'round';
+  x.lineCap = 'round';
+  const drawArm = (x1,y1,cpx,cpy,x2,y2) => {
+    // Thick skin fill tube
+    x.beginPath(); x.moveTo(x1,y1); x.quadraticCurveTo(cpx,cpy,x2,y2);
+    x.strokeStyle = skin; x.lineWidth = 10; x.stroke();
+    // Black outline
+    x.beginPath(); x.moveTo(x1,y1); x.quadraticCurveTo(cpx,cpy,x2,y2);
+    x.strokeStyle = '#000'; x.lineWidth = 3; x.stroke();
+    // Highlight
+    x.beginPath(); x.moveTo(x1-1,y1); x.quadraticCurveTo(cpx-1,cpy,x2-1,y2);
+    x.strokeStyle = 'rgba(255,255,255,0.18)'; x.lineWidth = 3; x.stroke();
+  };
   if (pose === 'plotting') {
-    x.lineWidth = 3;
-    x.beginPath(); x.moveTo(cx - bodyW + 2, shoulderY);
-    x.quadraticCurveTo(cx - bodyW - 10, shoulderY + 28, cx - 14, bodyY + 10); x.stroke();
-    x.beginPath(); x.moveTo(cx + bodyW - 2, shoulderY);
-    x.quadraticCurveTo(cx + bodyW + 10, shoulderY + 28, cx + 14, bodyY + 10); x.stroke();
+    drawArm(cx - bodyW + 2, shoulderY, cx - bodyW - 10, shoulderY + 28, cx - 14, bodyY + 10);
+    drawArm(cx + bodyW - 2, shoulderY, cx + bodyW + 10, shoulderY + 28, cx + 14, bodyY + 10);
   } else if (pose === 'arms') {
     const armY = bodyY - bodyH * 0.05;
-    x.lineWidth = 2.5;
-    x.beginPath(); x.moveTo(cx - bodyW + 2, armY);
-    x.quadraticCurveTo(cx - bodyW - 8, armY + 12, cx - bodyW - 22, armY + 28); x.stroke();
-    x.beginPath(); x.moveTo(cx + bodyW - 2, armY);
-    x.quadraticCurveTo(cx + bodyW + 8, armY + 8, cx + bodyW + 22, armY + 20); x.stroke();
+    drawArm(cx - bodyW + 2, armY, cx - bodyW - 8, armY + 12, cx - bodyW - 22, armY + 28);
+    drawArm(cx + bodyW - 2, armY, cx + bodyW + 8, armY + 8, cx + bodyW + 22, armY + 20);
   } else if (pose === 'victory') {
-    x.lineWidth = 2.5;
-    x.beginPath(); x.moveTo(cx - bodyW + 2, shoulderY);
-    x.quadraticCurveTo(cx - bodyW - 5, shoulderY + 22, cx - bodyW - 12, shoulderY + 45); x.stroke();
-    x.beginPath(); x.moveTo(cx + bodyW - 2, shoulderY);
-    x.quadraticCurveTo(cx + bodyW + 22, shoulderY - 22, cx + bodyW + 18, shoulderY - 40); x.stroke();
+    drawArm(cx - bodyW + 2, shoulderY, cx - bodyW - 5, shoulderY + 22, cx - bodyW - 12, shoulderY + 45);
+    drawArm(cx + bodyW - 2, shoulderY, cx + bodyW + 22, shoulderY - 22, cx + bodyW + 18, shoulderY - 40);
   } else if (pose === 'hips') {
-    x.lineWidth = 2.5;
-    x.beginPath(); x.moveTo(cx - bodyW + 2, shoulderY);
-    x.quadraticCurveTo(cx - bodyW - 18, shoulderY + 15, cx - bodyW - 14, shoulderY + 38); x.stroke();
-    x.beginPath(); x.moveTo(cx + bodyW - 2, shoulderY);
-    x.quadraticCurveTo(cx + bodyW + 18, shoulderY + 15, cx + bodyW + 14, shoulderY + 38); x.stroke();
+    drawArm(cx - bodyW + 2, shoulderY, cx - bodyW - 18, shoulderY + 15, cx - bodyW - 14, shoulderY + 38);
+    drawArm(cx + bodyW - 2, shoulderY, cx + bodyW + 18, shoulderY + 15, cx + bodyW + 14, shoulderY + 38);
   }
 
   // === MAIN BODY — one continuous organic bean shape ===
@@ -355,10 +354,6 @@ function drawGoblin(cx, skin, bodyType, face, hat, gear, sockStyle, pingStyle, i
     for (let f = -3; f <= 3; f++) {
       x.beginPath(); x.moveTo(cx + f * 5, bodyY + 3); x.lineTo(cx + f * 5, bodyY + 17); x.stroke();
     }
-    // Outer arm shadow for depth
-    x.strokeStyle = 'rgba(0,0,0,0.1)'; x.lineWidth = 3;
-    x.beginPath(); x.moveTo(cx - bodyW - 8, shoulderY + 26); x.lineTo(cx - 16, bodyY + 11); x.stroke();
-    x.beginPath(); x.moveTo(cx + bodyW + 8, shoulderY + 26); x.lineTo(cx + 16, bodyY + 11); x.stroke();
   } else if (pose === 'arms') {
     const armY = bodyY - bodyH * 0.05;
     const lhx = cx - bodyW - 22, lhy = armY + 28;
@@ -520,10 +515,12 @@ function drawFace(cx, ey, my, sp, face, hR) {
   if (face === 'angry') {
     // === ANGRY — THE most common Pisstek face ===
     // Heavy angled brows, small intense eyes, flat frown
+    // Eye whites — small visible sclera for intensity
+    ci(lx, ey, 5, '#FFF', true, 1.5); ci(rx, ey, 5, '#FFF', true, 1.5);
     x.fillStyle = '#000';
-    // Eyes — small solid dots, slightly squinted
-    x.beginPath(); x.ellipse(lx, ey, 3.5, 3, 0, 0, Math.PI*2); x.fill();
-    x.beginPath(); x.ellipse(rx, ey, 3.5, 3, 0, 0, Math.PI*2); x.fill();
+    // Eyes — intense pupils in whites
+    x.beginPath(); x.ellipse(lx, ey + 0.5, 3.5, 3, 0, 0, Math.PI*2); x.fill();
+    x.beginPath(); x.ellipse(rx, ey + 0.5, 3.5, 3, 0, 0, Math.PI*2); x.fill();
     // Brows — thick angled lines, steep V shape toward center
     ln(lx - 10, ey - 13, lx + 6, ey - 6, 3.5);
     ln(rx + 10, ey - 13, rx - 6, ey - 6, 3.5);
@@ -638,6 +635,8 @@ function drawFace(cx, ey, my, sp, face, hR) {
   } else if (face === 'dead') {
     // Dead inside — heavy flat brows, x eyes, flat mouth
     ln(lx-10,ey-11,lx+6,ey-6,3.5); ln(rx+10,ey-11,rx-6,ey-6,3.5);
+    // White circles behind X eyes
+    ci(lx,ey,6,'#FFF',true,1.5); ci(rx,ey,6,'#FFF',true,1.5);
     // X eyes
     ln(lx-5,ey-5,lx+5,ey+5,2.5); ln(lx+5,ey-5,lx-5,ey+5,2.5);
     ln(rx-5,ey-5,rx+5,ey+5,2.5); ln(rx+5,ey-5,rx-5,ey+5,2.5);
