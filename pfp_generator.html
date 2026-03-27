@@ -737,23 +737,29 @@ function drawGear(cx, hy, by, hr, bw, bh, gear, skin, lb, pose, shoulderY) {
     }
   } else if (gear === 'speedo') el(cx,by+bh*0.6,bw*0.45,9,'#F06');
   else if (gear === 'blackshades') {
-    const gy=hy-hr*0.15, sp=hr*0.22;
-    pg([[cx-sp-12,gy-8],[cx-sp+8,gy-8],[cx-sp+8,gy+7],[cx-sp-12,gy+7]],'#111');
-    pg([[cx+sp-8,gy-8],[cx+sp+12,gy-8],[cx+sp+12,gy+7],[cx+sp-8,gy+7]],'#111');
-    ln(cx-sp+8,gy,cx+sp-8,gy,2); ln(cx-sp-12,gy-1,cx-sp-18,gy-4,2); ln(cx+sp+12,gy-1,cx+sp+18,gy-4,2);
+    // Match updated eye pos: hy-hr*0.10, span hr*0.28
+    const gy=hy-hr*0.10, sp=hr*0.28;
+    pg([[cx-sp-13,gy-8],[cx-sp+10,gy-8],[cx-sp+10,gy+8],[cx-sp-13,gy+8]],'#111');
+    pg([[cx+sp-10,gy-8],[cx+sp+13,gy-8],[cx+sp+13,gy+8],[cx+sp-10,gy+8]],'#111');
+    x.fillStyle='rgba(255,255,255,0.08)';
+    x.fillRect(cx-sp-11,gy-6,8,5); x.fillRect(cx+sp-8,gy-6,8,5);
+    ln(cx-sp+10,gy,cx+sp-10,gy,2); ln(cx-sp-13,gy,cx-sp-19,gy-4,2); ln(cx+sp+13,gy,cx+sp+19,gy-4,2);
   } else if (gear === 'whiteshades') {
-    const gy=hy-hr*0.15, sp=hr*0.22;
-    ci(cx-sp,gy,11,'#FFF'); ci(cx+sp,gy,11,'#FFF');
-    ci(cx-sp,gy,7,'#222',true,1.5); ci(cx+sp,gy,7,'#222',true,1.5);
-    ln(cx-sp+11,gy,cx+sp-11,gy,2,'#FFF');
-    ln(cx-sp-11,gy,cx-sp-17,gy-3,2,'#FFF');
-    ln(cx+sp+11,gy,cx+sp+17,gy-3,2,'#FFF');
+    const gy=hy-hr*0.10, sp=hr*0.28;
+    ci(cx-sp,gy,13,'#FFF'); ci(cx+sp,gy,13,'#FFF');
+    ci(cx-sp,gy,9,'#333',true,1.5); ci(cx+sp,gy,9,'#333',true,1.5);
+    x.fillStyle='rgba(255,255,255,0.3)';
+    x.beginPath();x.ellipse(cx-sp-3,gy-3,5,3,0,0,Math.PI*2);x.fill();
+    x.beginPath();x.ellipse(cx+sp-3,gy-3,5,3,0,0,Math.PI*2);x.fill();
+    ln(cx-sp+13,gy,cx+sp-13,gy,2,'#FFF');
+    ln(cx-sp-13,gy,cx-sp-20,gy-3,2,'#FFF');
+    ln(cx+sp+13,gy,cx+sp+20,gy-3,2,'#FFF');
   } else if (gear === 'glasses') {
-    const gy=hy-hr*0.15, sp=hr*0.22;
-    ci(cx-sp,gy,9,null,true,2); ci(cx+sp,gy,9,null,true,2);
-    ln(cx-sp+9,gy,cx+sp-9,gy,1.5);
-    ln(cx-sp-9,gy,cx-sp-15,gy-3,1.5);
-    ln(cx+sp+9,gy,cx+sp+15,gy-3,1.5);
+    const gy=hy-hr*0.10, sp=hr*0.28;
+    ci(cx-sp,gy,11,null,true,2); ci(cx+sp,gy,11,null,true,2);
+    ln(cx-sp+11,gy,cx+sp-11,gy,1.5);
+    ln(cx-sp-11,gy,cx-sp-17,gy-3,1.5);
+    ln(cx+sp+11,gy,cx+sp+17,gy-3,1.5);
   } else if (gear === 'stream') {
     const sx=cx+bw,sy=by+bh*0.3;
     x.beginPath();x.moveTo(sx,sy);x.strokeStyle='#FFD700';x.lineWidth=4;
@@ -771,9 +777,18 @@ function drawGear(cx, hy, by, hr, bw, bh, gear, skin, lb, pose, shoulderY) {
     x.quadraticCurveTo(fx+32,fy+4,fx+35,fy+8);x.fillStyle='#FFD700';x.fill();
   } else if (gear === 'controller') {
     const gx=cx,gy=by+bh*0.2;
-    pg([[gx-16,gy-5],[gx+16,gy-5],[gx+20,gy+3],[gx+14,gy+9],[gx-14,gy+9],[gx-20,gy+3]],'#888');
-    ln(gx-9,gy-1,gx-9,gy+5,2,'#333');ln(gx-12,gy+2,gx-6,gy+2,2,'#333');
-    ci(gx+7,gy,2,'#C00',true,1);ci(gx+11,gy+3,2,'#00C',true,1);
+    // Controller body
+    pg([[gx-18,gy-6],[gx+18,gy-6],[gx+22,gy+2],[gx+16,gy+10],[gx-16,gy+10],[gx-22,gy+2]],'#888');
+    // D-pad
+    ln(gx-11,gy-2,gx-11,gy+6,3,'#333'); ln(gx-14,gy+2,gx-8,gy+2,3,'#333');
+    // Face buttons
+    ci(gx+8,gy-1,2.5,'#C00',true,1);ci(gx+12,gy+3,2.5,'#00C',true,1);
+    ci(gx+5,gy+3,2.5,'#0A0',true,1);ci(gx+12,gy-1,2.5,'#FA0',true,1);
+    // Shoulder bumps
+    pg([[gx-18,gy-6],[gx-12,gy-6],[gx-12,gy-10],[gx-16,gy-10]],'#777',true,1);
+    pg([[gx+12,gy-6],[gx+18,gy-6],[gx+16,gy-10],[gx+12,gy-10]],'#777',true,1);
+    // Center button
+    ci(gx,gy+2,3,'#666',true,1);
   } else if (gear === 'bowtie') {
     const bx=cx,bby=by-bh*0.55;
     pg([[bx,bby],[bx-9,bby-5],[bx-9,bby+5]],'#93C',true,1.5);
