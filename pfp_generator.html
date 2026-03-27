@@ -40,7 +40,7 @@ canvas { background: transparent; image-rendering: pixelated; }
     <div class="title-bar-buttons"><button>_</button><button>□</button><button>✕</button></div>
   </div>
   <div class="marquee-bar">
-    <span>☢ BUILT OUT OF PURE SPITE ☢ v6.3 — pill pilled, roach rider, killcam, mattress mode ☢ TAKE THE PILL ☢ PUMPFUN PILL CULTURE ☢ ALON IS PISSTEK CEO ☢ STOP BEING POOR ☢ LEGENDARY KILLCAM ☢ 360 NOSCOPE THE MOON ☢ DoN't ToUcH tHe PiNgLe ☢ FuCk KoLs ☢ THE ENGINE IS CLOSED. THE OUTPUT IS OPEN. ☢ mismatched socks: green left, blue right ☢ PISSCON 2 ☢ PISSTEK SURVIVES THE RUG ☢ ALL IN ☢ p/acc → Pissingularity ☢ 不要触摸我的 ☢ :23 ☢ PissTek™ | PingleTek™ | PISSTEK CAPITAL® ☢ 我是活的 ☢ PISSTINA IN THE KITCHEN ☢ ROACH ARMY MOBILIZING ☢</span>
+    <span>☢ BUILT OUT OF PURE SPITE ☢ v6.3 ☢ TAKE THE PILL ☢ PUMPFUN PILL CULTURE ☢ ALON IS PISSTEK CEO ☢ STOP BEING POOR ☢ LEGENDARY KILLCAM ☢ 360 NOSCOPE THE MOON ☢ BUY MY MEMES OR FUCK OFF ☢ i'M #1 aT EvErYtHiNg ☢ DoN't ToUcH tHe PiNgLe ☢ FuCk KoLs ☢ THE ENGINE IS CLOSED. THE OUTPUT IS OPEN. ☢ I STEAL EVERY BRAND / I OWN EVERY BRAND ☢ MEME+ TECHNOLOGY ☢ IN MINECRAFT ☢ (╯°□°）╯ ┻━┻ ☢ I'M THE ULTIMATE CORPORATOCRACY ☢ mismatched socks: green right, blue left ☢ PISSCON 2 — LIVE CULTURAL CONTACT ☢ PISSTEK SURVIVES THE RUG ☢ ALL IN ☢ p/acc → Pissingularity ☢ 不要触摸我的 ☢ :23 ☢ PissTek™ | PingleTek™ | PISSTEK CAPITAL® ☢ 我是活的 ☢ 中国堕落者 ☢ PISSTINA IN THE KITCHEN ☢ ROACH ARMY MOBILIZING ☢ PISSMISSLE LOVES SONIC 2 ☢ CYCLE 0 | 69.69 ☢ eVeRyThInG oN tHiS sItE iS a LiE ☢</span>
   </div>
   <div class="content">
     <div class="preset-row">
@@ -85,7 +85,7 @@ canvas { background: transparent; image-rendering: pixelated; }
         <select id="hat"><option value="none">None</option><option value="tophat">Top Hat</option><option value="crown">Piss Crown</option><option value="halo">Halo</option><option value="cap">Yellow Cap</option><option value="horns">Horns</option><option value="hardhat">Hard Hat</option><option value="headband">Headband</option><option value="viking">Viking Helm</option><option value="pinkhair">Pink Hair</option><option value="tinfoil">Tinfoil Hat</option><option value="bucket">Bucket Hat</option></select>
       </div>
       <div class="control-group"><label>🦸 Gear</label>
-        <select id="gear"><option value="none">None</option><option value="cape">Yellow Cape (P)</option><option value="speedo">Speedo</option><option value="blackshades">Black Shades</option><option value="whiteshades">White Round Shades</option><option value="glasses">Round Glasses</option><option value="stream">Piss Stream</option><option value="diamonds">Diamond Piss</option><option value="sword">Sword</option><option value="shirt">STOP BEING POOR</option><option value="alonceo">CEO Kit (shirt+shades)</option><option value="flag">Piss Raider Flag</option><option value="controller">Controller</option><option value="bowtie">Bowtie</option><option value="bikini">Bikini</option><option value="bikini_yellow">Yellow Bikini</option><option value="chain">Gold Chain</option><option value="moneybag">Money Bag</option><option value="pill">Pumpfun Pill</option><option value="sniper">Sniper Rifle</option><option value="cocktail">Cocktail Glass</option><option value="spoon">Wooden Spoon</option><option value="roachride">Roach Rider</option></select>
+        <select id="gear"><option value="none">None</option><option value="cape">Yellow Cape (P)</option><option value="speedo">Speedo</option><option value="blackshades">Black Shades</option><option value="whiteshades">White Round Shades</option><option value="glasses">Round Glasses</option><option value="stream">Piss Stream</option><option value="diamonds">Diamond Piss</option><option value="sword">Sword</option><option value="shirt">STOP BEING POOR</option><option value="alonceo">CEO Kit (shirt+shades)</option><option value="flag">Piss Raider Flag</option><option value="controller">Controller</option><option value="bowtie">Bowtie</option><option value="bikini">Bikini</option><option value="bikini_yellow">Yellow Bikini</option><option value="chain">Gold Chain</option><option value="moneybag">Money Bag</option><option value="pill">Pumpfun Pill</option><option value="sniper">Sniper Rifle</option><option value="cocktail">Cocktail Glass</option><option value="spoon">Wooden Spoon</option><option value="roachride">Roach Rider</option><option value="debitcard">Debit Card</option></select>
       </div>
       <div class="control-group"><label>🧦 Socks</label>
         <select id="sock"><option value="mismatch">Green + Blue</option><option value="green">Both Green</option><option value="blue">Both Blue</option><option value="none">Barefoot</option></select>
@@ -1230,6 +1230,27 @@ function drawGear(cx, hy, by, hr, bw, bh, gear, skin, lb, pose, shoulderY) {
     // Olive + toothpick
     ln(cgx+2,cgy-14,cgx+9,cgy-14,1.5);
     ci(cgx+4,cgy-14,3,'#5B8',true,1); ci(cgx+8,cgy-14,2.5,'#C22',true,0.8);
+  } else if (gear === 'debitcard') {
+    // Debit card / Mastercard — lore prop (Pissmissle carries one)
+    const dcx = cx + bw + 10, dcy = by - bh * 0.15;
+    x.save(); x.translate(dcx, dcy); x.rotate(-0.18);
+    // Card body
+    x.beginPath(); x.roundRect(-28,-18,56,36,4);
+    x.fillStyle='#1a1a2e'; x.fill(); x.strokeStyle='#000'; x.lineWidth=1.5; x.stroke();
+    // Mastercard circles
+    x.fillStyle='rgba(220,0,0,0.85)';
+    x.beginPath(); x.arc(-8,0,11,0,Math.PI*2); x.fill();
+    x.fillStyle='rgba(255,160,0,0.85)';
+    x.beginPath(); x.arc(8,0,11,0,Math.PI*2); x.fill();
+    // Overlap blend
+    x.fillStyle='rgba(220,80,0,0.5)';
+    x.beginPath(); x.arc(0,0,7,0,Math.PI*2); x.fill();
+    // Chip
+    x.fillStyle='#C8A200'; x.fillRect(-24,-16,14,10); x.strokeStyle='#8B7000'; x.lineWidth=0.8; x.strokeRect(-24,-16,14,10);
+    // Card number dots
+    x.fillStyle='rgba(255,255,255,0.4)'; x.font='5px monospace'; x.textAlign='center';
+    x.fillText('•••• •••• •••• PISS',0,14);
+    x.restore();
   } else if (gear === 'spoon') {
     // Wooden spoon raised — Pisstina kitchen ref
     const spx = cx + bw + 12, spy = hy - hr*0.2;
