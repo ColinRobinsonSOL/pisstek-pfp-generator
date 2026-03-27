@@ -451,13 +451,13 @@ function drawGoblin(cx, skin, bodyType, face, hat, gear, sockStyle, pingStyle, i
   } else {
     // Pissmissle beak — short stubby wedge on right side of face
     // Positioned at face mid-right, protruding outward
-    const noseBaseX = cx + headR * 0.56;
+    const noseBaseX = cx + headR * 0.62; // pushed further right so tip protrudes past head edge
     const noseBaseY = eyeYRef + 2;
     x.beginPath();
     x.moveTo(noseBaseX, noseBaseY - 9);
-    x.quadraticCurveTo(noseBaseX + 12, noseBaseY - 8, noseBaseX + 20, noseBaseY + 1);
-    x.quadraticCurveTo(noseBaseX + 17, noseBaseY + 10, noseBaseX + 9, noseBaseY + 13);
-    x.quadraticCurveTo(noseBaseX + 2, noseBaseY + 11, noseBaseX, noseBaseY + 5);
+    x.quadraticCurveTo(noseBaseX + 14, noseBaseY - 8, noseBaseX + 24, noseBaseY + 1);
+    x.quadraticCurveTo(noseBaseX + 20, noseBaseY + 10, noseBaseX + 11, noseBaseY + 14);
+    x.quadraticCurveTo(noseBaseX + 2, noseBaseY + 12, noseBaseX, noseBaseY + 5);
     x.closePath();
     x.fillStyle = skin; x.fill();
     x.strokeStyle = '#000'; x.lineWidth = 2.5; x.stroke();
@@ -482,9 +482,9 @@ function drawGoblin(cx, skin, bodyType, face, hat, gear, sockStyle, pingStyle, i
   // subtle blush DOTS on cheeks, small stub nose (NOT the big beak)
   if (isP) {
     if (hat === 'none') drawHat(cx, headY, headR, 'pinkhair');
-    // Diamond sparkle marks — ✦ under each eye at cheek level (kitchen ref)
+    // Diamond sparkle marks — ✦ on cheeks (kitchen ref — wide placement, not nose bridge)
     const eyeY2 = headY - headR * 0.28; // match eyeY
-    const spkL = cx - headR * 0.24, spkR = cx + headR * 0.24, spkY = eyeY2 + headR * 0.28;
+    const spkL = cx - headR * 0.50, spkR = cx + headR * 0.50, spkY = eyeY2 + headR * 0.22;
     for (const [sx, sy] of [[spkL, spkY], [spkR, spkY]]) {
       const ss = 7;
       x.strokeStyle = '#000'; x.lineWidth = 1.2;
@@ -525,7 +525,7 @@ function drawFace(cx, ey, my, sp, face, hR, skin) {
     // === ANGRY — THE signature Pisstek face ===
     // FLAT MS-PAINT STYLE: wide horizontal almond eyes, heavy straight lid, no shading
     // Refs: Sonic group, kitchen, space — eyes almost closed, contemptuous squint
-    const ew = 6, eh = 4.5; // almond eye: 6px half-width, 4.5px half-height
+    const ew = 7, eh = 4.5; // almond eye: wider for more expressive squint
     // White fill
     x.beginPath(); x.ellipse(lx, ey, ew, eh, 0, 0, Math.PI*2); x.fillStyle='#FFF'; x.fill();
     x.beginPath(); x.ellipse(rx, ey, ew, eh, 0, 0, Math.PI*2); x.fillStyle='#FFF'; x.fill();
@@ -1324,11 +1324,14 @@ function drawGeraldCone(cx, cy, sz, det, sockS, pingS, glasses) {
       x.fillStyle=rc;x.fill();x.strokeStyle='#000';x.lineWidth=1.5;x.stroke();
     }
   }
-  // Glasses
+  // Glasses — positioned at face eye level (ey=152 in drawFace call)
   if(glasses && det){
-    ci(cx-10,cy-h*0.05,9,null,true,1.5);
-    ci(cx+10,cy-h*0.05,9,null,true,1.5);
-    ln(cx+1,cy-h*0.05,cx-1,cy-h*0.05,1);
+    const gey=152;
+    ci(cx-12,gey,9,null,true,1.5);
+    ci(cx+12,gey,9,null,true,1.5);
+    ln(cx+3,gey,cx-3,gey,1);
+    ln(cx-21,gey,cx-28,gey-4,1.5); // arm left
+    ln(cx+21,gey,cx+28,gey-4,1.5); // arm right
   }
 }
 
@@ -1924,7 +1927,7 @@ function G(){
       x.fillStyle='#E890A5';
       for(let d=0;d<3;d++){x.beginPath();x.arc(cx+10+d*5,py+18+d*3,1.5,0,Math.PI*2);x.fill();}
     }
-    drawFace(cx,178,200,13,fc,25,'#FF6600');
+    drawFace(cx,152,172,12,fc,22,'#FF6600'); // eyes above white stripes (stripe1 at y≈177)
     drawHat(cx,120,60,ht);
     for(let c=0;c<cn;c++)miniCone(20+(c/Math.max(cn,1))*380,350+Math.random()*22,28+Math.random()*10);
     for(let r=0;r<rc;r++)roach(20+Math.random()*380,325+Math.random()*65,1.2+Math.random()*1.3,Math.random()*Math.PI*2,rs);
@@ -1936,38 +1939,38 @@ function G(){
   }
 
   if(ch==='pingle'){
-    // ROUNDED STUBBY HORNS — bezier nubs above head
-    x.beginPath(); x.moveTo(cx-20,174); x.quadraticCurveTo(cx-26,152,cx-14,152); x.quadraticCurveTo(cx-9,155,cx-17,174); x.closePath();
+    // ROUNDED STUBBY HORNS — bezier nubs above head (adjusted for head r=46 at y=192)
+    x.beginPath(); x.moveTo(cx-22,170); x.quadraticCurveTo(cx-28,146,cx-14,146); x.quadraticCurveTo(cx-8,150,cx-19,170); x.closePath();
     x.fillStyle='#D07090'; x.fill(); x.strokeStyle='#000'; x.lineWidth=2; x.stroke();
-    x.beginPath(); x.moveTo(cx+17,174); x.quadraticCurveTo(cx+24,152,cx+12,152); x.quadraticCurveTo(cx+7,155,cx+15,174); x.closePath();
+    x.beginPath(); x.moveTo(cx+19,170); x.quadraticCurveTo(cx+26,146,cx+12,146); x.quadraticCurveTo(cx+6,150,cx+17,170); x.closePath();
     x.fillStyle='#D07090'; x.fill(); x.strokeStyle='#000'; x.lineWidth=2; x.stroke();
-    // HEAD — round blob (separate from body like a real character)
-    x.beginPath(); x.arc(cx,193,40,0,Math.PI*2);
+    // HEAD — round blob (separate from body, oversized for character appeal)
+    x.beginPath(); x.arc(cx,192,46,0,Math.PI*2);
     x.fillStyle='#F0A0B0'; x.fill(); x.strokeStyle='#000'; x.lineWidth=3.5; x.stroke();
     // BODY — smaller round torso below
-    el(cx,248,34,26,'#F0A0B0');
+    el(cx,254,34,24,'#F0A0B0');
     // DIAPER — saggy white shape on body bottom
     x.beginPath();
-    x.moveTo(cx-28,260); x.quadraticCurveTo(cx-16,278,cx,281); x.quadraticCurveTo(cx+16,278,cx+28,260);
+    x.moveTo(cx-28,262); x.quadraticCurveTo(cx-16,280,cx,283); x.quadraticCurveTo(cx+16,280,cx+28,262);
     x.fillStyle='#F0F0F0'; x.fill(); x.strokeStyle='#000'; x.lineWidth=2; x.stroke();
-    x.fillStyle='#4488FF'; x.beginPath(); x.arc(cx,265,4,0,Math.PI*2); x.fill();
+    x.fillStyle='#4488FF'; x.beginPath(); x.arc(cx,267,4,0,Math.PI*2); x.fill();
     // FACE on head
-    drawFace(cx,189,210,15,fc,40,'#F0A0B0');
-    // NOODLE ARMS from body
-    ln(cx-34,248,cx-56,270,4,'#F0A0B0'); ln(cx-34,248,cx-56,270,2,'#000');
-    ln(cx+34,248,cx+56,266,4,'#F0A0B0'); ln(cx+34,248,cx+56,266,2,'#000');
-    ci(cx-56,270,6,'#F0A0B0');ci(cx+56,266,6,'#F0A0B0');
+    drawFace(cx,187,210,16,fc,46,'#F0A0B0');
+    // NOODLE ARMS from body (body at y=254)
+    ln(cx-34,254,cx-58,276,4,'#F0A0B0'); ln(cx-34,254,cx-58,276,2,'#000');
+    ln(cx+34,254,cx+58,272,4,'#F0A0B0'); ln(cx+34,254,cx+58,272,2,'#000');
+    ci(cx-58,276,6,'#F0A0B0');ci(cx+58,272,6,'#F0A0B0');
     // STUBBY LEGS from body bottom
-    ln(cx-16,272,cx-18,305,3.5,'#F0A0B0'); ln(cx-16,272,cx-18,305,2,'#000');
-    ln(cx+16,272,cx+18,305,3.5,'#F0A0B0'); ln(cx+16,272,cx+18,305,2,'#000');
+    ln(cx-16,276,cx-18,310,3.5,'#F0A0B0'); ln(cx-16,276,cx-18,310,2,'#000');
+    ln(cx+16,276,cx+18,310,3.5,'#F0A0B0'); ln(cx+16,276,cx+18,310,2,'#000');
     if(sc!=='none'){
       const lc=sc==='mismatch'?'#7CCC2E':'#5B9BD5',rc2=sc==='mismatch'?'#5B9BD5':'#7CCC2E';
-      x.beginPath();x.moveTo(cx-24,297);x.lineTo(cx-25,312);x.lineTo(cx-10,312);x.lineTo(cx-11,297);x.closePath();
+      x.beginPath();x.moveTo(cx-24,302);x.lineTo(cx-25,317);x.lineTo(cx-10,317);x.lineTo(cx-11,302);x.closePath();
       x.fillStyle=lc;x.fill();x.strokeStyle='#000';x.lineWidth=2;x.stroke();
-      x.beginPath();x.moveTo(cx+10,297);x.lineTo(cx+9,312);x.lineTo(cx+24,312);x.lineTo(cx+23,297);x.closePath();
+      x.beginPath();x.moveTo(cx+10,302);x.lineTo(cx+9,317);x.lineTo(cx+24,317);x.lineTo(cx+23,302);x.closePath();
       x.fillStyle=rc2;x.fill();x.strokeStyle='#000';x.lineWidth=2;x.stroke();
     }
-    drawHat(cx,153,40,ht);
+    drawHat(cx,146,46,ht); // hat on top of head (head top = 192-46=146)
     for(let r=0;r<rc;r++)roach(20+Math.random()*380,320+Math.random()*70,1.2+Math.random()*1.3,Math.random()*Math.PI*2,rs);
     for(let c=0;c<cn;c++)miniCone(20+(c/Math.max(cn,1))*380,345+Math.random()*25,26+Math.random()*10);
     drawCreatures(cr);
