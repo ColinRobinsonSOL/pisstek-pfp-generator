@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PissTek PFP Generator v5.0 — by ColinRobinson.Sol</title>
+<title>PissTek PFP Generator v5.9 — by ColinRobinson.Sol</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { background: #C0C0C0; font-family: 'MS Sans Serif', 'Segoe UI', Tahoma, sans-serif; min-height: 100vh; display: flex; justify-content: center; align-items: flex-start; padding: 10px; }
@@ -36,11 +36,11 @@ canvas { background: transparent; image-rendering: pixelated; }
 <body>
 <div class="window">
   <div class="title-bar">
-    <span>💦 PissTek PFP Generator v5.0 — ColinRobinson.Sol Labs × CRISARP</span>
+    <span>💦 PissTek PFP Generator v5.9 — ColinRobinson.Sol Labs × CRISARP</span>
     <div class="title-bar-buttons"><button>_</button><button>□</button><button>✕</button></div>
   </div>
   <div class="marquee-bar">
-    <span>☢ BUILT OUT OF PURE SPITE ☢ v5 — suited roaches, diamond piss, sword mode ☢ mismatched socks: green left, blue right ☢ PISSCON 2 ☢ PISSTEK SURVIVES THE RUG ☢ ALL IN ☢ p/acc → Pissingularity ☢ 不要触摸我的 ☢ :23 ☢</span>
+    <span>☢ BUILT OUT OF PURE SPITE ☢ v5.9 — maniac face, gold chain, tinfoil, casino, sewer ☢ i'M #1 aT EvErYtHiNg ☢ DoN't ToUcH tHe PiNgLe ☢ FuCk KoLs ☢ THE ENGINE IS CLOSED. THE OUTPUT IS OPEN. ☢ mismatched socks: green left, blue right ☢ PISSCON 2 ☢ PISSTEK SURVIVES THE RUG ☢ ALL IN ☢ p/acc → Pissingularity ☢ 不要触摸我的 ☢ :23 ☢ PissTek™ | PingleTek™ | PISSTEK CAPITAL® ☢ 我是活的 ☢</span>
   </div>
   <div class="content">
     <div class="preset-row">
@@ -59,6 +59,8 @@ canvas { background: transparent; image-rendering: pixelated; }
       <button class="btn95 preset" onclick="P('diamondpiss')">💎 Diamond</button>
       <button class="btn95 preset" onclick="P('rugsurvive')">☢️ Rug</button>
       <button class="btn95 preset" onclick="P('victory')">⚔️ Victory</button>
+      <button class="btn95 preset" onclick="P('casino')">🎰 Casino</button>
+      <button class="btn95 preset" onclick="P('sewer')">🪳 Sewer</button>
     </div>
     <div class="controls">
       <div class="control-group"><label>🎭 Character</label>
@@ -74,7 +76,7 @@ canvas { background: transparent; image-rendering: pixelated; }
         <select id="pose"><option value="plotting">Plotting (default)</option><option value="arms">Arms Out</option><option value="victory">Victory Raise</option><option value="hips">Hands on Hips</option></select>
       </div>
       <div class="control-group"><label>🎩 Head</label>
-        <select id="hat"><option value="none">None</option><option value="tophat">Top Hat</option><option value="crown">Piss Crown</option><option value="halo">Halo</option><option value="cap">Yellow Cap</option><option value="horns">Horns</option><option value="hardhat">Hard Hat</option><option value="headband">Headband</option><option value="viking">Viking Helm</option><option value="pinkhair">Pink Hair</option></select>
+        <select id="hat"><option value="none">None</option><option value="tophat">Top Hat</option><option value="crown">Piss Crown</option><option value="halo">Halo</option><option value="cap">Yellow Cap</option><option value="horns">Horns</option><option value="hardhat">Hard Hat</option><option value="headband">Headband</option><option value="viking">Viking Helm</option><option value="pinkhair">Pink Hair</option><option value="tinfoil">Tinfoil Hat</option><option value="bucket">Bucket Hat</option></select>
       </div>
       <div class="control-group"><label>🦸 Gear</label>
         <select id="gear"><option value="none">None</option><option value="cape">Yellow Cape (P)</option><option value="speedo">Speedo</option><option value="blackshades">Black Shades</option><option value="whiteshades">White Round Shades</option><option value="glasses">Round Glasses</option><option value="stream">Piss Stream</option><option value="diamonds">Diamond Piss</option><option value="sword">Sword</option><option value="shirt">STOP BEING POOR</option><option value="flag">Piss Raider Flag</option><option value="controller">Controller</option><option value="bowtie">Bowtie</option><option value="bikini">Bikini</option><option value="chain">Gold Chain</option><option value="moneybag">Money Bag</option></select>
@@ -104,7 +106,7 @@ canvas { background: transparent; image-rendering: pixelated; }
         <select id="creature"><option value="none">None</option><option value="lobster">Lobsters</option><option value="chick">Chicks</option></select>
       </div>
       <div class="control-group"><label>✨ FX</label>
-        <select id="fx"><option value="none">None</option><option value="P">P Letters</option><option value="hearts">Hearts</option><option value="fire">Fire</option><option value="money">$PISS</option><option value="zap">Lightning</option><option value="star">Sparkle</option></select>
+        <select id="fx"><option value="none">None</option><option value="P">P Letters</option><option value="hearts">Hearts</option><option value="fire">Fire</option><option value="money">$PISS</option><option value="zap">Lightning</option><option value="star">Sparkle</option><option value="matrix">Matrix Rain</option></select>
       </div>
       <div class="control-group"><label>📝 Title</label>
         <select id="title"><option value="none">None</option><option value="custom">Custom Text</option><option value="allin">ALL IN</option><option value="diamond">DIAMOND PISS</option><option value="survives">SURVIVES THE RUG</option><option value="ftw">FOR THE WIN!</option></select>
@@ -819,6 +821,42 @@ function drawHat(cx, hy, hr, hat) {
       x.lineTo(bx,top+hr*(0.3+((i%2)*0.15)));
     }
     x.strokeStyle='#E0508A';x.lineWidth=2;x.stroke();
+  } else if (hat === 'tinfoil') {
+    // Crinkled silver tinfoil hat — conspiratorial energy
+    x.beginPath();
+    x.moveTo(cx - hr*0.7, top + 8);
+    x.lineTo(cx - hr*0.52, top - 8);
+    x.lineTo(cx - hr*0.3, top - 22);
+    x.lineTo(cx - hr*0.1, top - 36);
+    x.lineTo(cx + hr*0.08, top - 42);
+    x.lineTo(cx + hr*0.22, top - 32);
+    x.lineTo(cx + hr*0.38, top - 18);
+    x.lineTo(cx + hr*0.55, top - 6);
+    x.lineTo(cx + hr*0.7, top + 8);
+    x.closePath();
+    x.fillStyle = '#C8C8C8'; x.fill(); x.strokeStyle = '#000'; x.lineWidth = 2; x.stroke();
+    // Foil shine lines — crinkle texture
+    x.strokeStyle = 'rgba(255,255,255,0.4)'; x.lineWidth = 1;
+    ln(cx - hr*0.35, top - 5, cx - hr*0.1, top - 32, 1, 'rgba(255,255,255,0.3)');
+    ln(cx + hr*0.1, top - 18, cx + hr*0.35, top - 6, 1, 'rgba(255,255,255,0.3)');
+    ln(cx - hr*0.15, top - 40, cx + hr*0.05, top - 28, 1, 'rgba(255,255,255,0.4)');
+    // Brim
+    el(cx, top + 8, hr*0.72 + 3, 7, '#B0B0B0', true, 1.5);
+  } else if (hat === 'bucket') {
+    // Bucket hat — flat brim, soft dome
+    el(cx, top + 8, hr*0.78 + 4, 8, '#E8C840', true, 2);
+    // Hat dome
+    x.beginPath();
+    x.moveTo(cx - hr*0.7, top + 8);
+    x.quadraticCurveTo(cx - hr*0.65, top - 20, cx, top - 22);
+    x.quadraticCurveTo(cx + hr*0.65, top - 20, cx + hr*0.7, top + 8);
+    x.fillStyle = '#E8C840'; x.fill(); x.strokeStyle = '#000'; x.lineWidth = 2; x.stroke();
+    // Brim underside shadow
+    x.strokeStyle = 'rgba(0,0,0,0.15)'; x.lineWidth = 1.5;
+    x.beginPath(); x.ellipse(cx, top + 10, hr*0.72, 5, 0, 0.1, Math.PI - 0.1); x.stroke();
+    // Text on brim
+    x.fillStyle = '#000'; x.font = 'bold 6px sans-serif'; x.textAlign = 'center';
+    x.fillText('PISS', cx, top + 12);
   }
 }
 
@@ -1439,6 +1477,17 @@ function drawFx(fx){
   x.strokeStyle='#FF0';x.lineWidth=1.5;x.beginPath();x.moveTo(lx,ly);x.lineTo(lx-8,ly+25);x.lineTo(lx+5,ly+25);x.lineTo(lx-5,ly+50);x.stroke();}}
   else if(fx==='star'){for(let i=0;i<16;i++){const sx=15+Math.random()*390,sy=15+Math.random()*390,ss=3+Math.random()*5;
   ln(sx-ss,sy,sx+ss,sy,1.5,'#FFD700');ln(sx,sy-ss,sx,sy+ss,1.5,'#FFD700');}}
+  else if(fx==='matrix'){
+    // Green piss-matrix rain — falling characters
+    x.font='bold 11px monospace';x.textAlign='center';
+    const chars=['P','I','S','S','💦','$','0','1','不','要','我','活','K','O','L','p','a','c','c',':','2','3'];
+    for(let i=0;i<28;i++){
+      const mx=15+Math.random()*390,my2=15+Math.random()*390;
+      const alpha=0.15+Math.random()*0.55;
+      x.fillStyle=`rgba(0,${150+Math.floor(Math.random()*105)},0,${alpha})`;
+      x.fillText(chars[Math.floor(Math.random()*chars.length)],mx,my2);
+    }
+  }
 }
 
 // ============================================================
@@ -1602,6 +1651,8 @@ function P(p){
     diamondpiss:{char:'goblin',body:'normal',face:'angry',hat:'none',gear:'diamonds',skin:'#E8D5A8',sock:'mismatch',ping:'normal',bg:'livingroom',roach:'4',cone:'0',fx:'star',roachstyle:'bucket',creature:'none',title:'diamond',pose:'plotting'},
     rugsurvive:{char:'goblin',body:'normal',face:'cry',hat:'none',gear:'none',skin:'#E8D5A8',sock:'mismatch',ping:'normal',bg:'ruins',roach:'10',cone:'0',fx:'none',roachstyle:'gasmask',creature:'none',title:'survives',pose:'arms'},
     victory:{char:'goblin',body:'normal',face:'angry',hat:'none',gear:'sword',skin:'#E8D5A8',sock:'mismatch',ping:'normal',bg:'lobsterpile',roach:'4',cone:'0',fx:'none',roachstyle:'normal',creature:'lobster',title:'ftw',pose:'victory'},
+    casino:{char:'goblin',body:'normal',face:'maniac',hat:'none',gear:'chain',skin:'#E8D5A8',sock:'mismatch',ping:'normal',bg:'casino',roach:'6',cone:'0',fx:'money',roachstyle:'suited',creature:'none',title:'none',pose:'arms'},
+    sewer:{char:'goblin',body:'normal',face:'angry',hat:'tinfoil',gear:'none',skin:'#E8D5A8',sock:'mismatch',ping:'angry',bg:'sewer',roach:'8',cone:'0',fx:'none',roachstyle:'gasmask',creature:'none',title:'none',pose:'plotting'},
   };
   const v=presets[p];if(!v)return;
   Object.entries(v).forEach(([id,val])=>{const e=document.getElementById(id);if(e)e.value=val;});
