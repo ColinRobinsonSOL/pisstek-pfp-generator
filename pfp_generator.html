@@ -219,26 +219,22 @@ function drawGoblin(cx, skin, bodyType, face, hat, gear, sockStyle, pingStyle, i
   if (sockStyle !== 'none') {
     const lc = sockStyle === 'mismatch' ? '#7CCC2E' : sockStyle === 'green' ? '#7CCC2E' : '#5B9BD5';
     const rc = sockStyle === 'mismatch' ? '#5B9BD5' : sockStyle === 'green' ? '#7CCC2E' : '#5B9BD5';
-    // Left sock
+    // Left sock — chunky block like in references
+    const st = legBase + legLen - 12, sb = legBase + legLen + 14;
     x.beginPath();
-    x.moveTo(ll - 8, legBase + legLen - 10);
-    x.lineTo(ll - 9, legBase + legLen + 6);
-    x.lineTo(ll - 12, legBase + legLen + 10);
-    x.lineTo(ll + 10, legBase + legLen + 10);
-    x.lineTo(ll + 8, legBase + legLen + 5);
-    x.lineTo(ll + 7, legBase + legLen - 10);
+    x.moveTo(ll - 11, st); x.lineTo(ll - 11, sb);
+    x.lineTo(ll + 12, sb); x.lineTo(ll + 12, st);
     x.closePath();
     x.fillStyle = lc; x.fill(); x.strokeStyle = '#000'; x.lineWidth = 2; x.stroke();
-    // Right sock
+    // Sock fold line near top
+    ln(ll - 11, st + 6, ll + 12, st + 6, 1, 'rgba(0,0,0,0.15)');
+    // Right sock — chunky block
     x.beginPath();
-    x.moveTo(rl - 7, legBase + legLen - 10);
-    x.lineTo(rl - 8, legBase + legLen + 5);
-    x.lineTo(rl - 10, legBase + legLen + 10);
-    x.lineTo(rl + 12, legBase + legLen + 10);
-    x.lineTo(rl + 9, legBase + legLen + 6);
-    x.lineTo(rl + 8, legBase + legLen - 10);
+    x.moveTo(rl - 12, st); x.lineTo(rl - 12, sb);
+    x.lineTo(rl + 11, sb); x.lineTo(rl + 11, st);
     x.closePath();
     x.fillStyle = rc; x.fill(); x.strokeStyle = '#000'; x.lineWidth = 2; x.stroke();
+    ln(rl - 12, st + 6, rl + 11, st + 6, 1, 'rgba(0,0,0,0.15)');
   }
 
   // === PINGLE — attached at groin, spread-limbed, drippy ===
@@ -261,15 +257,17 @@ function drawGoblin(cx, skin, bodyType, face, hat, gear, sockStyle, pingStyle, i
     ln(px + 6, py + 23, px + 12, py + 34, 2);
     ci(px - 12, py + 34, 2.5, '#F0A0B0', true, 1.5);
     ci(px + 12, py + 34, 2.5, '#F0A0B0', true, 1.5);
-    // Drips
-    x.fillStyle = '#E890A5';
-    for (let d = 0; d < 3; d++) {
-      const ddx = px - 5 + d * 5;
-      const dl = 4 + Math.random() * 6;
+    // Drips — longer, more of them, teardrop shaped
+    for (let d = 0; d < 6; d++) {
+      const ddx = px - 10 + d * 4 + (Math.random() - 0.5) * 3;
+      const dl = 12 + Math.random() * 14;
+      const dw = 2.5 + Math.random() * 1.5;
+      x.fillStyle = d % 2 === 0 ? '#E890A5' : '#F0A0B0';
       x.beginPath();
+      // Teardrop: narrow top, round bottom
       x.moveTo(ddx, py + 24);
-      x.quadraticCurveTo(ddx - 2, py + 24 + dl, ddx, py + 24 + dl + 3);
-      x.quadraticCurveTo(ddx + 2, py + 24 + dl, ddx, py + 24);
+      x.bezierCurveTo(ddx - dw, py + 24 + dl * 0.4, ddx - dw * 1.5, py + 24 + dl * 0.8, ddx, py + 24 + dl);
+      x.bezierCurveTo(ddx + dw * 1.5, py + 24 + dl * 0.8, ddx + dw, py + 24 + dl * 0.4, ddx, py + 24);
       x.fill();
     }
     // Face
@@ -375,23 +373,23 @@ function drawGoblin(cx, skin, bodyType, face, hat, gear, sockStyle, pingStyle, i
   // Head massive, body round/squat, minimal neck — matches reference
   x.beginPath();
   x.moveTo(cx - bodyW * 0.48, legBase);
-  // Left body up
-  x.quadraticCurveTo(cx - bodyW - 4, bodyY + bodyH * 0.1, cx - bodyW * 0.75, bodyY - bodyH * 0.55);
+  // Left body up — push control point out for rounder avocado bulge
+  x.quadraticCurveTo(cx - bodyW - 14, bodyY + bodyH * 0.15, cx - bodyW * 0.72, bodyY - bodyH * 0.52);
   // Smooth shoulder-to-head transition (no sharp neck)
-  x.quadraticCurveTo(cx - headR * 0.72, headY + headR * 0.55, cx - headR * 0.72, headY);
+  x.quadraticCurveTo(cx - headR * 0.65, headY + headR * 0.52, cx - headR * 0.68, headY);
   // Left head arc up to top
-  x.quadraticCurveTo(cx - headR * 0.85, headY - headR * 0.92, cx - headR * 0.18, headY - headR);
+  x.quadraticCurveTo(cx - headR * 0.88, headY - headR * 0.92, cx - headR * 0.18, headY - headR);
   // Crown of head (slightly flat on top — like reference)
-  x.quadraticCurveTo(cx, headY - headR * 1.04, cx + headR * 0.18, headY - headR);
+  x.quadraticCurveTo(cx, headY - headR * 1.05, cx + headR * 0.18, headY - headR);
   // Right head arc
-  x.quadraticCurveTo(cx + headR * 0.85, headY - headR * 0.92, cx + headR * 0.72, headY);
+  x.quadraticCurveTo(cx + headR * 0.88, headY - headR * 0.92, cx + headR * 0.68, headY);
   // Smooth transition back to shoulder
-  x.quadraticCurveTo(cx + headR * 0.72, headY + headR * 0.55, cx + bodyW * 0.75, bodyY - bodyH * 0.55);
-  // Right body down
-  x.quadraticCurveTo(cx + bodyW + 4, bodyY + bodyH * 0.1, cx + bodyW * 0.48, legBase);
-  // Crotch curve
-  x.quadraticCurveTo(cx + bodyW * 0.14, legBase + 6, cx, legBase + 4);
-  x.quadraticCurveTo(cx - bodyW * 0.14, legBase + 6, cx - bodyW * 0.48, legBase);
+  x.quadraticCurveTo(cx + headR * 0.65, headY + headR * 0.52, cx + bodyW * 0.72, bodyY - bodyH * 0.52);
+  // Right body down — matching bulge
+  x.quadraticCurveTo(cx + bodyW + 14, bodyY + bodyH * 0.15, cx + bodyW * 0.48, legBase);
+  // Crotch curve — wider/rounder bottom
+  x.quadraticCurveTo(cx + bodyW * 0.18, legBase + 12, cx, legBase + 6);
+  x.quadraticCurveTo(cx - bodyW * 0.18, legBase + 12, cx - bodyW * 0.48, legBase);
 
   x.fillStyle = skin; x.fill();
   x.strokeStyle = '#000'; x.lineWidth = 3; x.stroke();
@@ -493,6 +491,10 @@ function drawFace(cx, ey, my, sp, face, hR) {
     ln(rx + 10, ey - 13, rx - 6, ey - 6, 3.5);
     // Nose bridge crease between brows
     ln(cx - 3, ey - 8, cx + 3, ey - 8, 1.5, 'rgba(0,0,0,0.3)');
+    // Eye shine highlights
+    x.fillStyle = 'rgba(255,255,255,0.7)';
+    x.beginPath(); x.arc(lx - 1, ey - 1, 1.2, 0, Math.PI*2); x.fill();
+    x.beginPath(); x.arc(rx - 1, ey - 1, 1.2, 0, Math.PI*2); x.fill();
     // Flat tight frown — just a short horizontal line
     ln(cx - 7, my + 2, cx + 7, my + 2, 2.5);
     // Slight downturn at mouth corners
@@ -509,10 +511,10 @@ function drawFace(cx, ey, my, sp, face, hR) {
     // Brows — flatter than angry, slight tilt toward center
     ln(lx - 8, ey - 11, lx + 5, ey - 7, 3);
     ln(rx + 6, ey - 11, rx - 5, ey - 8, 2.5);
-    // Smirk — one side only, curves up on right
+    // Smirk — one side only, curves up on right (wider)
     x.beginPath();
-    x.moveTo(cx - 5, my + 3);
-    x.quadraticCurveTo(cx + 2, my - 1, cx + 10, my - 3);
+    x.moveTo(cx - 7, my + 3);
+    x.quadraticCurveTo(cx + 4, my - 2, cx + 16, my - 5);
     x.strokeStyle = '#000'; x.lineWidth = 2.5; x.stroke();
   } else if (face === 'cry') {
     ci(lx, ey, 7, '#FFF'); ci(rx, ey, 7, '#FFF');
@@ -528,10 +530,15 @@ function drawFace(cx, ey, my, sp, face, hR) {
     }
     el(cx, my + 3, 8, 6, '#300000');
   } else if (face === 'happy') {
+    // Happy — upward arc eyes with pupils, big smile
     x.strokeStyle = '#000'; x.lineWidth = 2.5;
     x.beginPath(); x.arc(lx, ey + 2, 5, Math.PI*1.1, Math.PI*1.9); x.stroke();
     x.beginPath(); x.arc(rx, ey + 2, 5, Math.PI*1.1, Math.PI*1.9); x.stroke();
-    x.beginPath(); x.arc(cx, my - 2, 8, 0.1, Math.PI - 0.1);
+    // Pupils inside arc eyes
+    x.fillStyle = '#000';
+    x.beginPath(); x.arc(lx, ey + 1, 2, 0, Math.PI*2); x.fill();
+    x.beginPath(); x.arc(rx, ey + 1, 2, 0, Math.PI*2); x.fill();
+    x.beginPath(); x.arc(cx, my - 2, 9, 0.05, Math.PI - 0.05);
     x.strokeStyle = '#000'; x.lineWidth = 2.5; x.stroke();
   } else if (face === 'dead') {
     // Dead inside — heavy flat brows, x eyes, flat mouth
@@ -543,21 +550,33 @@ function drawFace(cx, ey, my, sp, face, hR) {
     ln(cx-9,my+2,cx+9,my+2,2.5);
   } else if (face === 'vampire') {
     ci(lx,ey,7,'#1a0505'); ci(rx,ey,7,'#1a0505');
-    x.shadowColor='#F00';x.shadowBlur=10;
-    ci(lx,ey,2.5,'#F22',false); ci(rx,ey,2.5,'#F22',false);
+    x.shadowColor='#F00';x.shadowBlur=12;
+    ci(lx,ey,4,'#F22',false); ci(rx,ey,4,'#F22',false);
     x.shadowBlur=0;
-    x.beginPath(); x.arc(cx,my-3,10,0.15,Math.PI-0.15);
+    // Eye shine
+    x.fillStyle='rgba(255,80,80,0.5)';
+    x.beginPath();x.arc(lx-1,ey-2,1.5,0,Math.PI*2);x.fill();
+    x.beginPath();x.arc(rx-1,ey-2,1.5,0,Math.PI*2);x.fill();
+    x.beginPath(); x.arc(cx,my-3,11,0.12,Math.PI-0.12);
     x.strokeStyle='#000';x.lineWidth=2.5;x.stroke();
-    pg([[cx-5,my-1],[cx-3,my+8],[cx-1,my-1]],'#FFF',true,1.5);
-    pg([[cx+5,my-1],[cx+3,my+8],[cx+1,my-1]],'#FFF',true,1.5);
+    // Thicker fangs with wider bases
+    pg([[cx-6,my-1],[cx-2,my+10],[cx+1,my-1]],'#FFF',true,1.5);
+    pg([[cx+6,my-1],[cx+2,my+10],[cx-1,my-1]],'#FFF',true,1.5);
   } else if (face === 'uwu') {
+    // UwU — closed happy arc eyes with blush + cat mouth
     x.strokeStyle='#000';x.lineWidth=2.5;
-    x.beginPath();x.arc(lx,ey,5,Math.PI*0.1,Math.PI*0.9);x.stroke();
-    x.beginPath();x.arc(rx,ey,5,Math.PI*0.1,Math.PI*0.9);x.stroke();
-    el(lx-1,ey+9,6,3,'rgba(255,120,120,0.35)',false);
-    el(rx+1,ey+9,6,3,'rgba(255,120,120,0.35)',false);
+    x.beginPath();x.arc(lx,ey,5,Math.PI*0.05,Math.PI*0.95);x.stroke();
+    x.beginPath();x.arc(rx,ey,5,Math.PI*0.05,Math.PI*0.95);x.stroke();
+    // Pupils peeking through
+    x.fillStyle='#000';
+    x.beginPath();x.arc(lx,ey+1,2,0,Math.PI*2);x.fill();
+    x.beginPath();x.arc(rx,ey+1,2,0,Math.PI*2);x.fill();
+    // Bigger more vibrant blush
+    x.fillStyle='rgba(255,110,110,0.42)';
+    x.beginPath();x.ellipse(lx-2,ey+11,8,5,0,0,Math.PI*2);x.fill();
+    x.beginPath();x.ellipse(rx+2,ey+11,8,5,0,0,Math.PI*2);x.fill();
     x.beginPath();x.strokeStyle='#000';x.lineWidth=2;
-    x.moveTo(cx-5,my+2);x.lineTo(cx,my-2);x.lineTo(cx+5,my+2);x.stroke();
+    x.moveTo(cx-6,my+2);x.lineTo(cx,my-3);x.lineTo(cx+6,my+2);x.stroke();
   } else if (face === 'confused') {
     x.fillStyle='#000';x.beginPath();x.arc(lx,ey,3,0,Math.PI*2);x.fill();
     ci(rx,ey,5,'#FFF');
@@ -577,12 +596,13 @@ function drawFace(cx, ey, my, sp, face, hR) {
     ln(lx-8,ey-12,lx+4,ey-6,2.5);
     ln(rx+8,ey-12,rx-4,ey-6,2.5);
     x.globalAlpha=0.8;
-    x.strokeStyle='#F00';x.lineWidth=4;
-    x.beginPath();x.moveTo(lx,ey);x.lineTo(420,ey+80);x.stroke();
-    x.beginPath();x.moveTo(rx,ey);x.lineTo(420,ey+60);x.stroke();
-    x.strokeStyle='#F66';x.lineWidth=2;
-    x.beginPath();x.moveTo(lx,ey);x.lineTo(420,ey+80);x.stroke();
-    x.beginPath();x.moveTo(rx,ey);x.lineTo(420,ey+60);x.stroke();
+    const cw=cv.width;
+    x.strokeStyle='#F00';x.lineWidth=5;
+    x.beginPath();x.moveTo(lx,ey);x.lineTo(cw,ey+90);x.stroke();
+    x.beginPath();x.moveTo(rx,ey);x.lineTo(cw,ey+65);x.stroke();
+    x.strokeStyle='#FF6666';x.lineWidth=2;
+    x.beginPath();x.moveTo(lx,ey);x.lineTo(cw,ey+90);x.stroke();
+    x.beginPath();x.moveTo(rx,ey);x.lineTo(cw,ey+65);x.stroke();
     x.globalAlpha=1;
     x.shadowColor='#F00';x.shadowBlur=6;
     ci(lx,ey,4,'#F00',false);ci(rx,ey,4,'#F00',false);
