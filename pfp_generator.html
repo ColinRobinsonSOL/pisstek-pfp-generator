@@ -70,6 +70,9 @@ canvas { background: transparent; image-rendering: pixelated; }
       <div class="control-group"><label>😤 Face</label>
         <select id="face"><option value="angry">Angry</option><option value="smug">Smug</option><option value="cry">Crying</option><option value="happy">Happy</option><option value="dead">Dead Inside</option><option value="vampire">Energy Vampire</option><option value="uwu">UwU</option><option value="confused">Confused</option><option value="laser">Laser Eyes</option></select>
       </div>
+      <div class="control-group"><label>🤲 Pose</label>
+        <select id="pose"><option value="plotting">Plotting (default)</option><option value="arms">Arms Out</option><option value="victory">Victory Raise</option><option value="hips">Hands on Hips</option></select>
+      </div>
       <div class="control-group"><label>🎩 Head</label>
         <select id="hat"><option value="none">None</option><option value="tophat">Top Hat</option><option value="crown">Piss Crown</option><option value="halo">Halo</option><option value="cap">Yellow Cap</option><option value="horns">Horns</option><option value="hardhat">Hard Hat</option><option value="headband">Headband</option><option value="viking">Viking Helm</option><option value="pinkhair">Pink Hair</option></select>
       </div>
@@ -171,25 +174,29 @@ function tex(cx,cy,w,h,n=8){
 // Head and body are ONE flowing form
 // ============================================================
 
-function drawGoblin(cx, skin, bodyType, face, hat, gear, sockStyle, pingStyle, isP) {
-  // --- PROPORTIONS from reference art ---
+function drawGoblin(cx, skin, bodyType, face, hat, gear, sockStyle, pingStyle, isP, pose) {
+  pose = pose || 'plotting';
+
+  // --- PROPORTIONS — recalibrated against reference art ---
+  // Key: head should be BIG (dominates), body round/squat, legs short
   let headR, bodyW, bodyH, headY, bodyY, legLen;
 
   if (bodyType === 'normal') {
-    headR = 52; bodyW = 44; bodyH = 50; headY = 145; bodyY = 240; legLen = 55;
+    // Bigger head, squatter body — matches reference images
+    headR = 60; bodyW = 42; bodyH = 44; headY = 138; bodyY = 230; legLen = 52;
   } else if (bodyType === 'tall') {
-    headR = 46; bodyW = 38; bodyH = 65; headY = 120; bodyY = 235; legLen = 60;
+    headR = 52; bodyW = 36; bodyH = 62; headY = 112; bodyY = 225; legLen = 62;
   } else if (bodyType === 'thicc') {
-    headR = 50; bodyW = 65; bodyH = 48; headY = 145; bodyY = 248; legLen = 50;
+    headR = 56; bodyW = 68; bodyH = 50; headY = 140; bodyY = 245; legLen = 50;
   } else if (bodyType === 'smol') {
-    headR = 58; bodyW = 30; bodyH = 28; headY = 170; bodyY = 275; legLen = 40;
+    headR = 62; bodyW = 28; bodyH = 26; headY = 168; bodyY = 270; legLen = 38;
   } else { // sumo
-    headR = 48; bodyW = 78; bodyH = 62; headY = 130; bodyY = 258; legLen = 45;
+    headR = 52; bodyW = 82; bodyH = 64; headY = 128; bodyY = 255; legLen = 44;
   }
 
   const legBase = bodyY + bodyH * 0.8;
 
-  // === CAPE behind ===
+  // === CAPE behind (draw before body) ===
   if (gear === 'cape') {
     x.beginPath();
     x.moveTo(cx - bodyW + 5, bodyY - bodyH * 0.3);
@@ -202,205 +209,263 @@ function drawGoblin(cx, skin, bodyType, face, hat, gear, sockStyle, pingStyle, i
     x.fillText('P', cx, bodyY + 12);
   }
 
-  // === THIN NOODLE LEGS ===
-  const ll = cx - bodyW * 0.3;
-  const rl = cx + bodyW * 0.3;
-  ln(ll, legBase, ll - 2, legBase + legLen, 2.5);
-  ln(rl, legBase, rl + 2, legBase + legLen, 2.5);
+  // === THIN NOODLE LEGS — short, stick-like ===
+  const ll = cx - bodyW * 0.28;
+  const rl = cx + bodyW * 0.28;
+  ln(ll, legBase, ll - 2, legBase + legLen, 3);
+  ln(rl, legBase, rl + 2, legBase + legLen, 3);
 
-  // === MISMATCHED SOCKS ===
+  // === MISMATCHED SOCKS — chunky ankle blocks ===
   if (sockStyle !== 'none') {
     const lc = sockStyle === 'mismatch' ? '#7CCC2E' : sockStyle === 'green' ? '#7CCC2E' : '#5B9BD5';
     const rc = sockStyle === 'mismatch' ? '#5B9BD5' : sockStyle === 'green' ? '#7CCC2E' : '#5B9BD5';
-    // Left sock — ankle height
+    // Left sock
     x.beginPath();
-    x.moveTo(ll - 7, legBase + legLen - 8);
-    x.lineTo(ll - 8, legBase + legLen + 5);
-    x.lineTo(ll - 10, legBase + legLen + 8);
-    x.lineTo(ll + 8, legBase + legLen + 8);
-    x.lineTo(ll + 7, legBase + legLen + 3);
-    x.lineTo(ll + 6, legBase + legLen - 8);
+    x.moveTo(ll - 8, legBase + legLen - 10);
+    x.lineTo(ll - 9, legBase + legLen + 6);
+    x.lineTo(ll - 12, legBase + legLen + 10);
+    x.lineTo(ll + 10, legBase + legLen + 10);
+    x.lineTo(ll + 8, legBase + legLen + 5);
+    x.lineTo(ll + 7, legBase + legLen - 10);
     x.closePath();
     x.fillStyle = lc; x.fill(); x.strokeStyle = '#000'; x.lineWidth = 2; x.stroke();
     // Right sock
     x.beginPath();
-    x.moveTo(rl - 6, legBase + legLen - 8);
-    x.lineTo(rl - 7, legBase + legLen + 3);
-    x.lineTo(rl - 8, legBase + legLen + 8);
-    x.lineTo(rl + 10, legBase + legLen + 8);
-    x.lineTo(rl + 8, legBase + legLen + 5);
-    x.lineTo(rl + 7, legBase + legLen - 8);
+    x.moveTo(rl - 7, legBase + legLen - 10);
+    x.lineTo(rl - 8, legBase + legLen + 5);
+    x.lineTo(rl - 10, legBase + legLen + 10);
+    x.lineTo(rl + 12, legBase + legLen + 10);
+    x.lineTo(rl + 9, legBase + legLen + 6);
+    x.lineTo(rl + 8, legBase + legLen - 10);
     x.closePath();
     x.fillStyle = rc; x.fill(); x.strokeStyle = '#000'; x.lineWidth = 2; x.stroke();
   }
 
   // === PINGLE — attached at groin, spread-limbed, drippy ===
   if (pingStyle !== 'none') {
-    const px = cx, py = legBase + 2;
-    // Stem
-    ln(px, py - 10, px, py - 2, 2, '#D89090');
-    // Body blob
+    const px = cx, py = legBase;
+    // Stem connecting to body
+    ln(px, py - 12, px, py - 2, 2.5, '#C88080');
+    // Body blob — fatter
     x.beginPath();
-    x.ellipse(px, py + 7, 12, 13, 0, 0, Math.PI * 2);
+    x.ellipse(px, py + 10, 14, 15, 0, 0, Math.PI * 2);
     x.fillStyle = '#F0A0B0'; x.fill();
     x.strokeStyle = '#000'; x.lineWidth = 2; x.stroke();
-    // Spread arms
-    ln(px - 12, py + 5, px - 22, py - 1, 2);
-    ln(px + 12, py + 5, px + 22, py + 1, 2);
-    ci(px - 22, py - 1, 2.5, '#F0A0B0', true, 1.5);
-    ci(px + 22, py + 1, 2.5, '#F0A0B0', true, 1.5);
-    // Spread legs
-    ln(px - 5, py + 18, px - 10, py + 28, 2);
-    ln(px + 5, py + 18, px + 10, py + 28, 2);
-    ci(px - 10, py + 28, 2, '#F0A0B0', true, 1.5);
-    ci(px + 10, py + 28, 2, '#F0A0B0', true, 1.5);
+    // Spread arms (tiny)
+    ln(px - 14, py + 8, px - 26, py + 2, 2);
+    ln(px + 14, py + 8, px + 26, py + 4, 2);
+    ci(px - 26, py + 2, 3, '#F0A0B0', true, 1.5);
+    ci(px + 26, py + 4, 3, '#F0A0B0', true, 1.5);
+    // Spread legs (tiny)
+    ln(px - 6, py + 23, px - 12, py + 34, 2);
+    ln(px + 6, py + 23, px + 12, py + 34, 2);
+    ci(px - 12, py + 34, 2.5, '#F0A0B0', true, 1.5);
+    ci(px + 12, py + 34, 2.5, '#F0A0B0', true, 1.5);
     // Drips
     x.fillStyle = '#E890A5';
     for (let d = 0; d < 3; d++) {
-      const dx = px - 4 + d * 4;
-      const dl = 3 + Math.random() * 5;
+      const ddx = px - 5 + d * 5;
+      const dl = 4 + Math.random() * 6;
       x.beginPath();
-      x.moveTo(dx, py + 19);
-      x.quadraticCurveTo(dx - 1.5, py + 19 + dl, dx, py + 19 + dl + 2);
-      x.quadraticCurveTo(dx + 1.5, py + 19 + dl, dx, py + 19);
+      x.moveTo(ddx, py + 24);
+      x.quadraticCurveTo(ddx - 2, py + 24 + dl, ddx, py + 24 + dl + 3);
+      x.quadraticCurveTo(ddx + 2, py + 24 + dl, ddx, py + 24);
       x.fill();
     }
     // Face
     x.fillStyle = '#000';
     if (pingStyle === 'happy') {
-      x.fillRect(px - 4, py + 4, 2, 2); x.fillRect(px + 2, py + 4, 2, 2);
-      x.beginPath(); x.arc(px, py + 10, 3, 0, Math.PI);
-      x.strokeStyle = '#000'; x.lineWidth = 1.2; x.stroke();
+      x.fillRect(px - 5, py + 6, 2.5, 2.5); x.fillRect(px + 3, py + 6, 2.5, 2.5);
+      x.beginPath(); x.arc(px, py + 14, 4, 0, Math.PI);
+      x.strokeStyle = '#000'; x.lineWidth = 1.5; x.stroke();
     } else if (pingStyle === 'angry') {
-      x.fillRect(px - 4, py + 4, 2.5, 2.5); x.fillRect(px + 2, py + 4, 2.5, 2.5);
-      ln(px - 5, py + 1, px - 2, py + 3, 1.2);
-      ln(px + 5, py + 1, px + 2, py + 3, 1.2);
-      ln(px - 3, py + 11, px + 3, py + 12, 1.2);
+      x.fillRect(px - 5, py + 6, 3, 3); x.fillRect(px + 3, py + 6, 3, 3);
+      ln(px - 7, py + 2, px - 3, py + 5, 1.5);
+      ln(px + 7, py + 2, px + 3, py + 5, 1.5);
+      ln(px - 4, py + 16, px + 4, py + 17, 1.5);
     } else if (pingStyle === 'splat') {
-      x.fillRect(px - 3, py + 5, 2, 2); x.fillRect(px + 1, py + 5, 2, 2);
-      ln(px - 2, py + 11, px + 2, py + 11, 1.2);
+      x.fillRect(px - 4, py + 7, 2.5, 2.5); x.fillRect(px + 2, py + 7, 2.5, 2.5);
+      ln(px - 3, py + 15, px + 3, py + 15, 1.5);
     } else {
-      x.fillRect(px - 4, py + 4, 2, 2); x.fillRect(px + 2, py + 4, 2, 2);
-      ln(px - 2, py + 11, px + 2, py + 11, 1.2);
+      // Normal — deadpan
+      x.fillRect(px - 5, py + 6, 2.5, 2.5); x.fillRect(px + 3, py + 6, 2.5, 2.5);
+      ln(px - 3, py + 14, px + 3, py + 14, 1.5);
     }
   }
 
-  // === THIN NOODLE ARMS ===
-  const armY = bodyY - bodyH * 0.05;
-  // Left arm — thin line with small hand
-  const lhx = cx - bodyW - 20, lhy = armY + 25;
-  x.beginPath(); x.strokeStyle = '#000'; x.lineWidth = 2.5; x.lineCap = 'round';
-  x.moveTo(cx - bodyW + 2, armY);
-  x.quadraticCurveTo(cx - bodyW - 8, armY + 10, lhx, lhy);
-  x.stroke();
-  ci(lhx, lhy, 5, skin, true, 2);
-  // Fingers
-  ln(lhx - 4, lhy - 2, lhx - 8, lhy - 5, 1.2);
-  ln(lhx - 5, lhy + 1, lhx - 9, lhy, 1.2);
-  ln(lhx - 3, lhy + 4, lhx - 7, lhy + 5, 1.2);
+  // === ARMS — POSE BASED ===
+  const shoulderY = bodyY - bodyH * 0.12;
 
-  // Right arm
-  const rhx = cx + bodyW + 20, rhy = armY + 18;
-  x.beginPath(); x.strokeStyle = '#000'; x.lineWidth = 2.5;
-  x.moveTo(cx + bodyW - 2, armY);
-  x.quadraticCurveTo(cx + bodyW + 8, armY + 5, rhx, rhy);
-  x.stroke();
-  ci(rhx, rhy, 5, skin, true, 2);
-  ln(rhx + 4, rhy - 2, rhx + 8, rhy - 5, 1.2);
-  ln(rhx + 5, rhy + 1, rhx + 9, rhy, 1.2);
-  ln(rhx + 3, rhy + 4, rhx + 7, rhy + 5, 1.2);
+  if (pose === 'plotting') {
+    // === THE ICONIC PISSTEK POSE: arms bent in, hands clasped at belly ===
+    // Left arm: shoulder → elbow (slightly out) → hand (center-belly)
+    x.beginPath(); x.strokeStyle = '#000'; x.lineWidth = 3; x.lineCap = 'round';
+    x.moveTo(cx - bodyW + 2, shoulderY);
+    x.quadraticCurveTo(cx - bodyW - 10, shoulderY + 28, cx - 14, bodyY + 10);
+    x.stroke();
+    // Right arm: shoulder → elbow (slightly out) → hand (center-belly)
+    x.beginPath();
+    x.moveTo(cx + bodyW - 2, shoulderY);
+    x.quadraticCurveTo(cx + bodyW + 10, shoulderY + 28, cx + 14, bodyY + 10);
+    x.stroke();
+    // Clasped hands — overlapping oval blob at center-belly
+    el(cx, bodyY + 10, 20, 11, skin, true, 2.5);
+    // Finger knuckle lines across clasped hands
+    x.strokeStyle = 'rgba(0,0,0,0.25)'; x.lineWidth = 1;
+    for (let f = -3; f <= 3; f++) {
+      x.beginPath();
+      x.moveTo(cx + f * 5, bodyY + 4);
+      x.lineTo(cx + f * 5, bodyY + 16);
+      x.stroke();
+    }
+  } else if (pose === 'arms') {
+    // Original arms-out pose
+    const armY = bodyY - bodyH * 0.05;
+    const lhx = cx - bodyW - 22, lhy = armY + 28;
+    x.beginPath(); x.strokeStyle = '#000'; x.lineWidth = 2.5; x.lineCap = 'round';
+    x.moveTo(cx - bodyW + 2, armY);
+    x.quadraticCurveTo(cx - bodyW - 8, armY + 12, lhx, lhy);
+    x.stroke();
+    ci(lhx, lhy, 5, skin, true, 2);
+    ln(lhx - 4, lhy - 2, lhx - 8, lhy - 5, 1.2);
+    ln(lhx - 5, lhy + 1, lhx - 9, lhy, 1.2);
+    ln(lhx - 3, lhy + 4, lhx - 7, lhy + 5, 1.2);
+    const rhx = cx + bodyW + 22, rhy = armY + 20;
+    x.beginPath(); x.strokeStyle = '#000'; x.lineWidth = 2.5;
+    x.moveTo(cx + bodyW - 2, armY);
+    x.quadraticCurveTo(cx + bodyW + 8, armY + 8, rhx, rhy);
+    x.stroke();
+    ci(rhx, rhy, 5, skin, true, 2);
+    ln(rhx + 4, rhy - 2, rhx + 8, rhy - 5, 1.2);
+    ln(rhx + 5, rhy + 1, rhx + 9, rhy, 1.2);
+    ln(rhx + 3, rhy + 4, rhx + 7, rhy + 5, 1.2);
+  } else if (pose === 'victory') {
+    // Left arm hangs slightly down
+    const lhx = cx - bodyW - 12, lhy = shoulderY + 45;
+    x.beginPath(); x.strokeStyle = '#000'; x.lineWidth = 2.5; x.lineCap = 'round';
+    x.moveTo(cx - bodyW + 2, shoulderY);
+    x.quadraticCurveTo(cx - bodyW - 5, shoulderY + 22, lhx, lhy);
+    x.stroke();
+    ci(lhx, lhy, 5, skin, true, 2);
+    // Right arm raised triumphantly
+    const rhx = cx + bodyW + 18, rhy = shoulderY - 40;
+    x.beginPath(); x.lineWidth = 2.5;
+    x.moveTo(cx + bodyW - 2, shoulderY);
+    x.quadraticCurveTo(cx + bodyW + 22, shoulderY - 22, rhx, rhy);
+    x.stroke();
+    ci(rhx, rhy, 5, skin, true, 2);
+    ln(rhx + 2, rhy - 5, rhx + 5, rhy - 9, 1.2);
+    ln(rhx + 5, rhy - 2, rhx + 9, rhy - 4, 1.2);
+    ln(rhx - 2, rhy - 5, rhx - 5, rhy - 9, 1.2);
+  } else if (pose === 'hips') {
+    // Both arms bent outward, fists on hips
+    x.beginPath(); x.strokeStyle = '#000'; x.lineWidth = 2.5; x.lineCap = 'round';
+    x.moveTo(cx - bodyW + 2, shoulderY);
+    x.quadraticCurveTo(cx - bodyW - 18, shoulderY + 15, cx - bodyW - 14, shoulderY + 38);
+    x.stroke();
+    ci(cx - bodyW - 14, shoulderY + 38, 5, skin, true, 2);
+    x.beginPath();
+    x.moveTo(cx + bodyW - 2, shoulderY);
+    x.quadraticCurveTo(cx + bodyW + 18, shoulderY + 15, cx + bodyW + 14, shoulderY + 38);
+    x.stroke();
+    ci(cx + bodyW + 14, shoulderY + 38, 5, skin, true, 2);
+  }
 
-  // === MAIN BODY — one continuous organic shape ===
-  // Head and body as ONE flowing bean form
+  // === MAIN BODY — one continuous organic bean shape ===
+  // Head massive, body round/squat, minimal neck — matches reference
   x.beginPath();
-  // Start left side of body bottom
-  x.moveTo(cx - bodyW * 0.5, legBase);
-  // Left body side going up
-  x.quadraticCurveTo(cx - bodyW - 2, bodyY, cx - bodyW * 0.7, bodyY - bodyH * 0.6);
-  // Neck transition (subtle — head flows into body)
-  x.quadraticCurveTo(cx - headR * 0.75, headY + headR * 0.6, cx - headR * 0.7, headY);
-  // Left side of head up to top
-  x.quadraticCurveTo(cx - headR * 0.8, headY - headR * 0.9, cx - headR * 0.2, headY - headR);
-  // Top of head
-  x.quadraticCurveTo(cx, headY - headR * 1.06, cx + headR * 0.2, headY - headR);
-  // Right side of head
-  x.quadraticCurveTo(cx + headR * 0.8, headY - headR * 0.9, cx + headR * 0.7, headY);
-  // Neck transition right
-  x.quadraticCurveTo(cx + headR * 0.75, headY + headR * 0.6, cx + bodyW * 0.7, bodyY - bodyH * 0.6);
-  // Right body side going down
-  x.quadraticCurveTo(cx + bodyW + 2, bodyY, cx + bodyW * 0.5, legBase);
-  // Bottom of body (crotch area)
-  x.quadraticCurveTo(cx + bodyW * 0.15, legBase + 5, cx, legBase + 3);
-  x.quadraticCurveTo(cx - bodyW * 0.15, legBase + 5, cx - bodyW * 0.5, legBase);
+  x.moveTo(cx - bodyW * 0.48, legBase);
+  // Left body up
+  x.quadraticCurveTo(cx - bodyW - 4, bodyY + bodyH * 0.1, cx - bodyW * 0.75, bodyY - bodyH * 0.55);
+  // Smooth shoulder-to-head transition (no sharp neck)
+  x.quadraticCurveTo(cx - headR * 0.72, headY + headR * 0.55, cx - headR * 0.72, headY);
+  // Left head arc up to top
+  x.quadraticCurveTo(cx - headR * 0.85, headY - headR * 0.92, cx - headR * 0.18, headY - headR);
+  // Crown of head (slightly flat on top — like reference)
+  x.quadraticCurveTo(cx, headY - headR * 1.04, cx + headR * 0.18, headY - headR);
+  // Right head arc
+  x.quadraticCurveTo(cx + headR * 0.85, headY - headR * 0.92, cx + headR * 0.72, headY);
+  // Smooth transition back to shoulder
+  x.quadraticCurveTo(cx + headR * 0.72, headY + headR * 0.55, cx + bodyW * 0.75, bodyY - bodyH * 0.55);
+  // Right body down
+  x.quadraticCurveTo(cx + bodyW + 4, bodyY + bodyH * 0.1, cx + bodyW * 0.48, legBase);
+  // Crotch curve
+  x.quadraticCurveTo(cx + bodyW * 0.14, legBase + 6, cx, legBase + 4);
+  x.quadraticCurveTo(cx - bodyW * 0.14, legBase + 6, cx - bodyW * 0.48, legBase);
 
   x.fillStyle = skin; x.fill();
-  x.strokeStyle = '#000'; x.lineWidth = 2.5; x.stroke();
+  x.strokeStyle = '#000'; x.lineWidth = 3; x.stroke();
 
-  // Belly bump curve
+  // Subtle belly roundness shadow
   x.beginPath();
-  x.strokeStyle = 'rgba(0,0,0,0.1)'; x.lineWidth = 1;
-  x.arc(cx + 2, bodyY - 5, bodyW * 0.5, 0.4, Math.PI - 0.4);
+  x.strokeStyle = 'rgba(0,0,0,0.08)'; x.lineWidth = 1.2;
+  x.arc(cx, bodyY + 2, bodyW * 0.52, 0.35, Math.PI - 0.35);
   x.stroke();
 
-  // Skin texture cross-hatching
-  tex(cx, bodyY, bodyW * 1.4, bodyH * 1.2, 12);
-  tex(cx, headY, headR * 1.2, headR, 6);
+  // Skin texture
+  tex(cx, bodyY, bodyW * 1.4, bodyH * 1.2, 14);
+  tex(cx, headY, headR * 1.1, headR * 0.9, 7);
 
-  // === EARS — small pointed triangles ===
-  const earY = headY - headR * 0.05;
+  // === EARS — small horizontal pointed stubs AT EYE LEVEL ===
+  // In references: tiny points sticking out sideways at eye height, not above
+  const earY = headY + headR * 0.05; // at roughly eye level
   // Left ear
   x.beginPath();
-  x.moveTo(cx - headR * 0.65, earY - 5);
-  x.lineTo(cx - headR * 0.65 - 18, earY);
-  x.lineTo(cx - headR * 0.65, earY + 6);
+  x.moveTo(cx - headR * 0.72, earY - 6);
+  x.lineTo(cx - headR * 0.72 - 20, earY + 2);
+  x.lineTo(cx - headR * 0.72, earY + 8);
   x.closePath();
   x.fillStyle = skin; x.fill(); x.strokeStyle = '#000'; x.lineWidth = 2; x.stroke();
   // Right ear
   x.beginPath();
-  x.moveTo(cx + headR * 0.65, earY - 5);
-  x.lineTo(cx + headR * 0.65 + 18, earY);
-  x.lineTo(cx + headR * 0.65, earY + 6);
+  x.moveTo(cx + headR * 0.72, earY - 6);
+  x.lineTo(cx + headR * 0.72 + 20, earY + 2);
+  x.lineTo(cx + headR * 0.72, earY + 8);
   x.closePath();
   x.fillStyle = skin; x.fill(); x.strokeStyle = '#000'; x.lineWidth = 2; x.stroke();
 
-  // === THE NOSE — pointed snout/beak ===
-  // This is THE defining feature — protrudes from right side of face
-  const noseX = cx + headR * 0.5;
-  const noseY = headY + 2;
+  // === THE NOSE — THE most defining feature ===
+  // Long pointed beak/snout, protrudes far right, slightly downward curve
+  // In references: prominent, angular, almost bird-like, dominates the face
+  const noseBaseX = cx + headR * 0.48;
+  const noseBaseY = headY + headR * 0.1; // slightly below face center (eye level-ish)
   x.beginPath();
-  x.moveTo(noseX - 2, noseY - 7);
-  x.quadraticCurveTo(noseX + 20, noseY, noseX + 15, noseY + 8);
-  x.quadraticCurveTo(noseX + 5, noseY + 10, noseX - 2, noseY + 5);
+  // Top edge: starts at face, curves out to sharp tip
+  x.moveTo(noseBaseX, noseBaseY - 10);
+  x.quadraticCurveTo(noseBaseX + 18, noseBaseY - 8, noseBaseX + 32, noseBaseY + 2);
+  // Tip of nose (sharp point)
+  x.quadraticCurveTo(noseBaseX + 30, noseBaseY + 10, noseBaseX + 20, noseBaseY + 14);
+  // Underside back to face
+  x.quadraticCurveTo(noseBaseX + 8, noseBaseY + 14, noseBaseX, noseBaseY + 6);
+  x.closePath();
   x.fillStyle = skin; x.fill();
-  x.strokeStyle = '#000'; x.lineWidth = 2; x.stroke();
-  // Nostril
-  x.fillStyle = '#000';
-  x.beginPath(); x.arc(noseX + 12, noseY + 3, 1.2, 0, Math.PI * 2); x.fill();
+  x.strokeStyle = '#000'; x.lineWidth = 2.5; x.stroke();
+  // Nostril — small dark oval near tip
+  x.fillStyle = 'rgba(0,0,0,0.7)';
+  x.beginPath(); x.ellipse(noseBaseX + 22, noseBaseY + 8, 2.5, 1.8, -0.3, 0, Math.PI * 2); x.fill();
 
   // === HEADWEAR ===
   drawHat(cx, headY, headR, hat);
 
   // === PISSTINA extras ===
   if (isP) {
-    // Auto pink hair if no hat
     if (hat === 'none') drawHat(cx, headY, headR, 'pinkhair');
-    // Blush dots
     x.fillStyle = 'rgba(255,140,140,0.35)';
-    x.beginPath(); x.arc(cx - headR * 0.32, headY + headR * 0.2, 6, 0, Math.PI * 2); x.fill();
-    x.beginPath(); x.arc(cx + headR * 0.32, headY + headR * 0.2, 6, 0, Math.PI * 2); x.fill();
+    x.beginPath(); x.arc(cx - headR * 0.3, headY + headR * 0.18, 7, 0, Math.PI * 2); x.fill();
+    x.beginPath(); x.arc(cx + headR * 0.3, headY + headR * 0.18, 7, 0, Math.PI * 2); x.fill();
   }
 
-  // === FACE ===
-  const eyeY = headY - headR * 0.15;
-  const eyeSpan = headR * 0.22;
-  drawFace(cx, eyeY, headY + headR * 0.35, eyeSpan, face, headR);
+  // === FACE — eyes placed near center of face, NOT upper quarter ===
+  // In reference: eyes are fairly low/centered on face, big brow angles
+  const eyeY = headY - headR * 0.05; // near face center (was -0.15, too high)
+  const eyeSpan = headR * 0.24;
+  drawFace(cx, eyeY, headY + headR * 0.38, eyeSpan, face, headR);
 
   // === GEAR (front accessories) ===
   drawGear(cx, headY, bodyY, headR, bodyW, bodyH, gear, skin, legBase);
 
   // === SHIRT overlay ===
   if (gear === 'shirt') {
-    // Redraw body area as shirt
     el(cx, bodyY, bodyW + 2, bodyH * 0.8 + 2, '#111', true, 2);
     x.fillStyle = '#FFF'; x.font = 'bold 9px sans-serif'; x.textAlign = 'center';
     x.fillText('STOP', cx, bodyY - 8);
@@ -417,23 +482,37 @@ function drawFace(cx, ey, my, sp, face, hR) {
   const lx = cx - sp, rx = cx + sp;
 
   if (face === 'angry') {
+    // === ANGRY — THE most common Pisstek face ===
+    // Heavy angled brows, small intense eyes, flat frown
     x.fillStyle = '#000';
-    x.beginPath(); x.arc(lx, ey, 3, 0, Math.PI*2); x.fill();
-    x.beginPath(); x.arc(rx, ey, 3, 0, Math.PI*2); x.fill();
-    ln(lx - 8, ey - 12, lx + 4, ey - 6, 2.5);
-    ln(rx + 8, ey - 12, rx - 4, ey - 6, 2.5);
-    // Wrinkly frown
-    ln(cx - 8, my, cx + 8, my + 2, 2);
-    ln(cx - 10, my - 2, cx - 7, my + 1, 1.2);
-    ln(cx + 10, my - 2, cx + 7, my + 1, 1.2);
-    // Mouth wrinkles
-    ln(cx - 5, my + 3, cx - 2, my + 6, 0.8, 'rgba(0,0,0,0.2)');
-    ln(cx + 2, my + 3, cx + 5, my + 6, 0.8, 'rgba(0,0,0,0.2)');
+    // Eyes — small solid dots, slightly squinted
+    x.beginPath(); x.ellipse(lx, ey, 3.5, 3, 0, 0, Math.PI*2); x.fill();
+    x.beginPath(); x.ellipse(rx, ey, 3.5, 3, 0, 0, Math.PI*2); x.fill();
+    // Brows — thick angled lines, steep V shape toward center
+    ln(lx - 10, ey - 13, lx + 6, ey - 6, 3.5);
+    ln(rx + 10, ey - 13, rx - 6, ey - 6, 3.5);
+    // Nose bridge crease between brows
+    ln(cx - 3, ey - 8, cx + 3, ey - 8, 1.5, 'rgba(0,0,0,0.3)');
+    // Flat tight frown — just a short horizontal line
+    ln(cx - 7, my + 2, cx + 7, my + 2, 2.5);
+    // Slight downturn at mouth corners
+    ln(cx - 7, my + 2, cx - 9, my + 5, 1.5);
+    ln(cx + 7, my + 2, cx + 9, my + 5, 1.5);
   } else if (face === 'smug') {
-    ln(lx - 4, ey, lx + 4, ey, 2.5);
-    x.fillStyle = '#000'; x.beginPath(); x.arc(rx, ey, 3, 0, Math.PI*2); x.fill();
-    ln(rx - 6, ey - 12, rx + 6, ey - 8, 2);
-    x.beginPath(); x.arc(cx + 3, my, 8, 0.1, Math.PI * 0.6);
+    // === SMUG — one eye open one squinting, crooked smirk ===
+    // As seen in "ALL IN" image — both slightly narrowed, confident look
+    x.fillStyle = '#000';
+    // Left eye — thin horizontal squint
+    ln(lx - 5, ey, lx + 5, ey, 3);
+    // Right eye — half-closed squint
+    x.beginPath(); x.ellipse(rx, ey, 4, 2.5, 0, 0, Math.PI*2); x.fill();
+    // Brows — flatter than angry, slight tilt toward center
+    ln(lx - 8, ey - 11, lx + 5, ey - 7, 3);
+    ln(rx + 6, ey - 11, rx - 5, ey - 8, 2.5);
+    // Smirk — one side only, curves up on right
+    x.beginPath();
+    x.moveTo(cx - 5, my + 3);
+    x.quadraticCurveTo(cx + 2, my - 1, cx + 10, my - 3);
     x.strokeStyle = '#000'; x.lineWidth = 2.5; x.stroke();
   } else if (face === 'cry') {
     ci(lx, ey, 7, '#FFF'); ci(rx, ey, 7, '#FFF');
@@ -455,11 +534,13 @@ function drawFace(cx, ey, my, sp, face, hR) {
     x.beginPath(); x.arc(cx, my - 2, 8, 0.1, Math.PI - 0.1);
     x.strokeStyle = '#000'; x.lineWidth = 2.5; x.stroke();
   } else if (face === 'dead') {
-    ln(lx-4,ey-4,lx+4,ey+4,2.5); ln(lx+4,ey-4,lx-4,ey+4,2.5);
-    ln(rx-4,ey-4,rx+4,ey+4,2.5); ln(rx+4,ey-4,rx-4,ey+4,2.5);
-    x.beginPath(); x.strokeStyle='#000'; x.lineWidth=2;
-    for(let i=0;i<18;i++){const px=cx-9+i;const py=my+Math.sin(i*0.9)*2.5;
-    if(i===0)x.moveTo(px,py);else x.lineTo(px,py);} x.stroke();
+    // Dead inside — heavy flat brows, x eyes, flat mouth
+    ln(lx-10,ey-11,lx+6,ey-6,3.5); ln(rx+10,ey-11,rx-6,ey-6,3.5);
+    // X eyes
+    ln(lx-5,ey-5,lx+5,ey+5,2.5); ln(lx+5,ey-5,lx-5,ey+5,2.5);
+    ln(rx-5,ey-5,rx+5,ey+5,2.5); ln(rx+5,ey-5,rx-5,ey+5,2.5);
+    // Completely flat mouth
+    ln(cx-9,my+2,cx+9,my+2,2.5);
   } else if (face === 'vampire') {
     ci(lx,ey,7,'#1a0505'); ci(rx,ey,7,'#1a0505');
     x.shadowColor='#F00';x.shadowBlur=10;
@@ -1084,7 +1165,7 @@ function G(){
   const ch=$('char'),bt=$('body'),fc=$('face'),ht=$('hat'),gr=$('gear'),
     sk=$('skin'),bg=$('bg'),sc=$('sock'),pg2=$('ping'),
     rc=+$('roach'),cn=+$('cone'),ef=$('fx'),
-    rs=$('roachstyle'),cr=$('creature'),ti=$('title');
+    rs=$('roachstyle'),cr=$('creature'),ti=$('title'),ps=$('pose');
 
   // Show/hide custom title input
   const ctr=document.getElementById('customTitleRow');
@@ -1143,7 +1224,7 @@ function G(){
   }
 
   // Main goblin (pissmissle/pisstina)
-  drawGoblin(cx,sk,bt,fc,ht,gr,sc,pg2,ch==='pisstina');
+  drawGoblin(cx,sk,bt,fc,ht,gr,sc,pg2,ch==='pisstina',ps);
 
   for(let r=0;r<rc;r++)roach(15+Math.random()*390,310+Math.random()*85,1.2+Math.random()*1.4,Math.random()*Math.PI*2,rs);
   for(let c=0;c<cn;c++)miniCone(15+(c/Math.max(cn,1))*390,350+Math.random()*22,24+Math.random()*12);
@@ -1209,20 +1290,20 @@ function $i(id){return document.getElementById(id);}
 
 function P(p){
   const presets={
-    pissmissle:{char:'goblin',body:'normal',face:'angry',hat:'none',gear:'none',skin:'#E8D5A8',sock:'mismatch',ping:'normal',bg:'none',roach:'4',cone:'0',fx:'none',roachstyle:'normal',creature:'none',title:'none'},
-    pisstina:{char:'pisstina',body:'normal',face:'uwu',hat:'pinkhair',gear:'none',skin:'#E8D5A8',sock:'mismatch',ping:'happy',bg:'none',roach:'0',cone:'0',fx:'hearts',roachstyle:'normal',creature:'none',title:'none'},
-    gerald:{char:'gerald',body:'normal',face:'happy',hat:'halo',gear:'glasses',skin:'#E8D5A8',sock:'mismatch',ping:'splat',bg:'none',roach:'0',cone:'8',fx:'star',roachstyle:'normal',creature:'none',title:'none'},
-    colin:{char:'goblin',body:'normal',face:'vampire',hat:'none',gear:'blackshades',skin:'#E8D5A8',sock:'mismatch',ping:'angry',bg:'#000',roach:'10',cone:'0',fx:'none',roachstyle:'normal',creature:'none',title:'none'},
-    sumo:{char:'goblin',body:'sumo',face:'angry',hat:'headband',gear:'speedo',skin:'#E8D5A8',sock:'none',ping:'normal',bg:'#FC0',roach:'0',cone:'0',fx:'none',roachstyle:'normal',creature:'none',title:'none'},
-    viking:{char:'goblin',body:'tall',face:'angry',hat:'viking',gear:'flag',skin:'#E8D5A8',sock:'mismatch',ping:'angry',bg:'storm',roach:'0',cone:'0',fx:'zap',roachstyle:'normal',creature:'none',title:'none'},
-    pool:{char:'goblin',body:'normal',face:'smug',hat:'cap',gear:'whiteshades',skin:'#E8D5A8',sock:'mismatch',ping:'happy',bg:'beach',roach:'0',cone:'0',fx:'money',roachstyle:'normal',creature:'none',title:'none'},
-    space:{char:'goblin',body:'normal',face:'happy',hat:'none',gear:'none',skin:'#E8D5A8',sock:'mismatch',ping:'normal',bg:'space',roach:'0',cone:'0',fx:'star',roachstyle:'normal',creature:'none',title:'none'},
-    gamer:{char:'goblin',body:'normal',face:'angry',hat:'none',gear:'controller',skin:'#E8D5A8',sock:'mismatch',ping:'normal',bg:'#008',roach:'0',cone:'3',fx:'none',roachstyle:'normal',creature:'none',title:'none'},
-    desk:{char:'goblin',body:'normal',face:'angry',hat:'none',gear:'none',skin:'#E8D5A8',sock:'mismatch',ping:'normal',bg:'none',roach:'10',cone:'0',fx:'P',roachstyle:'normal',creature:'none',title:'none'},
-    allin:{char:'goblin',body:'normal',face:'smug',hat:'none',gear:'blackshades',skin:'#E8D5A8',sock:'mismatch',ping:'normal',bg:'poker',roach:'10',cone:'0',fx:'money',roachstyle:'suited',creature:'chick',title:'allin'},
-    diamondpiss:{char:'goblin',body:'normal',face:'angry',hat:'none',gear:'diamonds',skin:'#E8D5A8',sock:'mismatch',ping:'normal',bg:'livingroom',roach:'4',cone:'0',fx:'star',roachstyle:'bucket',creature:'none',title:'diamond'},
-    rugsurvive:{char:'goblin',body:'normal',face:'angry',hat:'none',gear:'none',skin:'#E8D5A8',sock:'mismatch',ping:'normal',bg:'ruins',roach:'10',cone:'0',fx:'none',roachstyle:'gasmask',creature:'none',title:'survives'},
-    victory:{char:'goblin',body:'normal',face:'angry',hat:'none',gear:'sword',skin:'#E8D5A8',sock:'mismatch',ping:'normal',bg:'lobsterpile',roach:'4',cone:'0',fx:'none',roachstyle:'normal',creature:'lobster',title:'ftw'},
+    pissmissle:{char:'goblin',body:'normal',face:'angry',hat:'none',gear:'none',skin:'#E8D5A8',sock:'mismatch',ping:'normal',bg:'none',roach:'4',cone:'0',fx:'none',roachstyle:'normal',creature:'none',title:'none',pose:'plotting'},
+    pisstina:{char:'pisstina',body:'normal',face:'uwu',hat:'pinkhair',gear:'none',skin:'#E8D5A8',sock:'mismatch',ping:'happy',bg:'none',roach:'0',cone:'0',fx:'hearts',roachstyle:'normal',creature:'none',title:'none',pose:'plotting'},
+    gerald:{char:'gerald',body:'normal',face:'happy',hat:'halo',gear:'glasses',skin:'#E8D5A8',sock:'mismatch',ping:'splat',bg:'none',roach:'0',cone:'8',fx:'star',roachstyle:'normal',creature:'none',title:'none',pose:'plotting'},
+    colin:{char:'goblin',body:'normal',face:'vampire',hat:'none',gear:'blackshades',skin:'#E8D5A8',sock:'mismatch',ping:'angry',bg:'#000',roach:'10',cone:'0',fx:'none',roachstyle:'normal',creature:'none',title:'none',pose:'plotting'},
+    sumo:{char:'goblin',body:'sumo',face:'angry',hat:'headband',gear:'speedo',skin:'#E8D5A8',sock:'none',ping:'normal',bg:'#FC0',roach:'0',cone:'0',fx:'none',roachstyle:'normal',creature:'none',title:'none',pose:'hips'},
+    viking:{char:'goblin',body:'tall',face:'angry',hat:'viking',gear:'flag',skin:'#E8D5A8',sock:'mismatch',ping:'angry',bg:'storm',roach:'0',cone:'0',fx:'zap',roachstyle:'normal',creature:'none',title:'none',pose:'arms'},
+    pool:{char:'goblin',body:'normal',face:'smug',hat:'cap',gear:'whiteshades',skin:'#E8D5A8',sock:'mismatch',ping:'happy',bg:'beach',roach:'0',cone:'0',fx:'money',roachstyle:'normal',creature:'none',title:'none',pose:'plotting'},
+    space:{char:'goblin',body:'normal',face:'happy',hat:'none',gear:'none',skin:'#E8D5A8',sock:'mismatch',ping:'normal',bg:'space',roach:'0',cone:'0',fx:'star',roachstyle:'normal',creature:'none',title:'none',pose:'plotting'},
+    gamer:{char:'goblin',body:'normal',face:'angry',hat:'none',gear:'controller',skin:'#E8D5A8',sock:'mismatch',ping:'normal',bg:'#008',roach:'0',cone:'3',fx:'none',roachstyle:'normal',creature:'none',title:'none',pose:'plotting'},
+    desk:{char:'goblin',body:'normal',face:'angry',hat:'none',gear:'none',skin:'#E8D5A8',sock:'mismatch',ping:'normal',bg:'none',roach:'10',cone:'0',fx:'P',roachstyle:'normal',creature:'none',title:'none',pose:'plotting'},
+    allin:{char:'goblin',body:'normal',face:'smug',hat:'none',gear:'blackshades',skin:'#E8D5A8',sock:'mismatch',ping:'normal',bg:'poker',roach:'10',cone:'0',fx:'money',roachstyle:'suited',creature:'chick',title:'allin',pose:'plotting'},
+    diamondpiss:{char:'goblin',body:'normal',face:'angry',hat:'none',gear:'diamonds',skin:'#E8D5A8',sock:'mismatch',ping:'normal',bg:'livingroom',roach:'4',cone:'0',fx:'star',roachstyle:'bucket',creature:'none',title:'diamond',pose:'plotting'},
+    rugsurvive:{char:'goblin',body:'normal',face:'angry',hat:'none',gear:'none',skin:'#E8D5A8',sock:'mismatch',ping:'normal',bg:'ruins',roach:'10',cone:'0',fx:'none',roachstyle:'gasmask',creature:'none',title:'survives',pose:'plotting'},
+    victory:{char:'goblin',body:'normal',face:'angry',hat:'none',gear:'sword',skin:'#E8D5A8',sock:'mismatch',ping:'normal',bg:'lobsterpile',roach:'4',cone:'0',fx:'none',roachstyle:'normal',creature:'lobster',title:'ftw',pose:'victory'},
   };
   const v=presets[p];if(!v)return;
   Object.entries(v).forEach(([id,val])=>{const e=document.getElementById(id);if(e)e.value=val;});
