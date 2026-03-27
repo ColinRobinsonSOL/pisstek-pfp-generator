@@ -237,136 +237,36 @@ function drawGoblin(cx, skin, bodyType, face, hat, gear, sockStyle, pingStyle, i
     ln(rl - 12, st + 6, rl + 11, st + 6, 1, 'rgba(0,0,0,0.15)');
   }
 
-  // === PINGLE — attached at groin, spread-limbed, drippy ===
-  if (pingStyle !== 'none') {
-    const px = cx, py = legBase;
-    // Stem connecting to body
-    ln(px, py - 12, px, py - 2, 2.5, '#C88080');
-    // Body blob — fatter
-    x.beginPath();
-    x.ellipse(px, py + 10, 14, 15, 0, 0, Math.PI * 2);
-    x.fillStyle = '#F0A0B0'; x.fill();
-    x.strokeStyle = '#000'; x.lineWidth = 2; x.stroke();
-    // Spread arms (tiny)
-    ln(px - 14, py + 8, px - 26, py + 2, 2);
-    ln(px + 14, py + 8, px + 26, py + 4, 2);
-    ci(px - 26, py + 2, 3, '#F0A0B0', true, 1.5);
-    ci(px + 26, py + 4, 3, '#F0A0B0', true, 1.5);
-    // Spread legs (tiny)
-    ln(px - 6, py + 23, px - 12, py + 34, 2);
-    ln(px + 6, py + 23, px + 12, py + 34, 2);
-    ci(px - 12, py + 34, 2.5, '#F0A0B0', true, 1.5);
-    ci(px + 12, py + 34, 2.5, '#F0A0B0', true, 1.5);
-    // Drips — longer, more of them, teardrop shaped
-    for (let d = 0; d < 6; d++) {
-      const ddx = px - 10 + d * 4 + (Math.random() - 0.5) * 3;
-      const dl = 12 + Math.random() * 14;
-      const dw = 2.5 + Math.random() * 1.5;
-      x.fillStyle = d % 2 === 0 ? '#E890A5' : '#F0A0B0';
-      x.beginPath();
-      // Teardrop: narrow top, round bottom
-      x.moveTo(ddx, py + 24);
-      x.bezierCurveTo(ddx - dw, py + 24 + dl * 0.4, ddx - dw * 1.5, py + 24 + dl * 0.8, ddx, py + 24 + dl);
-      x.bezierCurveTo(ddx + dw * 1.5, py + 24 + dl * 0.8, ddx + dw, py + 24 + dl * 0.4, ddx, py + 24);
-      x.fill();
-    }
-    // Face
-    x.fillStyle = '#000';
-    if (pingStyle === 'happy') {
-      x.fillRect(px - 5, py + 6, 2.5, 2.5); x.fillRect(px + 3, py + 6, 2.5, 2.5);
-      x.beginPath(); x.arc(px, py + 14, 4, 0, Math.PI);
-      x.strokeStyle = '#000'; x.lineWidth = 1.5; x.stroke();
-    } else if (pingStyle === 'angry') {
-      x.fillRect(px - 5, py + 6, 3, 3); x.fillRect(px + 3, py + 6, 3, 3);
-      ln(px - 7, py + 2, px - 3, py + 5, 1.5);
-      ln(px + 7, py + 2, px + 3, py + 5, 1.5);
-      ln(px - 4, py + 16, px + 4, py + 17, 1.5);
-    } else if (pingStyle === 'splat') {
-      x.fillRect(px - 4, py + 7, 2.5, 2.5); x.fillRect(px + 2, py + 7, 2.5, 2.5);
-      ln(px - 3, py + 15, px + 3, py + 15, 1.5);
-    } else {
-      // Normal — deadpan
-      x.fillRect(px - 5, py + 6, 2.5, 2.5); x.fillRect(px + 3, py + 6, 2.5, 2.5);
-      ln(px - 3, py + 14, px + 3, py + 14, 1.5);
-    }
-  }
-
-  // === ARMS — POSE BASED ===
+  // === ARM LINES BEHIND BODY (upper portion only) ===
+  // Draw the thin arm LINES before body so they appear to originate from body sides
+  // Hands/clasped blobs are drawn AFTER body so they appear in front
   const shoulderY = bodyY - bodyH * 0.12;
-
+  x.strokeStyle = '#000'; x.lineCap = 'round';
   if (pose === 'plotting') {
-    // === THE ICONIC PISSTEK POSE: arms bent in, hands clasped at belly ===
-    // Left arm: shoulder → elbow (slightly out) → hand (center-belly)
-    x.beginPath(); x.strokeStyle = '#000'; x.lineWidth = 3; x.lineCap = 'round';
-    x.moveTo(cx - bodyW + 2, shoulderY);
-    x.quadraticCurveTo(cx - bodyW - 10, shoulderY + 28, cx - 14, bodyY + 10);
-    x.stroke();
-    // Right arm: shoulder → elbow (slightly out) → hand (center-belly)
-    x.beginPath();
-    x.moveTo(cx + bodyW - 2, shoulderY);
-    x.quadraticCurveTo(cx + bodyW + 10, shoulderY + 28, cx + 14, bodyY + 10);
-    x.stroke();
-    // Clasped hands — overlapping oval blob at center-belly
-    el(cx, bodyY + 10, 20, 11, skin, true, 2.5);
-    // Finger knuckle lines across clasped hands
-    x.strokeStyle = 'rgba(0,0,0,0.25)'; x.lineWidth = 1;
-    for (let f = -3; f <= 3; f++) {
-      x.beginPath();
-      x.moveTo(cx + f * 5, bodyY + 4);
-      x.lineTo(cx + f * 5, bodyY + 16);
-      x.stroke();
-    }
+    x.lineWidth = 3;
+    x.beginPath(); x.moveTo(cx - bodyW + 2, shoulderY);
+    x.quadraticCurveTo(cx - bodyW - 10, shoulderY + 28, cx - 14, bodyY + 10); x.stroke();
+    x.beginPath(); x.moveTo(cx + bodyW - 2, shoulderY);
+    x.quadraticCurveTo(cx + bodyW + 10, shoulderY + 28, cx + 14, bodyY + 10); x.stroke();
   } else if (pose === 'arms') {
-    // Original arms-out pose
     const armY = bodyY - bodyH * 0.05;
-    const lhx = cx - bodyW - 22, lhy = armY + 28;
-    x.beginPath(); x.strokeStyle = '#000'; x.lineWidth = 2.5; x.lineCap = 'round';
-    x.moveTo(cx - bodyW + 2, armY);
-    x.quadraticCurveTo(cx - bodyW - 8, armY + 12, lhx, lhy);
-    x.stroke();
-    ci(lhx, lhy, 5, skin, true, 2);
-    ln(lhx - 4, lhy - 2, lhx - 8, lhy - 5, 1.2);
-    ln(lhx - 5, lhy + 1, lhx - 9, lhy, 1.2);
-    ln(lhx - 3, lhy + 4, lhx - 7, lhy + 5, 1.2);
-    const rhx = cx + bodyW + 22, rhy = armY + 20;
-    x.beginPath(); x.strokeStyle = '#000'; x.lineWidth = 2.5;
-    x.moveTo(cx + bodyW - 2, armY);
-    x.quadraticCurveTo(cx + bodyW + 8, armY + 8, rhx, rhy);
-    x.stroke();
-    ci(rhx, rhy, 5, skin, true, 2);
-    ln(rhx + 4, rhy - 2, rhx + 8, rhy - 5, 1.2);
-    ln(rhx + 5, rhy + 1, rhx + 9, rhy, 1.2);
-    ln(rhx + 3, rhy + 4, rhx + 7, rhy + 5, 1.2);
+    x.lineWidth = 2.5;
+    x.beginPath(); x.moveTo(cx - bodyW + 2, armY);
+    x.quadraticCurveTo(cx - bodyW - 8, armY + 12, cx - bodyW - 22, armY + 28); x.stroke();
+    x.beginPath(); x.moveTo(cx + bodyW - 2, armY);
+    x.quadraticCurveTo(cx + bodyW + 8, armY + 8, cx + bodyW + 22, armY + 20); x.stroke();
   } else if (pose === 'victory') {
-    // Left arm hangs slightly down
-    const lhx = cx - bodyW - 12, lhy = shoulderY + 45;
-    x.beginPath(); x.strokeStyle = '#000'; x.lineWidth = 2.5; x.lineCap = 'round';
-    x.moveTo(cx - bodyW + 2, shoulderY);
-    x.quadraticCurveTo(cx - bodyW - 5, shoulderY + 22, lhx, lhy);
-    x.stroke();
-    ci(lhx, lhy, 5, skin, true, 2);
-    // Right arm raised triumphantly
-    const rhx = cx + bodyW + 18, rhy = shoulderY - 40;
-    x.beginPath(); x.lineWidth = 2.5;
-    x.moveTo(cx + bodyW - 2, shoulderY);
-    x.quadraticCurveTo(cx + bodyW + 22, shoulderY - 22, rhx, rhy);
-    x.stroke();
-    ci(rhx, rhy, 5, skin, true, 2);
-    ln(rhx + 2, rhy - 5, rhx + 5, rhy - 9, 1.2);
-    ln(rhx + 5, rhy - 2, rhx + 9, rhy - 4, 1.2);
-    ln(rhx - 2, rhy - 5, rhx - 5, rhy - 9, 1.2);
+    x.lineWidth = 2.5;
+    x.beginPath(); x.moveTo(cx - bodyW + 2, shoulderY);
+    x.quadraticCurveTo(cx - bodyW - 5, shoulderY + 22, cx - bodyW - 12, shoulderY + 45); x.stroke();
+    x.beginPath(); x.moveTo(cx + bodyW - 2, shoulderY);
+    x.quadraticCurveTo(cx + bodyW + 22, shoulderY - 22, cx + bodyW + 18, shoulderY - 40); x.stroke();
   } else if (pose === 'hips') {
-    // Both arms bent outward, fists on hips
-    x.beginPath(); x.strokeStyle = '#000'; x.lineWidth = 2.5; x.lineCap = 'round';
-    x.moveTo(cx - bodyW + 2, shoulderY);
-    x.quadraticCurveTo(cx - bodyW - 18, shoulderY + 15, cx - bodyW - 14, shoulderY + 38);
-    x.stroke();
-    ci(cx - bodyW - 14, shoulderY + 38, 5, skin, true, 2);
-    x.beginPath();
-    x.moveTo(cx + bodyW - 2, shoulderY);
-    x.quadraticCurveTo(cx + bodyW + 18, shoulderY + 15, cx + bodyW + 14, shoulderY + 38);
-    x.stroke();
-    ci(cx + bodyW + 14, shoulderY + 38, 5, skin, true, 2);
+    x.lineWidth = 2.5;
+    x.beginPath(); x.moveTo(cx - bodyW + 2, shoulderY);
+    x.quadraticCurveTo(cx - bodyW - 18, shoulderY + 15, cx - bodyW - 14, shoulderY + 38); x.stroke();
+    x.beginPath(); x.moveTo(cx + bodyW - 2, shoulderY);
+    x.quadraticCurveTo(cx + bodyW + 18, shoulderY + 15, cx + bodyW + 14, shoulderY + 38); x.stroke();
   }
 
   // === MAIN BODY — one continuous organic bean shape ===
@@ -403,6 +303,89 @@ function drawGoblin(cx, skin, bodyType, face, hat, gear, sockStyle, pingStyle, i
   // Skin texture
   tex(cx, bodyY, bodyW * 1.4, bodyH * 1.2, 14);
   tex(cx, headY, headR * 1.1, headR * 0.9, 7);
+
+  // === HANDS IN FRONT OF BODY (drawn over body fill) ===
+  if (pose === 'plotting') {
+    // Clasped hands blob at center-belly, IN FRONT of body
+    el(cx, bodyY + 10, 22, 12, skin, true, 2.5);
+    // Finger knuckle lines
+    x.strokeStyle = 'rgba(0,0,0,0.22)'; x.lineWidth = 1;
+    for (let f = -3; f <= 3; f++) {
+      x.beginPath(); x.moveTo(cx + f * 5, bodyY + 3); x.lineTo(cx + f * 5, bodyY + 17); x.stroke();
+    }
+    // Outer arm shadow for depth
+    x.strokeStyle = 'rgba(0,0,0,0.1)'; x.lineWidth = 3;
+    x.beginPath(); x.moveTo(cx - bodyW - 8, shoulderY + 26); x.lineTo(cx - 16, bodyY + 11); x.stroke();
+    x.beginPath(); x.moveTo(cx + bodyW + 8, shoulderY + 26); x.lineTo(cx + 16, bodyY + 11); x.stroke();
+  } else if (pose === 'arms') {
+    const armY = bodyY - bodyH * 0.05;
+    const lhx = cx - bodyW - 22, lhy = armY + 28;
+    ci(lhx, lhy, 6, skin, true, 2);
+    ln(lhx - 4, lhy - 2, lhx - 8, lhy - 5, 1.5); ln(lhx - 5, lhy + 1, lhx - 9, lhy, 1.5); ln(lhx - 3, lhy + 4, lhx - 7, lhy + 5, 1.5);
+    const rhx = cx + bodyW + 22, rhy = armY + 20;
+    ci(rhx, rhy, 6, skin, true, 2);
+    ln(rhx + 4, rhy - 2, rhx + 8, rhy - 5, 1.5); ln(rhx + 5, rhy + 1, rhx + 9, rhy, 1.5); ln(rhx + 3, rhy + 4, rhx + 7, rhy + 5, 1.5);
+  } else if (pose === 'victory') {
+    const lhx = cx - bodyW - 12, lhy = shoulderY + 45;
+    ci(lhx, lhy, 6, skin, true, 2);
+    const rhx = cx + bodyW + 18, rhy = shoulderY - 40;
+    ci(rhx, rhy, 6, skin, true, 2);
+    ln(rhx + 2, rhy - 5, rhx + 5, rhy - 9, 1.5); ln(rhx + 5, rhy - 2, rhx + 9, rhy - 4, 1.5); ln(rhx - 2, rhy - 5, rhx - 5, rhy - 9, 1.5);
+  } else if (pose === 'hips') {
+    ci(cx - bodyW - 14, shoulderY + 38, 6, skin, true, 2);
+    ci(cx + bodyW + 14, shoulderY + 38, 6, skin, true, 2);
+  }
+
+  // === PINGLE — drawn AFTER body so it appears in front ===
+  if (pingStyle !== 'none') {
+    const px = cx, py = legBase;
+    // Stem connecting to body front
+    ln(px, py - 10, px, py, 2.5, '#C88080');
+    // Body blob
+    x.beginPath();
+    x.ellipse(px, py + 10, 14, 15, 0, 0, Math.PI * 2);
+    x.fillStyle = '#F0A0B0'; x.fill();
+    x.strokeStyle = '#000'; x.lineWidth = 2; x.stroke();
+    // Spread arms
+    ln(px - 14, py + 8, px - 26, py + 2, 2);
+    ln(px + 14, py + 8, px + 26, py + 4, 2);
+    ci(px - 26, py + 2, 3, '#F0A0B0', true, 1.5);
+    ci(px + 26, py + 4, 3, '#F0A0B0', true, 1.5);
+    // Spread legs
+    ln(px - 6, py + 23, px - 12, py + 34, 2);
+    ln(px + 6, py + 23, px + 12, py + 34, 2);
+    ci(px - 12, py + 34, 2.5, '#F0A0B0', true, 1.5);
+    ci(px + 12, py + 34, 2.5, '#F0A0B0', true, 1.5);
+    // Drips — teardrop shaped, 6 of them
+    for (let d = 0; d < 6; d++) {
+      const ddx = px - 10 + d * 4 + (Math.random() - 0.5) * 3;
+      const dl = 12 + Math.random() * 14;
+      const dw = 2.5 + Math.random() * 1.5;
+      x.fillStyle = d % 2 === 0 ? '#E890A5' : '#F0A0B0';
+      x.beginPath();
+      x.moveTo(ddx, py + 24);
+      x.bezierCurveTo(ddx - dw, py + 24 + dl * 0.4, ddx - dw * 1.5, py + 24 + dl * 0.8, ddx, py + 24 + dl);
+      x.bezierCurveTo(ddx + dw * 1.5, py + 24 + dl * 0.8, ddx + dw, py + 24 + dl * 0.4, ddx, py + 24);
+      x.fill();
+    }
+    // Face
+    x.fillStyle = '#000';
+    if (pingStyle === 'happy') {
+      x.fillRect(px - 5, py + 6, 2.5, 2.5); x.fillRect(px + 3, py + 6, 2.5, 2.5);
+      x.beginPath(); x.arc(px, py + 14, 4, 0, Math.PI);
+      x.strokeStyle = '#000'; x.lineWidth = 1.5; x.stroke();
+    } else if (pingStyle === 'angry') {
+      x.fillRect(px - 5, py + 6, 3, 3); x.fillRect(px + 3, py + 6, 3, 3);
+      ln(px - 7, py + 2, px - 3, py + 5, 1.5); ln(px + 7, py + 2, px + 3, py + 5, 1.5);
+      ln(px - 4, py + 16, px + 4, py + 17, 1.5);
+    } else if (pingStyle === 'splat') {
+      x.fillRect(px - 4, py + 7, 2.5, 2.5); x.fillRect(px + 2, py + 7, 2.5, 2.5);
+      ln(px - 3, py + 15, px + 3, py + 15, 1.5);
+    } else {
+      x.fillRect(px - 5, py + 6, 2.5, 2.5); x.fillRect(px + 3, py + 6, 2.5, 2.5);
+      ln(px - 3, py + 14, px + 3, py + 14, 1.5);
+    }
+  }
 
   // === EARS — small horizontal pointed stubs AT EYE LEVEL ===
   // In references: tiny points sticking out sideways at eye height, not above
@@ -460,7 +443,7 @@ function drawGoblin(cx, skin, bodyType, face, hat, gear, sockStyle, pingStyle, i
   drawFace(cx, eyeY, headY + headR * 0.38, eyeSpan, face, headR);
 
   // === GEAR (front accessories) ===
-  drawGear(cx, headY, bodyY, headR, bodyW, bodyH, gear, skin, legBase);
+  drawGear(cx, headY, bodyY, headR, bodyW, bodyH, gear, skin, legBase, pose, shoulderY);
 
   // === SHIRT overlay ===
   if (gear === 'shirt') {
@@ -697,11 +680,18 @@ function drawHat(cx, hy, hr, hat) {
 // GEAR / ACCESSORIES
 // ============================================================
 
-function drawGear(cx, hy, by, hr, bw, bh, gear, skin, lb) {
+function drawGear(cx, hy, by, hr, bw, bh, gear, skin, lb, pose, shoulderY) {
+  pose = pose || 'plotting';
   if (gear === 'none' || gear === 'cape' || gear === 'shirt') return;
   if (gear === 'sword') {
-    // Sword held up in right hand area
-    const sx=cx+bw+14,sy=hy-hr*0.5;
+    // Sword follows right hand position based on pose
+    let sx, sy;
+    if (pose === 'victory') {
+      // Right arm is raised — sword at raised right hand
+      sx = cx + bw + 14; sy = (shoulderY||by-bh*0.12) - 44;
+    } else {
+      sx = cx + bw + 14; sy = hy - hr * 0.5;
+    }
     // Blade
     x.beginPath();
     x.moveTo(sx,sy);x.lineTo(sx+3,sy-65);x.lineTo(sx+6,sy-70);
