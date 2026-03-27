@@ -212,10 +212,12 @@ function drawGoblin(cx, skin, bodyType, face, hat, gear, sockStyle, pingStyle, i
   }
 
   // === THIN NOODLE LEGS — short, stick-like ===
+  // 'arms' pose = pissing pose: legs spread wide
+  const legSpread = pose === 'arms' ? 8 : 2;
   const ll = cx - bodyW * 0.28;
   const rl = cx + bodyW * 0.28;
-  ln(ll, legBase, ll - 2, legBase + legLen, 3);
-  ln(rl, legBase, rl + 2, legBase + legLen, 3);
+  ln(ll, legBase, ll - legSpread, legBase + legLen, 3);
+  ln(rl, legBase, rl + legSpread, legBase + legLen, 3);
 
   // === MISMATCHED SOCKS — chunky ankle blocks ===
   if (sockStyle !== 'none') {
@@ -223,20 +225,22 @@ function drawGoblin(cx, skin, bodyType, face, hat, gear, sockStyle, pingStyle, i
     const rc = sockStyle === 'mismatch' ? '#5B9BD5' : sockStyle === 'green' ? '#7CCC2E' : '#5B9BD5';
     // Left sock — chunky block like in references
     const st = legBase + legLen - 12, sb = legBase + legLen + 14;
+    const lfo = -legSpread; // foot offset matches leg angle
     x.beginPath();
-    x.moveTo(ll - 11, st); x.lineTo(ll - 11, sb);
-    x.lineTo(ll + 12, sb); x.lineTo(ll + 12, st);
+    x.moveTo(ll - 11 + lfo, st); x.lineTo(ll - 11 + lfo, sb);
+    x.lineTo(ll + 12 + lfo, sb); x.lineTo(ll + 12 + lfo, st);
     x.closePath();
     x.fillStyle = lc; x.fill(); x.strokeStyle = '#000'; x.lineWidth = 2; x.stroke();
     // Sock fold line near top
-    ln(ll - 11, st + 6, ll + 12, st + 6, 1, 'rgba(0,0,0,0.15)');
+    ln(ll - 11 + lfo, st + 6, ll + 12 + lfo, st + 6, 1, 'rgba(0,0,0,0.15)');
     // Right sock — chunky block
+    const rfo = legSpread;
     x.beginPath();
-    x.moveTo(rl - 12, st); x.lineTo(rl - 12, sb);
-    x.lineTo(rl + 11, sb); x.lineTo(rl + 11, st);
+    x.moveTo(rl - 12 + rfo, st); x.lineTo(rl - 12 + rfo, sb);
+    x.lineTo(rl + 11 + rfo, sb); x.lineTo(rl + 11 + rfo, st);
     x.closePath();
     x.fillStyle = rc; x.fill(); x.strokeStyle = '#000'; x.lineWidth = 2; x.stroke();
-    ln(rl - 12, st + 6, rl + 11, st + 6, 1, 'rgba(0,0,0,0.15)');
+    ln(rl - 12 + rfo, st + 6, rl + 11 + rfo, st + 6, 1, 'rgba(0,0,0,0.15)');
   }
 
   // === RUBBER-HOSE ARMS BEHIND BODY ===
@@ -383,11 +387,28 @@ function drawGoblin(cx, skin, bodyType, face, hat, gear, sockStyle, pingStyle, i
     x.ellipse(px, py + 10, 14, 15, 0, 0, Math.PI * 2);
     x.fillStyle = '#F0A0B0'; x.fill();
     x.strokeStyle = '#000'; x.lineWidth = 2; x.stroke();
-    // Spread arms
-    ln(px - 14, py + 8, px - 26, py + 2, 2);
-    ln(px + 14, py + 8, px + 26, py + 4, 2);
-    ci(px - 26, py + 2, 3, '#F0A0B0', true, 1.5);
-    ci(px + 26, py + 4, 3, '#F0A0B0', true, 1.5);
+    // Arms — angry mode: left arm extended for middle finger, right arm on hip
+    if (pingStyle === 'angry') {
+      // Left arm: extended straight out
+      ln(px - 14, py + 8, px - 30, py + 6, 2);
+      // Right arm: bent down to hip
+      ln(px + 14, py + 8, px + 22, py + 12, 2);
+      ln(px + 22, py + 12, px + 20, py + 22, 2);
+      ci(px + 20, py + 22, 3, '#F0A0B0', true, 1.5);
+      // Middle finger fist — left hand
+      x.fillStyle = '#F0A0B0';
+      x.fillRect(px - 36, py + 2, 8, 6);
+      x.strokeStyle = '#000'; x.lineWidth = 1; x.strokeRect(px - 36, py + 2, 8, 6);
+      // Middle finger raised
+      x.fillRect(px - 33, py - 5, 3, 8);
+      x.strokeRect(px - 33, py - 5, 3, 8);
+    } else {
+      // Normal spread arms
+      ln(px - 14, py + 8, px - 26, py + 2, 2);
+      ln(px + 14, py + 8, px + 26, py + 4, 2);
+      ci(px - 26, py + 2, 3, '#F0A0B0', true, 1.5);
+      ci(px + 26, py + 4, 3, '#F0A0B0', true, 1.5);
+    }
     // Spread legs
     ln(px - 6, py + 23, px - 12, py + 34, 2);
     ln(px + 6, py + 23, px + 12, py + 34, 2);
@@ -412,6 +433,7 @@ function drawGoblin(cx, skin, bodyType, face, hat, gear, sockStyle, pingStyle, i
       x.beginPath(); x.arc(px, py + 14, 4, 0, Math.PI);
       x.strokeStyle = '#000'; x.lineWidth = 1.5; x.stroke();
     } else if (pingStyle === 'angry') {
+      // Angry brows + frown — pinglefinger2.png reference
       x.fillRect(px - 5, py + 6, 3, 3); x.fillRect(px + 3, py + 6, 3, 3);
       ln(px - 7, py + 2, px - 3, py + 5, 1.5); ln(px + 7, py + 2, px + 3, py + 5, 1.5);
       ln(px - 4, py + 16, px + 4, py + 17, 1.5);
@@ -943,31 +965,33 @@ function drawGear(cx, hy, by, hr, bw, bh, gear, skin, lb, pose, shoulderY) {
     ln(cx-sp-11,gy,cx-sp-17,gy-3,1.5);
     ln(cx+sp+11,gy,cx+sp+17,gy-3,1.5);
   } else if (gear === 'stream') {
-    // Piss arc — parabolic stream with thick core + spray droplets
-    const sx=cx+bw-2, sy=by+bh*0.3;
+    // Piss arc — shoots LEFT from crotch (matching reference art pissing.png)
+    const sx=cx, sy=lb; // origin: crotch/base
     // Outer glow
     x.shadowColor='rgba(255,200,0,0.5)'; x.shadowBlur=8;
     x.beginPath(); x.moveTo(sx,sy); x.strokeStyle='rgba(255,220,0,0.4)'; x.lineWidth=9;
-    for(let i=0;i<50;i++){const t=i/50;x.lineTo(sx+t*100,sy+t*t*65+Math.sin(i*0.5)*1.5);}
+    for(let i=0;i<50;i++){const t=i/50;x.lineTo(sx-t*110,sy+t*t*55+Math.sin(i*0.5)*1.5);}
     x.stroke();
     x.shadowBlur=0;
     // Core stream
     x.beginPath(); x.moveTo(sx,sy); x.strokeStyle='#FFD700'; x.lineWidth=5;
-    for(let i=0;i<50;i++){const t=i/50;x.lineTo(sx+t*100,sy+t*t*65+Math.sin(i*0.5)*2);}
+    for(let i=0;i<50;i++){const t=i/50;x.lineTo(sx-t*110,sy+t*t*55+Math.sin(i*0.5)*2);}
     x.stroke();
     // Center highlight
-    x.beginPath(); x.moveTo(sx,sy); x.strokeStyle='rgba(255,255,200,0.5)'; x.lineWidth=2;
-    for(let i=0;i<50;i++){const t=i/50;x.lineTo(sx+t*98,sy+t*t*62);}
+    x.beginPath(); x.moveTo(sx,sy); x.strokeStyle='rgba(255,255,200,0.55)'; x.lineWidth=2;
+    for(let i=0;i<50;i++){const t=i/50;x.lineTo(sx-t*108,sy+t*t*52);}
     x.stroke();
-    // Splash droplets at landing zone
+    // Diamond-shaped chunky droplets (matching reference art)
     x.fillStyle='#FFD700';
-    for(let s=0;s<8;s++){
-      const ddx=sx+85+(Math.random()-0.5)*22, ddy=sy+58+(Math.random()-0.5)*14;
-      const dr=1.5+Math.random()*2;
-      x.beginPath();x.arc(ddx,ddy,dr,0,Math.PI*2);x.fill();
+    for(let s=0;s<10;s++){
+      const ddx=sx-85+(Math.random()-0.5)*30, ddy=sy+48+(Math.random()-0.5)*18;
+      const ds=3+Math.random()*3;
+      x.beginPath();
+      x.moveTo(ddx,ddy-ds);x.lineTo(ddx+ds,ddy);x.lineTo(ddx,ddy+ds*0.6);x.lineTo(ddx-ds,ddy);
+      x.closePath();x.fill();
     }
     // Splash pool
-    x.beginPath(); x.ellipse(sx+93,sy+66,14,5,0,0,Math.PI*2);
+    x.beginPath(); x.ellipse(sx-100,sy+56,16,5,0,0,Math.PI*2);
     x.fillStyle='rgba(255,215,0,0.5)'; x.fill();
   } else if (gear === 'flag') {
     const fx=cx+bw+16,fy=hy-50;
