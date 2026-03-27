@@ -68,7 +68,7 @@ canvas { background: transparent; image-rendering: pixelated; }
         <select id="body"><option value="normal">Normal</option><option value="tall">Tall</option><option value="thicc">Thicc</option><option value="smol">Smol</option><option value="sumo">Sumo</option></select>
       </div>
       <div class="control-group"><label>😤 Face</label>
-        <select id="face"><option value="angry">Angry</option><option value="smug">Smug</option><option value="cry">Crying</option><option value="happy">Happy</option><option value="dead">Dead Inside</option><option value="vampire">Energy Vampire</option><option value="uwu">UwU</option><option value="confused">Confused</option><option value="laser">Laser Eyes</option></select>
+        <select id="face"><option value="angry">Angry</option><option value="smug">Smug</option><option value="cry">Crying</option><option value="happy">Happy</option><option value="dead">Dead Inside</option><option value="vampire">Energy Vampire</option><option value="uwu">UwU</option><option value="confused">Confused</option><option value="laser">Laser Eyes</option><option value="maniac">Maniac</option></select>
       </div>
       <div class="control-group"><label>🤲 Pose</label>
         <select id="pose"><option value="plotting">Plotting (default)</option><option value="arms">Arms Out</option><option value="victory">Victory Raise</option><option value="hips">Hands on Hips</option></select>
@@ -77,7 +77,7 @@ canvas { background: transparent; image-rendering: pixelated; }
         <select id="hat"><option value="none">None</option><option value="tophat">Top Hat</option><option value="crown">Piss Crown</option><option value="halo">Halo</option><option value="cap">Yellow Cap</option><option value="horns">Horns</option><option value="hardhat">Hard Hat</option><option value="headband">Headband</option><option value="viking">Viking Helm</option><option value="pinkhair">Pink Hair</option></select>
       </div>
       <div class="control-group"><label>🦸 Gear</label>
-        <select id="gear"><option value="none">None</option><option value="cape">Yellow Cape (P)</option><option value="speedo">Speedo</option><option value="blackshades">Black Shades</option><option value="whiteshades">White Round Shades</option><option value="glasses">Round Glasses</option><option value="stream">Piss Stream</option><option value="diamonds">Diamond Piss</option><option value="sword">Sword</option><option value="shirt">STOP BEING POOR</option><option value="flag">Piss Raider Flag</option><option value="controller">Controller</option><option value="bowtie">Bowtie</option><option value="bikini">Bikini</option></select>
+        <select id="gear"><option value="none">None</option><option value="cape">Yellow Cape (P)</option><option value="speedo">Speedo</option><option value="blackshades">Black Shades</option><option value="whiteshades">White Round Shades</option><option value="glasses">Round Glasses</option><option value="stream">Piss Stream</option><option value="diamonds">Diamond Piss</option><option value="sword">Sword</option><option value="shirt">STOP BEING POOR</option><option value="flag">Piss Raider Flag</option><option value="controller">Controller</option><option value="bowtie">Bowtie</option><option value="bikini">Bikini</option><option value="chain">Gold Chain</option><option value="moneybag">Money Bag</option></select>
       </div>
       <div class="control-group"><label>🧦 Socks</label>
         <select id="sock"><option value="mismatch">Green + Blue</option><option value="green">Both Green</option><option value="blue">Both Blue</option><option value="none">Barefoot</option></select>
@@ -89,7 +89,7 @@ canvas { background: transparent; image-rendering: pixelated; }
         <select id="ping"><option value="normal">Normal</option><option value="happy">Happy</option><option value="angry">Angry</option><option value="splat">Splatted</option><option value="none">None</option></select>
       </div>
       <div class="control-group"><label>🌈 Background</label>
-        <select id="bg"><option value="none">Transparent</option><option value="#000">Black</option><option value="#FC0">Piss Yellow</option><option value="#888">Grey</option><option value="#008">Navy</option><option value="space">Space</option><option value="beach">Beach</option><option value="fire">Campfire</option><option value="storm">Storm Sea</option><option value="grave">Graveyard</option><option value="rainbow">Rainbow</option><option value="poker">Poker Table</option><option value="livingroom">Living Room</option><option value="ruins">Ruins</option><option value="lobsterpile">Lobster Pile</option></select>
+        <select id="bg"><option value="none">Transparent</option><option value="#000">Black</option><option value="#FC0">Piss Yellow</option><option value="#888">Grey</option><option value="#008">Navy</option><option value="space">Space</option><option value="beach">Beach</option><option value="fire">Campfire</option><option value="storm">Storm Sea</option><option value="grave">Graveyard</option><option value="rainbow">Rainbow</option><option value="poker">Poker Table</option><option value="livingroom">Living Room</option><option value="ruins">Ruins</option><option value="lobsterpile">Lobster Pile</option><option value="casino">Casino Floor</option><option value="sewer">Sewer</option></select>
       </div>
       <div class="control-group"><label>🪳 Roaches</label>
         <select id="roach"><option value="0">None</option><option value="4">Few</option><option value="10">Many</option><option value="25">PLAGUE</option></select>
@@ -701,6 +701,42 @@ function drawFace(cx, ey, my, sp, face, hR) {
     ci(lx,ey,4,'#F00',false);ci(rx,ey,4,'#F00',false);
     x.shadowBlur=0;
     ln(cx-7,my,cx+7,my+2,2);
+  } else if (face === 'maniac') {
+    // === MANIAC — wide open eyes, gigantic grin, unhinged energy ===
+    ci(lx,ey,8,'#FFF',true,2); ci(rx,ey,8,'#FFF',true,2);
+    // Big dilated pupils
+    x.fillStyle='#000';
+    x.beginPath();x.arc(lx+1,ey+1,5,0,Math.PI*2);x.fill();
+    x.beginPath();x.arc(rx-1,ey+1,5,0,Math.PI*2);x.fill();
+    // Bright red bloodshot lines
+    x.strokeStyle='rgba(220,0,0,0.55)';x.lineWidth=0.8;
+    ln(lx-6,ey-5,lx+2,ey,0.8,'rgba(200,0,0,0.45)');
+    ln(lx-5,ey+5,lx+2,ey,0.8,'rgba(200,0,0,0.45)');
+    ln(rx+6,ey-5,rx-2,ey,0.8,'rgba(200,0,0,0.45)');
+    ln(rx+5,ey+5,rx-2,ey,0.8,'rgba(200,0,0,0.45)');
+    // Eye shines — big and bright
+    x.fillStyle='rgba(255,255,255,0.85)';
+    x.beginPath();x.arc(lx-1,ey-2,2,0,Math.PI*2);x.fill();
+    x.beginPath();x.arc(rx-1,ey-2,2,0,Math.PI*2);x.fill();
+    // Huge manic grin
+    x.beginPath();
+    x.moveTo(cx-18,my);
+    x.quadraticCurveTo(cx,my+16,cx+18,my);
+    x.fillStyle='#300000';x.fill();
+    x.strokeStyle='#000';x.lineWidth=2.5;x.stroke();
+    x.beginPath();x.moveTo(cx-18,my);x.quadraticCurveTo(cx,my-4,cx+18,my);
+    x.strokeStyle='#000';x.lineWidth=2;x.stroke();
+    // Many teeth
+    x.fillStyle='#FFF';
+    for(let t=-3;t<=3;t++){
+      x.fillRect(cx+t*5-2,my+1,4,5);
+      x.strokeStyle='rgba(0,0,0,0.3)';x.lineWidth=0.5;
+      x.strokeRect(cx+t*5-2,my+1,4,5);
+    }
+    // Manic thin brows — raised very high and curved inward
+    x.strokeStyle='#000';x.lineWidth=2.5;
+    x.beginPath();x.moveTo(lx-9,ey-16);x.quadraticCurveTo(lx,ey-22,lx+8,ey-15);x.stroke();
+    x.beginPath();x.moveTo(rx-8,ey-15);x.quadraticCurveTo(rx,ey-22,rx+9,ey-16);x.stroke();
   }
 }
 
@@ -909,6 +945,56 @@ function drawGear(cx, hy, by, hr, bw, bh, gear, skin, lb, pose, shoulderY) {
     pg([[cx+11,bby],[cx+3,bby+9],[cx+19,bby+9]],'#111');
     ln(cx-3,bby+5,cx+3,bby+5,1.5);
     pg([[cx-bw*0.3,by+bh*0.4],[cx+bw*0.3,by+bh*0.4],[cx+bw*0.18,by+bh*0.7],[cx-bw*0.18,by+bh*0.7]],'#111');
+  } else if (gear === 'chain') {
+    // Gold chain necklace — hangs around neck area
+    const cy2 = hy + hr * 0.8;
+    x.strokeStyle = '#FFD700'; x.lineWidth = 3.5; x.lineCap = 'round';
+    x.beginPath();
+    x.moveTo(cx - hr * 0.55, cy2 - 4);
+    x.quadraticCurveTo(cx, cy2 + 14, cx + hr * 0.55, cy2 - 4);
+    x.stroke();
+    x.strokeStyle = '#B8960C'; x.lineWidth = 1.5;
+    x.beginPath();
+    x.moveTo(cx - hr * 0.55, cy2 - 4);
+    x.quadraticCurveTo(cx, cy2 + 14, cx + hr * 0.55, cy2 - 4);
+    x.stroke();
+    // Chain links — small ovals along the curve
+    for (let i = 0; i <= 8; i++) {
+      const t = i / 8;
+      const lx2 = cx - hr * 0.55 + t * hr * 1.1;
+      const ly2 = cy2 - 4 + Math.sin(t * Math.PI) * 18;
+      x.beginPath(); x.ellipse(lx2, ly2, 4, 2.5, t * Math.PI, 0, Math.PI*2);
+      x.strokeStyle = '#FFD700'; x.lineWidth = 1.5; x.stroke();
+    }
+    // Pendant — small "P" medallion
+    ci(cx, cy2 + 14, 7, '#FFD700', true, 1.5);
+    x.fillStyle = '#000'; x.font = 'bold 8px sans-serif'; x.textAlign = 'center';
+    x.fillText('P', cx, cy2 + 17);
+  } else if (gear === 'moneybag') {
+    // Money bag held in plotting pose — at clasped hands position
+    const mbx = cx + bw + 18, mby = by - bh * 0.1;
+    // Bag body
+    x.beginPath();
+    x.moveTo(mbx - 10, mby - 6);
+    x.quadraticCurveTo(mbx - 18, mby - 2, mbx - 18, mby + 10);
+    x.quadraticCurveTo(mbx - 16, mby + 24, mbx, mby + 26);
+    x.quadraticCurveTo(mbx + 16, mby + 24, mbx + 18, mby + 10);
+    x.quadraticCurveTo(mbx + 18, mby - 2, mbx + 10, mby - 6);
+    x.closePath();
+    x.fillStyle = '#F5DEB3'; x.fill(); x.strokeStyle = '#000'; x.lineWidth = 2; x.stroke();
+    // Bag tie
+    x.beginPath();
+    x.moveTo(mbx - 8, mby - 8);
+    x.quadraticCurveTo(mbx, mby - 14, mbx + 8, mby - 8);
+    x.quadraticCurveTo(mbx + 4, mby - 2, mbx, mby - 6);
+    x.quadraticCurveTo(mbx - 4, mby - 2, mbx - 8, mby - 8);
+    x.fillStyle = '#DEB887'; x.fill(); x.strokeStyle = '#000'; x.lineWidth = 1.5; x.stroke();
+    // Dollar sign
+    x.fillStyle = '#228B22'; x.font = 'bold 14px sans-serif'; x.textAlign = 'center';
+    x.fillText('$', mbx, mby + 16);
+    // Shine
+    x.fillStyle = 'rgba(255,255,255,0.3)';
+    x.beginPath(); x.ellipse(mbx - 5, mby + 3, 5, 7, -0.3, 0, Math.PI*2); x.fill();
   }
 }
 
@@ -1269,6 +1355,62 @@ function drawBg(bg){
       ln(fx2,fy2,fx2,fy2-25,1.5,'#5C3317');
       pg([[fx2,fy2-25],[fx2+12,fy2-22],[fx2+10,fy2-15],[fx2,fy2-18]],
         ['#C00','#FFD700','#00C','#0A0','#C00'][f],true,0.8);
+    }
+  } else if(bg==='casino'){
+    // Neon casino floor — red/gold carpet, slot machines silhouettes
+    const g2=x.createLinearGradient(0,0,0,420);
+    g2.addColorStop(0,'#1a0808');g2.addColorStop(0.5,'#2a1010');g2.addColorStop(1,'#3a1818');
+    x.fillStyle=g2;x.fillRect(0,0,420,420);
+    // Neon glow strips
+    x.shadowColor='#F00';x.shadowBlur=20;
+    x.fillStyle='rgba(255,0,0,0.12)';x.fillRect(0,0,420,30);x.fillRect(0,390,420,30);
+    x.shadowBlur=0;
+    // Gold diamond carpet pattern
+    x.strokeStyle='rgba(180,120,0,0.2)';x.lineWidth=1;
+    for(let i=0;i<14;i++){for(let j=0;j<14;j++){
+      const px2=i*30+15,py2=j*30+15;
+      x.beginPath();x.moveTo(px2,py2-10);x.lineTo(px2+10,py2);x.lineTo(px2,py2+10);x.lineTo(px2-10,py2);x.closePath();x.stroke();
+    }}
+    // Neon sign at top
+    x.fillStyle='rgba(255,220,0,0.08)';x.fillRect(80,5,260,35);
+    x.fillStyle='#FFD700';x.shadowColor='#FFD700';x.shadowBlur=8;
+    x.font='bold 18px Impact, sans-serif';x.textAlign='center';
+    x.fillText('🎰 PISS PALACE CASINO 🎰',210,28);
+    x.shadowBlur=0;
+    // Floor glow
+    x.fillStyle='rgba(255,100,0,0.05)';x.fillRect(0,300,420,120);
+  } else if(bg==='sewer'){
+    // Dark sewer tunnel — Pisstek's natural habitat
+    const g3=x.createLinearGradient(0,0,0,420);
+    g3.addColorStop(0,'#1a2810');g3.addColorStop(0.6,'#0f1a0a');g3.addColorStop(1,'#2a4010');
+    x.fillStyle=g3;x.fillRect(0,0,420,420);
+    // Brick walls
+    x.strokeStyle='rgba(80,60,20,0.3)';x.lineWidth=1;
+    for(let row=0;row<12;row++){
+      const yy=row*35;const off=row%2===0?0:20;
+      for(let col=0;col<8;col++){
+        x.strokeRect(col*52+off-5,yy,48,32);
+      }
+    }
+    // Tunnel arch
+    x.beginPath();x.arc(210,350,180,Math.PI,0,false);
+    x.fillStyle='rgba(0,0,0,0.5)';x.fill();
+    // Piss puddle/stream on floor
+    x.beginPath();x.ellipse(210,390,90,18,0,0,Math.PI*2);
+    x.fillStyle='rgba(200,180,0,0.35)';x.fill();
+    // Water drips
+    for(let d=0;d<12;d++){
+      const dx3=20+Math.random()*380,dy3=50+Math.random()*250;
+      x.strokeStyle='rgba(100,150,80,0.4)';x.lineWidth=1;
+      x.beginPath();x.moveTo(dx3,dy3);x.lineTo(dx3,dy3+8+Math.random()*12);x.stroke();
+    }
+    // Glowing eyes in darkness
+    for(let e=0;e<4;e++){
+      const ex=30+e*100,ey2=300+Math.random()*40;
+      x.shadowColor='#F00';x.shadowBlur=6;
+      ci(ex,ey2,3,'rgba(255,0,0,0.6)',false);
+      ci(ex+12,ey2,3,'rgba(255,0,0,0.6)',false);
+      x.shadowBlur=0;
     }
   } else {
     x.fillStyle=bg;x.fillRect(0,0,420,420);
